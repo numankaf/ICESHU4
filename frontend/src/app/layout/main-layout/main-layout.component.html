@@ -1,0 +1,75 @@
+<!--TOPBAR-->
+<mat-toolbar>
+  <img alt="" src="/assets/layout/images/logo.png" width="30px" class="ml-2">
+  <span class="topbar-title px-2 text-3xl">ICESHU4</span>
+  <button mat-icon-button
+          (click)="sidenav.toggle()">
+    <mat-icon> menu</mat-icon>
+  </button>
+
+  <span class="spacer"></span>
+<!--  <div class="p-fluid">-->
+<!--    <p-selectButton [options]="[{ icon: 'light_mode', value:'light'},{ icon: 'dark_mode' , value: 'dark'},]"-->
+<!--                    [(ngModel)]="theme" optionLabel="icon" optionValue="value" (onOptionClick)="changeTheme()">-->
+<!--      <ng-template let-item>-->
+<!--        <mat-icon> {{item.icon}}</mat-icon>-->
+<!--      </ng-template>-->
+<!--    </p-selectButton>-->
+<!--  </div>-->
+
+  <div class="topbar-profile">
+    <img alt="avatar"  src="assets/layout/images/profile.jpg" [matMenuTriggerFor]="appMenu" class="profile-avatar cursor-pointer">
+    <!--    <div class="topbar-profile-content">-->
+    <!--      <span>Bully Maguire</span>-->
+    <!--      <span>Spiderman</span>-->
+    <!--    </div>-->
+  </div>
+  <mat-menu #appMenu="matMenu"  class="matMenu">
+    <ng-template matMenuContent class="profile-menu-header" >
+      <div  class="flex align-items-center ">
+         <img alt="avatar" class="profile-avatar ml-2" src="assets/layout/images/profile.jpg" >
+          <span class="text-color text-base font-semibold" style="font-family: var(--font-family) ;">Bully Maguire</span>
+      </div>
+      <mat-divider class="my-2  mx-2"></mat-divider>
+      <button mat-menu-item >
+        <mat-icon class="text-color"> person</mat-icon>
+        <span class="text-color text-base" style="font-family: var(--font-family)"> Profile</span>
+      </button>
+      <button mat-menu-item >
+        <mat-icon class="text-color"> settings</mat-icon>
+        <span class="text-color text-base" style="font-family: var(--font-family)"> Settings</span>
+      </button>
+      <button mat-menu-item >
+        <mat-icon class="text-color"> dark_mode</mat-icon>
+        <div class="flex align-items-center justify-content-center">
+          <span class="text-color text-base" style="font-family: var(--font-family)">Dark Mode</span>
+          <p-inputSwitch  class="pl-3 flex darkmode-switch" (click)="$event.stopPropagation();"
+                          [(ngModel)]="darkTheme" (onChange)="changeTheme()"></p-inputSwitch>
+        </div>
+      </button>
+      <mat-divider class="my-2 mx-2"></mat-divider>
+      <button mat-menu-item>
+        <mat-icon class="text-color"> logout</mat-icon>
+        <span class="text-color text-base"   style="font-family: var(--font-family)">Logout</span>
+      </button>
+    </ng-template>
+  </mat-menu>
+
+</mat-toolbar>
+
+<!--SIDEBAR-->
+<mat-sidenav-container>
+  <mat-sidenav #sidenav="matSidenav" class="mat-elevation-z8">
+    <div *ngFor="let item of menuItems">
+      <button *ngIf="!item.divider" mat-button class="menu-button" routerLink="{{item.route}}"
+              routerLinkActive="active-sidebar-item">
+        <mat-icon>{{item.icon}}</mat-icon>
+        <span>{{item.name}}</span>
+      </button>
+      <mat-divider *ngIf="item.divider"></mat-divider>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

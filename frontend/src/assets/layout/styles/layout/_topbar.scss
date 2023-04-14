@@ -1,0 +1,133 @@
+mat-toolbar {
+  background: var(--surface-card);
+  color: var(--text-color);
+}
+
+mat-sidenav {
+  margin: 16px;
+  width: 260px;
+  border-right: none;
+  background: var(--surface-card);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+mat-sidenav button {
+  height: 3.2rem;
+  color: var(--text-color);
+}
+
+mat-sidenav button:hover {
+  background-color: var(--highlight-bg);
+}
+
+mat-sidenav-container {
+  background-color: var(--surface-ground);
+  height: calc(100vh - 64px);
+}
+
+mat-sidenav-content {
+  padding-top: 20px;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--surface-ground);
+  padding-left: 3rem;
+  padding-right: 1.7rem;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.menu-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 1rem;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+//.avatar {
+//  margin-top: 16px;
+//  width: 100px;
+//  height: 100px;
+//  border-radius: 50%;
+//}
+//
+//.name {
+//  margin-top: 8px;
+//  font-weight: normal;
+//}
+//
+//.designation {
+//  margin-top: 2px;
+//  font-size: 0.7rem;
+//  color: lightgrey;
+//}
+
+mat-divider {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.active-sidebar-item {
+  color: var(--primary-color) !important;
+  background: var(--highlight-bg);
+}
+
+.topbar-title {
+  width: 220px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.topbar-profile {
+  margin-left: 1rem;
+  justify-content: center;
+  display: flex;
+
+
+}
+
+.profile-avatar{
+  width: 42px;
+  margin-right: .55rem;
+  border-radius: 50%;
+}
+
+::ng-deep {
+  .p-fluid .p-buttonset .p-button {
+    padding: 0.2rem 0.5rem;
+  }
+  .matMenu{
+    background: var(--surface-card);
+
+    button{
+      min-height: 40px;
+    }
+  }
+}
+.darkmode-switch {
+  .p-inputswitch {
+    height: 1.2rem;
+    width: 2.4rem;
+    &.p-inputswitch-checked {
+      .p-inputswitch-slider::before {
+        transform: translateX(1rem);
+      }
+    }
+    .p-inputswitch-slider::before {
+      width: 0.9rem;
+      height: 0.9rem;
+      margin-top: -0.45rem;
+    }
+  }
+}
