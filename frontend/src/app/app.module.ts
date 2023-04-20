@@ -14,18 +14,24 @@ import {MatListModule} from "@angular/material/list";
 import {MatMenuModule} from "@angular/material/menu";
 import { DashboardComponent } from './iceshu4/dashboard/dashboard.component';
 import {SelectButtonModule} from "primeng/selectbutton";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {StyleClassModule} from "primeng/styleclass";
 import {RippleModule} from "primeng/ripple";
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {ButtonModule} from "primeng/button";
 import {InputSwitchModule} from "primeng/inputswitch";
+import { LoginComponent } from './iceshu4/auth/login/login.component';
+import {CheckboxModule} from "primeng/checkbox";
+import {ChipsModule} from "primeng/chips";
+import { RegisterComponent } from './iceshu4/auth/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainLayoutComponent,
-    DashboardComponent
+    DashboardComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +52,9 @@ import {InputSwitchModule} from "primeng/inputswitch";
     OverlayPanelModule,
     ButtonModule,
     InputSwitchModule,
+    CheckboxModule,
+    ChipsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
