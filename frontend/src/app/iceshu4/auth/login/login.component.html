@@ -17,9 +17,9 @@
            <div class="mb-4 pt-2  " style="width: 90%">
              <label for="email" class="block text-base font-medium mb-2">Email</label>
              <div class="p-input-icon-left inline">
-               <i class="pi pi-envelope"></i>
+               <i class="pi pi-envelope pr-2"></i>
                <input id="email" type="text" pInputText placeholder="Email address"
-                      class="w-full" formControlName="email">
+                      class="w-full py-3 " formControlName="email">
              </div>
              <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
                <small class="p-error"
@@ -30,9 +30,9 @@
              <label for="password" class="block text-base font-medium mb-2">Password</label>
              <div class="p-input-icon-left inline">
                <p-password formControlName="password" id="password"
-                           [inputStyle]="{'width':'100%'}"
+                           [inputStyle]="{'width':'100%' ,'padding': '1rem'}"
                            [style]="{'width':'100%'}"
-                           [toggleMask]="true"[feedback]="false" class="w-full" placeholder="Password"></p-password>
+                           [toggleMask]="true"[feedback]="false" class="w-full " placeholder="Password"></p-password>
              </div>
              <div *ngIf="f['password'].invalid && (f['password'].dirty)" style="text-align: left;">
                <small class="p-error "
@@ -51,9 +51,9 @@
           </span>
          </div>
          <div class="flex align-items-center justify-content-center">
-           <button [disabled]="!this.form.valid" style="width:70%"
+           <button [disabled]="!this.form.valid" style="width:65%"
                    type="submit" pButton pRipple
-                   label="Log in" class="mb-4">
+                   label="Log in" class="mb-4 p-3">
            </button>
          </div>
 
