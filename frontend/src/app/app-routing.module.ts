@@ -6,6 +6,8 @@ import {LoginComponent} from "./iceshu4/auth/login/login.component";
 import {RegisterComponent} from "./iceshu4/auth/register/register.component";
 import {LandingComponent} from "./iceshu4/landing/landing.component";
 import {ForgotpasswordComponent} from "./iceshu4/auth/forgotpassword/forgotpassword.component";
+import {AccountComponent} from "./iceshu4/components/profile/account/account.component";
+import {ProfileLayoutComponent} from "./layout/profile-layout/profile-layout.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -27,6 +29,15 @@ import {ForgotpasswordComponent} from "./iceshu4/auth/forgotpassword/forgotpassw
         {path: 'forms', component: DashboardComponent},
         {path: 'about', component: DashboardComponent},
         {path: 'help', component: DashboardComponent},
+      ]
+    },
+    {
+      path: 'profile', component: ProfileLayoutComponent,
+      children: [
+        {path: '', redirectTo: 'account', pathMatch: 'full'},
+        {path: 'account', component: AccountComponent},
+        {path: 'changepassword', component: AccountComponent},
+        {path: 'messages', component: AccountComponent},
       ]
     },
 

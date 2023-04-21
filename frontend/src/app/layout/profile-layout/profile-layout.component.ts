@@ -1,15 +1,15 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {Router} from "@angular/router";
 import {LayoutService} from "../layout.service";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-main-layout',
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['main-layout.component.scss']
+  selector: 'app-profile-layout',
+  templateUrl: './profile-layout.component.html',
+  styleUrls: ['./profile-layout.component.scss']
 })
-export class MainLayoutComponent implements AfterViewInit {
+export class ProfileLayoutComponent implements AfterViewInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   menuItems: any;
@@ -21,13 +21,12 @@ export class MainLayoutComponent implements AfterViewInit {
 
   ngOnInit() {
     this.menuItems = [
-      {icon: 'dashboard',name:'Dashboard', route:'/main/dashboard'},
-      {icon: 'library_books',name:'Classes', route:'/main/classes'},
-      {icon: 'feed',name:'Forms', route:'/main/forms'},
-      {icon: 'info',name:'About', route:'/main/about'},
-      {icon: 'help',name:'Help', route:'/main/help'},
+      {icon: 'account_circle',name:'Account', route:'/profile/account'},
+      {icon: 'key',name:'Change Password', route:'/profile/changepassword'},
+      {icon: 'sms',name:'Messages', route:'/profile/messages'},
+      {icon: 'first_page',name:'Back to Main Menu', route:'/main'},
 
-      ]
+    ]
   }
 
   ngAfterViewInit() {

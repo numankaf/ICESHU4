@@ -30,6 +30,9 @@ import { LandingComponent } from './iceshu4/landing/landing.component';
 import { ForgotpasswordComponent } from './iceshu4/auth/forgotpassword/forgotpassword.component';
 import {CarouselModule} from "primeng/carousel";
 import {AvatarModule} from "primeng/avatar";
+import { ProfileLayoutComponent } from './layout/profile-layout/profile-layout.component';
+import { AccountComponent } from './iceshu4/components/profile/account/account.component';
+import { TopbarComponent } from './layout/topbar/topbar.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import {AvatarModule} from "primeng/avatar";
     LoginComponent,
     RegisterComponent,
     LandingComponent,
-    ForgotpasswordComponent
+    ForgotpasswordComponent,
+    ProfileLayoutComponent,
+    AccountComponent,
+    TopbarComponent
   ],
   imports: [
     BrowserModule,
