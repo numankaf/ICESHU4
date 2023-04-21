@@ -1,0 +1,65 @@
+<div class="flex flex-wrap" style="width: 100vw; height: 100vh">
+  <div class="w-full lg:w-5" style="background-color: rgba(255,255,255,.7);">
+    <img class="block" src="assets/layout/images/bg.png" width="100%" height="100%">
+  </div>
+  <div class="w-full lg:w-7 p-4 lg:p-7 surface-card" >
+   <div style="position: relative;top: 50%; transform: translateY(-50%);">
+     <div class="flex align-items-center justify-content-center">
+       <img alt="" src="/assets/layout/images/logo.png" width="30px" class="ml-2">
+       <span class="px-2 text-3xl">ICESHU4</span>
+     </div>
+     <div class="text-center font-medium text-2xl pt-5 pb-3">Login</div>
+     <div class="text-center text-lg"> Don't have an account? <a class="text-primary cursor-pointer underline-link" routerLink="auth/register">Sign up</a>
+     </div>
+     <form [formGroup]="form" (ngSubmit)="login()">
+       <div class="flex flex-column lg:p-5 lg:m-5 " >
+         <div class="flex flex-column align-items-center justify-content-center">
+           <div class="mb-4 pt-2  " style="width: 90%">
+             <label for="email" class="block text-base font-medium mb-2">Email</label>
+             <div class="p-input-icon-left inline">
+               <i class="pi pi-envelope pr-2"></i>
+               <input id="email" type="text" pInputText placeholder="Email address"
+                      class="w-full py-3 " formControlName="email">
+             </div>
+             <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
+               <small class="p-error"
+                      *ngIf="f['email'].errors?.['required']">Email required!</small>
+             </div>
+           </div>
+           <div class="mb-4 pb-3" style="width: 90%">
+             <label for="password" class="block text-base font-medium mb-2">Password</label>
+             <div class="p-input-icon-left inline">
+               <p-password formControlName="password" id="password"
+                           [inputStyle]="{'width':'100%' ,'padding': '1rem'}"
+                           [style]="{'width':'100%'}"
+                           [toggleMask]="true"[feedback]="false" class="w-full " placeholder="Password"></p-password>
+             </div>
+             <div *ngIf="f['password'].invalid && (f['password'].dirty)" style="text-align: left;">
+               <small class="p-error "
+                      *ngIf="f['password'].errors?.['required']">Password required!</small>
+             </div>
+           </div>
+         </div>
+
+         <div class="flex justify-content-between flex-wrap" style="width: 95%">
+           <div></div>
+           <span class="mb-4">
+            <div class=" inline">
+              <a class="text-primary cursor-pointer text-lg underline-link"
+                 style="text-decoration:none" routerLink="/auth/forgotpassword">Forgot Password?</a>
+                </div>
+          </span>
+         </div>
+         <div class="flex align-items-center justify-content-center">
+           <button [disabled]="!this.form.valid" style="width:65%"
+                   type="submit" pButton pRipple
+                   label="Log in" class="mb-4 p-3">
+           </button>
+         </div>
+
+       </div>
+       <!--      <p-messages [value]="errorMessages"></p-messages>-->
+     </form>
+   </div>
+  </div>
+</div>
