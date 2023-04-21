@@ -49,3 +49,10 @@ p {
 .underline-link:hover {
   color: var(--primary-color);
 }
+.card {
+  background: var(--surface-card);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 3px 4px #0000001a, 0 24px 36px #0000000a;
+  border-radius: 14px;
+}
