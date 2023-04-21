@@ -1,1 +1,102 @@
-<p>register works!</p>
+<div class="flex flex-wrap" >
+
+    <div class="w-full lg:w-5" style="background-color: rgba(255,255,255,.7);">
+        <img class="block" src="assets/layout/images/nbg.jpg" style="opacity: 0.5" width="100%" height="100%">
+    </div>
+
+    <div class="w-full lg:w-7 p-4 lg:p-7 surface-card" >
+        <div style="position: relative;top: 50%; transform: translateY(-50%);">
+            <div class="flex align-items-center justify-content-center cursor-pointer" routerLink="/">
+                <img alt="" src="/assets/layout/images/logo.png" width="30px" class="ml-2">
+                <span class="px-2 text-3xl">ICESHU4</span>
+            </div>
+            <div class="text-center font-medium text-2xl pt-3 pb-2">Sign up</div>
+            <div class="text-center text-lg"> Already have an account? <a class="text-primary cursor-pointer underline-link" routerLink="/auth/login">Log in</a>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="register()">
+                <div class="flex flex-column lg:p-3 lg:m-3 " >
+                    <div class="flex flex-column align-items-center justify-content-center">
+
+                        <div class="mb-3 pt-1 " style="width: 90%">
+
+                            <p-dropdown formControlName="department" [style]="{'width':'100%'}" [options]="departments" [(ngModel)]="selectedDepartment" optionLabel="departmentName" placeholder="Departments">
+                            </p-dropdown>
+
+                            <div class="py-4 flex justify-content-between flex-wrap">
+                                <span class="" style="width: 49%">
+                                    <label for="name" class="block text-base font-medium mb-2">Name</label>
+                                    <div class="inline">
+                                        <input id="name" type="text" pInputText placeholder="Name"
+                                               class="w-full py-3 " formControlName="name">
+                                    </div>
+                                    <div *ngIf="f['name'].invalid && (f['name'].dirty )" style="text-align: left;">
+                                        <small class="p-error"
+                                               *ngIf="f['name'].errors?.['required']">Name required!</small>
+                                    </div>
+                                </span>
+
+                                <span class="" style="width: 49%">
+                                    <label for="surname" class="block text-base font-medium mb-2">Surname</label>
+                                    <div class="inline">
+                                        <input id="surname" type="text" pInputText placeholder="Surname"
+                                               class="w-full py-3 " formControlName="surname">
+                                    </div>
+                                    <div *ngIf="f['surname'].invalid && (f['surname'].dirty )" style="text-align: left;">
+                                        <small class="p-error"
+                                               *ngIf="f['surname'].errors?.['required']">Surname required!</small>
+                                    </div>
+                                </span>
+                            </div>
+
+
+                            <label for="email" class="block text-base font-medium mb-2">Email</label>
+                            <div class="p-input-icon-left inline">
+                                <i class="pi pi-envelope pr-2"></i>
+                                <input id="email" type="text" pInputText placeholder="Email address"
+                                       class="w-full py-3 " formControlName="email">
+                            </div>
+                            <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
+                                <small class="p-error"
+                                       *ngIf="f['email'].errors?.['required']">Email required!</small>
+                            </div>
+
+                        </div>
+
+                        <div class="mb-3 pb-2" style="width: 90%">
+                            <label class="block text-base font-medium mb-2">Password</label>
+                            <div class="p-input-icon-left inline">
+                                <p-password formControlName="password" id="password"
+                                            [inputStyle]="{'width':'100%' ,'padding': '1rem'}"
+                                            [style]="{'width':'100%'}"
+                                            [toggleMask]="true"[feedback]="false" class="w-full " placeholder="Password"></p-password>
+                            </div>
+                            <div *ngIf="f['password'].invalid && (f['password'].dirty)" style="text-align: left;">
+                                <small class="p-error "
+                                       *ngIf="f['password'].errors?.['required']">Password required!</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-content-between flex-wrap" style="width: 95%">
+                        <div></div>
+                        <span class="mb-4">
+            <div class=" inline">
+              <a class="text-primary cursor-pointer text-lg underline-link"
+                 style="text-decoration:none" routerLink="/auth/forgotpassword">Forgot Password?</a>
+                </div>
+          </span>
+                    </div>
+                    <div class="flex align-items-center justify-content-center">
+                        <button [disabled]="!this.form.valid" style="width:65%"
+                                type="submit" pButton pRipple
+                                label="Sign up" class="mb-4 p-3">
+                        </button>
+                    </div>
+
+                </div>
+                <!--      <p-messages [value]="errorMessages"></p-messages>-->
+            </form>
+        </div>
+    </div>
+</div>
+
