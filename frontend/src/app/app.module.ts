@@ -26,6 +26,13 @@ import {ChipsModule} from "primeng/chips";
 import { RegisterComponent } from './iceshu4/auth/register/register.component';
 import {DividerModule} from "primeng/divider";
 import {PasswordModule} from "primeng/password";
+import { LandingComponent } from './iceshu4/landing/landing.component';
+import { ForgotpasswordComponent } from './iceshu4/auth/forgotpassword/forgotpassword.component';
+import {CarouselModule} from "primeng/carousel";
+import {AvatarModule} from "primeng/avatar";
+import { ProfileLayoutComponent } from './layout/profile-layout/profile-layout.component';
+import { AccountComponent } from './iceshu4/components/profile/account/account.component';
+import { TopbarComponent } from './layout/topbar/topbar.component';
 
 @NgModule({
   declarations: [
@@ -33,33 +40,40 @@ import {PasswordModule} from "primeng/password";
     MainLayoutComponent,
     DashboardComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LandingComponent,
+    ForgotpasswordComponent,
+    ProfileLayoutComponent,
+    AccountComponent,
+    TopbarComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatButtonModule,
-        CardModule,
-        MatListModule,
-        MatMenuModule,
-        SelectButtonModule,
-        FormsModule,
-        StyleClassModule,
-        RippleModule,
-        OverlayPanelModule,
-        ButtonModule,
-        InputSwitchModule,
-        CheckboxModule,
-        ChipsModule,
-        ReactiveFormsModule,
-        DividerModule,
-        PasswordModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatButtonModule,
+    CardModule,
+    MatListModule,
+    MatMenuModule,
+    SelectButtonModule,
+    FormsModule,
+    StyleClassModule,
+    RippleModule,
+    OverlayPanelModule,
+    ButtonModule,
+    InputSwitchModule,
+    CheckboxModule,
+    ChipsModule,
+    ReactiveFormsModule,
+    DividerModule,
+    PasswordModule,
+    CarouselModule,
+    AvatarModule,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

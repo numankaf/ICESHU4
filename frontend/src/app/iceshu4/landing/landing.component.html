@@ -1,0 +1,145 @@
+<div class="relative overflow-hidden flex flex-column justify-content-center ">
+  <div class="bg-circle opacity-50" style="top: -200px; left: -700px;"></div>
+  <div class="bg-circle hidden lg:flex" style="top: 50px; right: -800px; transform: rotate(60deg);"></div>
+  <div
+    class="py-6 px-4 mx-0 lg:py-6 lg:mx-4 lg:px-4 flex align-items-center justify-content-between relative lg:static">
+    <img src="assets/layout/images/logo.png" alt="logo" width="30">
+    <span class="px-2  mr-5 text-3xl">ICESHU4</span>
+    <a class="m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 cursor-pointer" href="#home" style="text-decoration: none">
+      Home
+    </a>
+    <a class="m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 cursor-pointer" href="#apps" style="text-decoration: none" >
+      Apps
+    </a>
+    <a class="m-0 md:ml-5 px-0 py-3 text-900 font-medium line-height-3 cursor-pointer"  href="#development-team" style="width: 200px;text-decoration: none" >
+     Development Team
+    </a>
+    <div class="align-items-center flex-grow-1 justify-content-between hidden lg:flex
+      lg:static w-full surface-ground left-0 top-100 px-6 lg:px-0 z-2lg:shadow-none">
+      <section></section>
+
+      <div
+        class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-ground py-3 lg:py-0 mt-3 lg:mt-0">
+        <p-button label="Login" styleClass="p-button-text" class="pr-2" [routerLink]="['/auth/login']"></p-button>
+        <p-button label="Sign Up" styleClass="p-button-raised" [routerLink]="['/auth/signup']"></p-button>
+      </div>
+    </div>
+  </div>
+  <div class="p-4 mx-0 lg:mx-8 lg:px-8 z-2">
+    <div id="home" class="grid grid-nogutter justify-content-between align-items-center mb-6 py-6 md:mb-8 md:py-8">
+      <div
+        class="col-12 md:col-4 flex flex-column gap-4  align-items-center md:align-items-start text-center md:text-left">
+        <span class="block text-900 font-bold text-4xl">Welcome to ICESHU4!</span>
+        <span class="block text-700 text-lg">The innovative course-evaluation system
+          designed to enhance the educational experience for both students and educators alike.</span>
+      </div>
+      <div class="col-12 md:col-7  mb-6 md:mb-0 ">
+        <img alt="" class="w-full h-full border-round shadow-2 animation-duration-1000 animation-ease-out moveinright"
+             src="assets/layout/images/carousel/carouseimage1.PNG">
+      </div>
+    </div>
+  </div>
+  <div id="apps" class="flex flex-column align-items-center justify-content-center">
+    <span class="block text-900 font-bold text-4xl py-5">Apps</span>
+    <span class="block text-700 text-lg py-3">The cutting-edge course-evaluation system app that streamlines
+          the feedback process and empowers users to improve the quality of their education.</span>
+    <div style="width:70%;">
+      <p-carousel [value]="carouselImages"
+                  [circular]="true"
+                  [autoplayInterval]="3000">
+        <ng-template let-images pTemplate="item">
+          <div style="width:80%" class="center">
+            <div>
+              <img class="w-full h-full border-round surface-border shadow-2"
+                   [src]="images.url" alt="{{images.url}}">
+              <span class="block text-center text-800 text-lg font-bold pt-5">{{images.content}}</span>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+  <div id="development-team" class="p-4 mx-0 lg:mx-8 lg:px-8 z-2 grid justify-content-center  mt-8">
+    <div class="flex flex-column justify-content-center align-items-center">
+      <span class="block text-900 font-bold text-4xl py-5">Development Team</span>
+      <span class="block text-700 text-center text-lg py-3">Meet the ICESHU4 development team, a group of experienced
+        professionals dedicated to creating an advanced course-evaluation system that revolutionizes the way we approach education.</span>
+    </div>
+    <div class="flex justify-content-center align-items-center">
+      <div class="col-12 lg:col-3 p-0">
+        <div class="p-3 h-full">
+          <div class="shadow-2 py-4 h-full flex flex-column surface-card align-items-center justify-content"
+               style="border-radius: 6px;">
+            <div style="height: 80px">
+              <span
+                class="text-900 block font-medium text-2xl mb-4 line-height-2 text-center">Software Project Manager</span>
+            </div>
+            <p-avatar image="https://avatars.githubusercontent.com/u/72977168?v=4" styleClass="mr-2" size="xlarge"
+                      shape="circle"></p-avatar>
+            <span class="text-900 block font-medium text-xl mb-2 mt-3 text-center">Numan Kafadar</span>
+            <span class="text-900 block text-xl mb-2 mt-2 text-center">b21946242</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 lg:col-3 p-0">
+        <div class="p-3 h-full">
+          <div class="shadow-2 py-4 h-full flex flex-column surface-card align-items-center justify-content"
+               style="border-radius: 6px;">
+            <div style="height: 80px">
+              <span class="text-900 block font-medium text-2xl mb-4 line-height-2 text-center">Software Configuration Manager</span>
+            </div>
+            <p-avatar image="https://avatars.githubusercontent.com/u/72995775?s=100&v=4" styleClass="mr-2" size="xlarge"
+                      shape="circle"></p-avatar>
+            <span class="text-900 block font-medium text-xl mb-2 mt-3 text-center">Yunus Emre Terzi</span>
+            <span class="text-900 block text-xl mb-2 mt-2 text-center">b2200356021</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 lg:col-3 p-0">
+        <div class="p-3 h-full">
+          <div class="shadow-2 py-4 h-full flex flex-column surface-card align-items-center justify-content"
+               style="border-radius: 6px;">
+            <div style="height: 80px">
+              <span class="text-900 block font-medium text-2xl mb-4 line-height-2 text-center">Software Architect</span>
+            </div>
+            <p-avatar image="https://avatars.githubusercontent.com/u/128552053?s=100&v=4" styleClass="mr-2"
+                      size="xlarge" shape="circle"></p-avatar>
+            <span class="text-900 block font-medium text-xl mb-2 mt-3 text-center">Mustafa Çağrı Korkmaz</span>
+            <span class="text-900 block text-xl mb-2 mt-2 text-center">b2200356833</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 lg:col-3 p-0">
+        <div class="p-3 h-full">
+          <div class="shadow-2 py-4 h-full flex flex-column surface-card align-items-center justify-content"
+               style="border-radius: 6px;">
+            <div style="height: 80px">
+              <span class="text-900 block font-medium text-2xl mb-4 line-height-2 text-center">Software Analyst</span>
+            </div>
+            <p-avatar image="https://avatars.githubusercontent.com/u/72977897?s=100&v=4" styleClass="mr-2" size="xlarge"
+                      shape="circle"></p-avatar>
+            <span class="text-900 block font-medium text-xl mb-2 mt-3 text-center">Osman Faruk Derdiyok</span>
+            <span class="text-900 block text-xl mb-2 mt-2 text-center">b21946036</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 lg:col-3 p-0">
+        <div class="p-3 h-full">
+          <div class="shadow-2 py-4 h-full flex flex-column surface-card align-items-center justify-content"
+               style="border-radius: 6px;">
+            <div style="height: 80px">
+              <span class="text-900 block font-medium text-2xl mb-4 line-height-2 text-center">Software Tester</span>
+            </div>
+            <p-avatar image="https://avatars.githubusercontent.com/u/72995496?s=100&v=4" styleClass="mr-2" size="xlarge"
+                      shape="circle"></p-avatar>
+            <span class="text-900 block font-medium text-xl mb-2 mt-3 text-center">Umut Güngör</span>
+            <span class="text-900 block text-xl mb-2 mt-2 text-center">b21946198</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex justify-content-center align-items-center my-2 pt-1 pb-2 ">
+    <span class="text-900 block text-xl mb-2 mt-2 text-center">© 2023 Cyberbullies. All rights reserved.</span>
+  </div>
+</div>
