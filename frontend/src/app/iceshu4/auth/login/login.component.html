@@ -4,12 +4,12 @@
   </div>
   <div class="w-full lg:w-7 p-4 lg:p-7 surface-card" >
    <div style="position: relative;top: 50%; transform: translateY(-50%);">
-     <div class="flex align-items-center justify-content-center">
+     <div class="flex align-items-center justify-content-center cursor-pointer" routerLink="/">
        <img alt="" src="/assets/layout/images/logo.png" width="30px" class="ml-2">
        <span class="px-2 text-3xl">ICESHU4</span>
      </div>
      <div class="text-center font-medium text-2xl pt-5 pb-3">Login</div>
-     <div class="text-center text-lg"> Don't have an account? <a class="text-primary cursor-pointer underline-link" routerLink="auth/register">Sign up</a>
+     <div class="text-center text-lg"> Don't have an account? <a class="text-primary cursor-pointer underline-link" routerLink="/auth/signup">Sign up</a>
      </div>
      <form [formGroup]="form" (ngSubmit)="login()">
        <div class="flex flex-column lg:p-5 lg:m-5 " >
