@@ -20,6 +20,6 @@ export class LoginComponent {
   }
 
   login(){
-    console.log(this.loginInfos.email + " " + this.loginInfos.password +  " ile giriş yapıldı.")
+    console.log(this.form.value);
   }
 }

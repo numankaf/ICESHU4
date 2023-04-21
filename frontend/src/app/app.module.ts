@@ -24,6 +24,8 @@ import { LoginComponent } from './iceshu4/auth/login/login.component';
 import {CheckboxModule} from "primeng/checkbox";
 import {ChipsModule} from "primeng/chips";
 import { RegisterComponent } from './iceshu4/auth/register/register.component';
+import {DividerModule} from "primeng/divider";
+import {PasswordModule} from "primeng/password";
 
 @NgModule({
   declarations: [
@@ -33,29 +35,31 @@ import { RegisterComponent } from './iceshu4/auth/register/register.component';
     LoginComponent,
     RegisterComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    CardModule,
-    MatListModule,
-    MatMenuModule,
-    SelectButtonModule,
-    FormsModule,
-    StyleClassModule,
-    RippleModule,
-    OverlayPanelModule,
-    ButtonModule,
-    InputSwitchModule,
-    CheckboxModule,
-    ChipsModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        CardModule,
+        MatListModule,
+        MatMenuModule,
+        SelectButtonModule,
+        FormsModule,
+        StyleClassModule,
+        RippleModule,
+        OverlayPanelModule,
+        ButtonModule,
+        InputSwitchModule,
+        CheckboxModule,
+        ChipsModule,
+        ReactiveFormsModule,
+        DividerModule,
+        PasswordModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

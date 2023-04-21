@@ -7,7 +7,7 @@ import {RegisterComponent} from "./iceshu4/auth/register/register.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
-    {path: 'login', component: LoginComponent},
+    {path: 'auth/login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     { path: '', component: MainLayoutComponent,
       children :[
