@@ -34,6 +34,7 @@ import { ProfileLayoutComponent } from './layout/profile-layout/profile-layout.c
 import { AccountComponent } from './iceshu4/components/profile/account/account.component';
 import { TopbarComponent } from './layout/topbar/topbar.component';
 import {DropdownModule} from "primeng/dropdown";
+import {DialogModule} from "primeng/dialog";
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import {DropdownModule} from "primeng/dropdown";
         CarouselModule,
         AvatarModule,
         DropdownModule,
+        DialogModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

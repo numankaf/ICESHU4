@@ -7,6 +7,10 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./forgotpassword.component.scss']
 })
 export class ForgotpasswordComponent {
+  passwordSent: boolean = false;
+  constructor() {
+
+  }
   form = new FormGroup({
     email: new FormControl(null, [Validators.required]),
   });
@@ -17,5 +21,6 @@ export class ForgotpasswordComponent {
 
   sendResetPassword(){
     console.log(this.form.value);
+    this.passwordSent =true;
   }
 }

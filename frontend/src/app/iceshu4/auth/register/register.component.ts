@@ -23,7 +23,7 @@ export class RegisterComponent {
 
   ngOnInit(){
     this.departments = [
-      { id: 1, departmentName: "Computer Science" },
+      { id: 1, departmentName: "Computer Engineering" },
       { id: 2, departmentName: "Electric Electronic Engineering" },
       { id: 3, departmentName: "Mechanical Engineering "}
     ]
