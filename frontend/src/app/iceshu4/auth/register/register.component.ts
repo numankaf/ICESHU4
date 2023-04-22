@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {Register} from "./register";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Department} from "./department";
 
@@ -9,14 +8,14 @@ import {Department} from "./department";
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  registerInfos: Register = new Register();
 
   form = new FormGroup({
-    department: new FormControl(this.registerInfos.departmentId, [Validators.required]),
-    name: new FormControl(this.registerInfos.name, [Validators.required]),
-    surname: new FormControl(this.registerInfos.surname, [Validators.required]),
-    email: new FormControl(this.registerInfos.email, [Validators.required]),
-    password: new FormControl(this.registerInfos.password, [Validators.required]),
+    department: new FormControl(null, [Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    surname: new FormControl(null, [Validators.required]),
+    email: new FormControl(null, [Validators.required]),
+    password: new FormControl(null, [Validators.required]),
+    confirmpassword: new FormControl(null, [Validators.required]),
   });
 
   selectedDepartment?: Department;
@@ -29,9 +28,6 @@ export class RegisterComponent {
       { id: 3, departmentName: "Mechanical Engineering "}
     ]
   }
-
-
-
 
   get f() {
     return this.form.controls;
