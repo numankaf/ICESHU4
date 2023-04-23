@@ -8,6 +8,7 @@ import {LandingComponent} from "./iceshu4/landing/landing.component";
 import {ForgotpasswordComponent} from "./iceshu4/auth/forgotpassword/forgotpassword.component";
 import {AccountComponent} from "./iceshu4/components/profile/account/account.component";
 import {ProfileLayoutComponent} from "./layout/profile-layout/profile-layout.component";
+import {AuthGuard} from "./iceshu4/core/auth.guard";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -22,6 +23,7 @@ import {ProfileLayoutComponent} from "./layout/profile-layout/profile-layout.com
     },
     {
       path: 'main', component: MainLayoutComponent,
+      canActivate:[AuthGuard],
       children: [
         {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
         {path: 'dashboard', component: DashboardComponent},
@@ -33,6 +35,7 @@ import {ProfileLayoutComponent} from "./layout/profile-layout/profile-layout.com
     },
     {
       path: 'profile', component: ProfileLayoutComponent,
+      canActivate:[AuthGuard],
       children: [
         {path: '', redirectTo: 'account', pathMatch: 'full'},
         {path: 'account', component: AccountComponent},

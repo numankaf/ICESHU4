@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 
 import {LayoutService} from "../layout.service";
+import {AuthenticationService} from "../../iceshu4/core/authentication.service";
 
 
 @Component({
@@ -14,7 +15,8 @@ export class TopbarComponent {
   @Input() sidenav!: MatSidenav;
   darkTheme = false;
 
-  constructor(public layoutService: LayoutService,) {
+  constructor(public layoutService: LayoutService,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -46,6 +48,10 @@ export class TopbarComponent {
       cloneLinkElement.setAttribute('id', id);
       onComplete();
     });
+  }
+
+  logout(){
+    this.authenticationService.logout();
   }
 
 }

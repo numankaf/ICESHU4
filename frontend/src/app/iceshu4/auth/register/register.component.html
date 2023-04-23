@@ -85,6 +85,10 @@
                 <small class="p-error "
                        *ngIf="f['confirmpassword'].errors?.['required']">Confirm password required!</small>
               </div>
+              <div *ngIf="(f['confirmpassword'].dirty)" style="text-align: left;">
+                <small class="p-error "
+                       *ngIf="form.errors!=null && this.form.errors['passwordNotMatch']">Passwords does not match!</small>
+              </div>
             </div>
           </div>
 
@@ -100,7 +104,7 @@
                   label="Sign up" class="mb-4 p-3">
           </button>
         </div>
-        <!--      <p-messages [value]="errorMessages"></p-messages>-->
+        <p-messages [value]="errorMessages"></p-messages>
       </form>
     </div>
   </div>
