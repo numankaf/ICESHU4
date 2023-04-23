@@ -33,6 +33,8 @@ import {AvatarModule} from "primeng/avatar";
 import { ProfileLayoutComponent } from './layout/profile-layout/profile-layout.component';
 import { AccountComponent } from './iceshu4/components/profile/account/account.component';
 import { TopbarComponent } from './layout/topbar/topbar.component';
+import {DropdownModule} from "primeng/dropdown";
+import {DialogModule} from "primeng/dialog";
 
 @NgModule({
   declarations: [
@@ -47,33 +49,35 @@ import { TopbarComponent } from './layout/topbar/topbar.component';
     AccountComponent,
     TopbarComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    CardModule,
-    MatListModule,
-    MatMenuModule,
-    SelectButtonModule,
-    FormsModule,
-    StyleClassModule,
-    RippleModule,
-    OverlayPanelModule,
-    ButtonModule,
-    InputSwitchModule,
-    CheckboxModule,
-    ChipsModule,
-    ReactiveFormsModule,
-    DividerModule,
-    PasswordModule,
-    CarouselModule,
-    AvatarModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        CardModule,
+        MatListModule,
+        MatMenuModule,
+        SelectButtonModule,
+        FormsModule,
+        StyleClassModule,
+        RippleModule,
+        OverlayPanelModule,
+        ButtonModule,
+        InputSwitchModule,
+        CheckboxModule,
+        ChipsModule,
+        ReactiveFormsModule,
+        DividerModule,
+        PasswordModule,
+        CarouselModule,
+        AvatarModule,
+        DropdownModule,
+        DialogModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

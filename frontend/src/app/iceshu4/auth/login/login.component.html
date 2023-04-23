@@ -1,18 +1,20 @@
 <div class="flex flex-wrap" style="width: 100vw; height: 100vh">
-  <div class="w-full lg:w-5" style="background-color: rgba(255,255,255,.7);">
-    <img class="block" src="assets/layout/images/bg.png" width="100%" height="100%">
+  <div class="w-full lg:w-5" style="background: url('assets/layout/images/hucsbg.jpg'); background-size:100% 100%;">
+    <div class="p-3" >
+      <div class="flex align-items-center justify-content-center cursor-pointer" style="width: min-content" routerLink="/">
+        <img alt="" src="/assets/layout/images/logo.png" width="30px" class="ml-2">
+        <span class="px-2 text-3xl">ICESHU4</span>
+      </div>
+    </div>
   </div>
-  <div class="w-full lg:w-7 p-4 lg:p-7 surface-card" >
+  <div class="w-full lg:w-7 px-4 lg:px-7 surface-card" >
    <div style="position: relative;top: 50%; transform: translateY(-50%);">
-     <div class="flex align-items-center justify-content-center cursor-pointer" routerLink="/">
-       <img alt="" src="/assets/layout/images/logo.png" width="30px" class="ml-2">
-       <span class="px-2 text-3xl">ICESHU4</span>
-     </div>
+
      <div class="text-center font-medium text-2xl pt-5 pb-3">Login</div>
      <div class="text-center text-lg"> Don't have an account? <a class="text-primary cursor-pointer underline-link" routerLink="/auth/signup">Sign up</a>
      </div>
      <form [formGroup]="form" (ngSubmit)="login()">
-       <div class="flex flex-column lg:p-5 lg:m-5 " >
+       <div class="flex flex-column lg:px-5 lg:mx-5 " >
          <div class="flex flex-column align-items-center justify-content-center">
            <div class="mb-4 pt-2  " style="width: 90%">
              <label for="email" class="block text-base font-medium mb-2">Email</label>
