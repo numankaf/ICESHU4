@@ -54,7 +54,9 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/student/**")
                 .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
-                .anyRequest().authenticated();
+                .antMatchers("/h2-console/**")
+                .permitAll()
+                .and().headers().frameOptions().disable();
         // WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
