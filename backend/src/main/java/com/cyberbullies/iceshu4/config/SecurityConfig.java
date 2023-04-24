@@ -46,8 +46,10 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.headers().frameOptions().disable();
         httpSecurity
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(handler).and()
@@ -55,11 +57,11 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/auth/**")
                 .permitAll()
-                .antMatchers("/student/**")
-                .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
                 .antMatchers("/h2-console/**")
                 .permitAll()
-                .and().headers().frameOptions().disable();
+                .antMatchers("/student/**")
+                .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
+                .anyRequest().authenticated();
         // WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -72,9 +74,9 @@ public class SecurityConfig {
 
         @Override
         public void addCorsMappings(CorsRegistry corsRegistry) {
-            corsRegistry.addMapping("/*")
+            corsRegistry.addMapping("/**")
                     .allowedOrigins("http://localhost:4200")
-                    .allowedMethods("")
+                    .allowedMethods("*")
                     .maxAge(3600L)
                     .allowedHeaders("*")
                     .exposedHeaders("Authorization")
