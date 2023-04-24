@@ -6,6 +6,7 @@ import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.ResponseDTO;
 import com.cyberbullies.iceshu4.entity.Student;
 import com.cyberbullies.iceshu4.enums.UserRole;
+import com.cyberbullies.iceshu4.enums.Departments;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @AllArgsConstructor
 public class AuthService {
@@ -25,15 +25,15 @@ public class AuthService {
     private StudentService studentService;
     private TokenManager tokenManager;
 
-
-    public ResponseDTO login(LoginRequestDTO loginRequestDTO){
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(loginRequestDTO.getEmail(),loginRequestDTO.getPassword());
+    public ResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                loginRequestDTO.getEmail(), loginRequestDTO.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = tokenManager.generateJwtToken(auth);
-        Student student =studentService.getStudentByEmail(loginRequestDTO.getEmail());
+        Student student = studentService.getStudentByEmail(loginRequestDTO.getEmail());
         ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setAccessToken("Bearer "+ jwtToken);
+        responseDTO.setAccessToken("Bearer " + jwtToken);
         responseDTO.setUserId(student.getId());
         return responseDTO;
 
@@ -41,7 +41,7 @@ public class AuthService {
 
     public ResponseEntity<ResponseDTO> register(RegisterRequestDTO registerRequestDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
-        if(studentService.getStudentByEmail(registerRequestDTO.getEmail()) != null){
+        if (studentService.getStudentByEmail(registerRequestDTO.getEmail()) != null) {
             responseDTO.setMessage("Username already in use.");
             return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
         }
@@ -53,14 +53,21 @@ public class AuthService {
         student.setRole(UserRole.STUDENT);
         studentService.save(student);
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(registerRequestDTO.getEmail(),registerRequestDTO.getPassword());
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                registerRequestDTO.getEmail(), registerRequestDTO.getPassword());
         Authentication auth = authenticationManager.authenticate(authToken);
-        SecurityContextHolder.getContext().setAuthentication(auth);//Check this later
+        SecurityContextHolder.getContext().setAuthentication(auth);// Check this later
         String jwtToken = tokenManager.generateJwtToken(auth);
 
         responseDTO.setMessage("Student successfully registered.");
-        responseDTO.setAccessToken("Bearer "+jwtToken);
+        responseDTO.setAccessToken("Bearer " + jwtToken);
         responseDTO.setUserId(student.getId());
-        return new ResponseEntity<>(responseDTO,HttpStatus.CREATED);
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
+
+    // public Departments getDepartment() {
+    // Departments department = new Departments;
+    // return department;
+
+    // }
 }
