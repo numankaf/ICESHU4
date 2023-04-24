@@ -6,8 +6,11 @@ import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.ResponseDTO;
 import com.cyberbullies.iceshu4.entity.Student;
 import com.cyberbullies.iceshu4.enums.UserRole;
-import com.cyberbullies.iceshu4.enums.Departments;
 import lombok.AllArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -64,10 +67,4 @@ public class AuthService {
         responseDTO.setUserId(student.getId());
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
-
-    // public Departments getDepartment() {
-    // Departments department = new Departments;
-    // return department;
-
-    // }
 }
