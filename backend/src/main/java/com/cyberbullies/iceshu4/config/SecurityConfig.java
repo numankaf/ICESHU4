@@ -62,6 +62,8 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/student/**")
                 .permitAll()
+                .antMatchers("/department/**")
+                .permitAll()
                 // .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
                 .anyRequest().authenticated();
         // WILL BE UPDATED FOR ALL USER TYPES

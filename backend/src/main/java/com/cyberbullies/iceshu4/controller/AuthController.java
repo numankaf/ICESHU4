@@ -3,16 +3,11 @@ package com.cyberbullies.iceshu4.controller;
 import com.cyberbullies.iceshu4.dto.LoginRequestDTO;
 import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.ResponseDTO;
-import com.cyberbullies.iceshu4.entity.Department;
 import com.cyberbullies.iceshu4.service.AuthService;
-import com.cyberbullies.iceshu4.service.DepartmentService;
 
 import lombok.AllArgsConstructor;
 
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private AuthService authService;
-    private DepartmentService departmentService;
 
     @PostMapping("/login")
     public ResponseDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
@@ -34,10 +28,5 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         return authService.register(registerRequestDTO);
-    }
-
-    @GetMapping("/department")
-    public List<Department> getDepartment() {
-        return departmentService.getDepartment();
     }
 }

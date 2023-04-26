@@ -16,6 +16,7 @@ public class StudentDetailDTO {
     private String email;
     private UserRole role;
     private String birth_date;
+    private String profile_photo;
     private String about;
     private String address;
     private String school_id;

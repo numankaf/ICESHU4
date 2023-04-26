@@ -64,6 +64,7 @@ public class StudentService {
         updateStudent.setBirth_date(studentUpdateRequestDTO.getBirth_date());
         updateStudent.setAbout(studentUpdateRequestDTO.getAbout());
         updateStudent.setAddress(studentUpdateRequestDTO.getAddress());
+        updateStudent.setProfile_photo(studentUpdateRequestDTO.getProfile_photo());
         return studentRepository.save(updateStudent);
     }
 

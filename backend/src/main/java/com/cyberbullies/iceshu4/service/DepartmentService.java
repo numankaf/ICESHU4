@@ -15,7 +15,10 @@ public class DepartmentService {
     private DepartmentRepository departmentRepository;
 
     public List<Department> getDepartment() {
-        System.out.println("asdas");
         return departmentRepository.findAll();
+    }
+
+    public Department getDepartmentByName(String name) {
+        return departmentRepository.findByName(name);
     }
 }

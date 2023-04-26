@@ -8,6 +8,7 @@ import lombok.Data;
 @Getter
 @Data
 public class StudentUpdateRequestDTO {
+    private String profile_photo;
     private String name;
     private String surname;
     private String email;
