@@ -4,6 +4,9 @@ import {Department} from "./department";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../core/authentication.service";
 import {Message} from "primeng/api";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../../environments/environment";
+import {catchError} from "rxjs";
 
 @Component({
   selector: 'app-register',
@@ -16,7 +19,7 @@ export class RegisterComponent {
   departments!: Department[];
   errorMessages: Message[] =[];
   constructor(private router: Router, private authenticationService: AuthenticationService,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder, private http: HttpClient) {
     this.form = this.formBuilder.group({
       name: [null, [Validators.required]],
       surname: [null, [Validators.required]],
@@ -30,11 +33,11 @@ export class RegisterComponent {
   }
 
   ngOnInit() {
-    this.departments = [
-      {id: 1, departmentName: "Computer Engineering"},
-      {id: 2, departmentName: "Electric Electronic Engineering"},
-      {id: 3, departmentName: "Mechanical Engineering "}
-    ]
+    this.http.get<any>(`${environment.apiUrl}/department/findAll`).subscribe(
+      (data) =>{
+        this.departments = data;
+      }
+    );
   }
   password(formGroup: FormGroup) {
     // @ts-ignore
