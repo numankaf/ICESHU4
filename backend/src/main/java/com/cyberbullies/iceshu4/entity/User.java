@@ -17,7 +17,7 @@ public abstract class User {
     private Long id;
     private String name;
     private String surname;
-    // private Lob profile_photo;
+    private String profile_photo;
     @Enumerated(EnumType.ORDINAL)
     private UserRole role;
     private String password;
