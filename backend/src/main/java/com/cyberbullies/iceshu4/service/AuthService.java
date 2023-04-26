@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SystemPropertyUtils;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,6 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
     private StudentService studentService;
     private TokenManager tokenManager;
-    private DepartmentService departmentService;
 
     public ResponseDTO login(LoginRequestDTO loginRequestDTO) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -52,9 +52,8 @@ public class AuthService {
         student.setName(registerRequestDTO.getName());
         student.setSurname(registerRequestDTO.getSurname());
         student.setRole(UserRole.STUDENT);
-        // System.out.println(departmentService.getDepartmentByName(registerRequestDTO.getDepartment()));
-        // student.setDepartment(departmentService.getDepartmentByName(registerRequestDTO.getDepartment()));
         student.setDepartment(registerRequestDTO.getDepartment());
+        student.setSchool_id("2023" + Integer.toString((int) Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)));
         studentService.save(student);
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
