@@ -13,5 +13,8 @@ import javax.persistence.*;
 @Data
 public class Student extends User {
     private String school_id;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
 
 }

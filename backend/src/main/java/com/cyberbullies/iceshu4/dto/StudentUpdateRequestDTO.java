@@ -1,18 +1,17 @@
 package com.cyberbullies.iceshu4.dto;
 
-import com.cyberbullies.iceshu4.enums.UserRole;
-
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Data;
 
-@Getter
 @Setter
+@Getter
 @Data
-public class StudentRequestDTO {
+public class StudentUpdateRequestDTO {
     private String name;
     private String surname;
     private String email;
-    private String password;
-    private UserRole role;
+    private String birth_date;
+    private String about;
+    private String address;
 }

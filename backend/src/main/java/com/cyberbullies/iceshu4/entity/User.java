@@ -18,7 +18,7 @@ public abstract class User {
     private String name;
     private String surname;
     // private Lob profile_photo;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private UserRole role;
     private String password;
     private String email;// will be used as username in JwtUserDetails
