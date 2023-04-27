@@ -38,6 +38,8 @@ import {DialogModule} from "primeng/dialog";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MessagesModule} from "primeng/messages";
 import {AuthInterceptor} from './iceshu4/core/auth-interceptor';
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {CalendarModule} from "primeng/calendar";
 
 @NgModule({
   declarations: [
@@ -82,6 +84,8 @@ import {AuthInterceptor} from './iceshu4/core/auth-interceptor';
     DropdownModule,
     DialogModule,
     MessagesModule,
+    InputTextareaModule,
+    CalendarModule,
   ],
   providers: [
     {
