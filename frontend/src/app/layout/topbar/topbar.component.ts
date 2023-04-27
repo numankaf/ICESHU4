@@ -31,6 +31,8 @@ export class TopbarComponent {
     this.decodeJwtToken(token);
     this.id = this.decodeJwtToken(token);
     this.getProfileImage();
+    this.darkTheme = localStorage.getItem("theme") === 'dark';
+    this.changeTheme();
   }
 
   public decodeJwtToken(token: string): number {
@@ -53,6 +55,7 @@ export class TopbarComponent {
     this.replaceThemeLink(newHref, () => {
       this.layoutService.config.theme = theme;
       this.layoutService.onConfigUpdate();
+      localStorage.setItem("theme", theme);
     });
   }
 
