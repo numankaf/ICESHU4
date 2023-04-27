@@ -43,7 +43,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -60,7 +61,10 @@ public class SecurityConfig {
                 .antMatchers("/h2-console/**")
                 .permitAll()
                 .antMatchers("/student/**")
-                .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
+                .permitAll()
+                .antMatchers("/department/**")
+                .permitAll()
+                // .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
                 .anyRequest().authenticated();
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
 
