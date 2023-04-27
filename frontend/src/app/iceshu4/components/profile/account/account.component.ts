@@ -62,6 +62,9 @@ export class AccountComponent {
     return decodedToken.sub;
   }
 
+  cancel(){
+    this.ngOnInit();
+  }
   update() {
     if (this.form.valid) {
 

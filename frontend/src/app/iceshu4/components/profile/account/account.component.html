@@ -21,7 +21,7 @@
       <div class="m-2 justify-align-center align-items-center">
 
         <button (click)="editMode=false" *ngIf="editMode" pButton  pRipple label="Edit" icon="pi pi-pencil"></button>
-        <button (click)="editMode=true" *ngIf="!editMode" pButton class="p-button-danger" pRipple label="Cancel" icon="pi pi-times"></button>
+        <button (click)="editMode=true;cancel()" *ngIf="!editMode" pButton class="p-button-danger" pRipple label="Cancel" icon="pi pi-times"></button>
         <span class="pl-2"></span>
         <button (click)="editMode=true; update()" *ngIf="!editMode" class="p-button-success"
                 type="submit" [disabled]="!this.form.valid" pButton pRipple label="Save Changes" icon="pi pi-save"></button>
