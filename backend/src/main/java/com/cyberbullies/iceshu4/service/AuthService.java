@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,6 +45,9 @@ public class AuthService {
     public void forgotPassword(ForgotPasswordDTO forgotPasswordDTO)
     {
         Student student = studentService.getStudentByEmail(forgotPasswordDTO.getEmail());
+        if (student == null){
+            throw new BadCredentialsException("This email is invalid");
+        }
         String newPassword = emailSenderService.generatePassword();
         String context= "Dear "+student.getName()+",\n"+
                 "Your password has been reset for security reasons. \n Your new password is: "+newPassword+
