@@ -33,6 +33,7 @@ public class StudentService {
         dto.setName(student.get().getName());
         dto.setSurname(student.get().getSurname());
         dto.setEmail(student.get().getEmail());
+        dto.setProfile_photo(student.get().getProfile_photo());
         dto.setAddress(student.get().getAddress());
         dto.setRole(student.get().getRole());
         dto.setBirth_date(student.get().getBirth_date());
