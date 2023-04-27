@@ -20,6 +20,10 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}/auth/register`, credentials).pipe(catchError(this.handleError));
   }
 
+  forgotPassword(credentials: any): Observable<any> {
+    // @ts-ignore
+    return this.http.post<any>(`${environment.apiUrl}/auth/forgotpassword`, credentials,{responseType: 'text'}).pipe(catchError(this.handleError));
+  }
   getToken(){
     return sessionStorage.getItem('accessToken');
   }

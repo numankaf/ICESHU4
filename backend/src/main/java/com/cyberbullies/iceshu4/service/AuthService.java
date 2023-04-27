@@ -45,9 +45,14 @@ public class AuthService {
     {
         Student student = studentService.getStudentByEmail(forgotPasswordDTO.getEmail());
         String newPassword = emailSenderService.generatePassword();
-
-        emailSenderService.sendEmail(student.getEmail(), "Password Change Request",
-                "Your password has been changed.\nYour new password is: " + newPassword);
+        String context= "Dear "+student.getName()+",\n"+
+                "Your password has been reset for security reasons. \n Your new password is: "+newPassword+
+            "\nWe recommend changing your password as soon as possible to ensure the safety of your account. " +
+                "Please create a strong and unique password consisting of a combination of uppercase and lowercase letters, numbers," +
+                " and special characters. If you did not request a password reset, please contact our customer support team immediately. " +
+                "\nThank you for choosing our service. \nBest regards,\nIceshu4, Cyberbullies ";
+        emailSenderService.sendEmail(student.getEmail(), "New Password Created",
+                context );
 
        student.setPassword(passwordEncoder.encode(newPassword));
 

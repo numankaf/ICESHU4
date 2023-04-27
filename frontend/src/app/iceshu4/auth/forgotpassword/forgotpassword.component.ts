@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthenticationService} from "../../core/authentication.service";
+import {Message} from "primeng/api";
 
 @Component({
   selector: 'app-forgotpassword',
@@ -7,10 +9,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./forgotpassword.component.scss']
 })
 export class ForgotpasswordComponent {
+  errorMessages: Message[] = [];
   passwordSent: boolean = false;
-  constructor() {
+
+  constructor(private authenticationService: AuthenticationService) {
 
   }
+
   form = new FormGroup({
     email: new FormControl(null, [Validators.required]),
   });
@@ -19,8 +24,20 @@ export class ForgotpasswordComponent {
     return this.form.controls;
   }
 
-  sendResetPassword(){
-    console.log(this.form.value);
-    this.passwordSent =true;
+  sendResetPassword() {
+    this.authenticationService.forgotPassword(this.form.value).subscribe(
+      (res:any)=>{
+        this.passwordSent = true ;
+      },
+      error=>{
+        console.log(error)
+        this.errorMessages=[];
+        this.errorMessages.push({
+          severity: 'error',
+          summary: 'Error:',
+          detail: 'This email does not exist'
+        })
+      }
+    )
   }
 }
