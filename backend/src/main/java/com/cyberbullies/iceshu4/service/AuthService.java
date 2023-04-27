@@ -1,6 +1,7 @@
 package com.cyberbullies.iceshu4.service;
 
 import com.cyberbullies.iceshu4.auth.TokenManager;
+import com.cyberbullies.iceshu4.dto.ForgotPasswordDTO;
 import com.cyberbullies.iceshu4.dto.LoginRequestDTO;
 import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.ResponseDTO;
@@ -24,6 +25,7 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
     private StudentService studentService;
     private TokenManager tokenManager;
+    private EmailSenderService emailSenderService;
 
     public ResponseDTO login(LoginRequestDTO loginRequestDTO) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -35,9 +37,24 @@ public class AuthService {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setAccessToken("Bearer " + jwtToken);
         responseDTO.setUserId(student.getId());
+
         return responseDTO;
+    }
+
+    public void forgotPassword(ForgotPasswordDTO forgotPasswordDTO)
+    {
+        Student student = studentService.getStudentByEmail(forgotPasswordDTO.getEmail());
+        String newPassword = emailSenderService.generatePassword();
+
+        emailSenderService.sendEmail(student.getEmail(), "Password Change Request",
+                "Your password has been changed.\nYour new password is: " + newPassword);
+
+       student.setPassword(passwordEncoder.encode(newPassword));
+
+       studentService.save(student);
 
     }
+
 
     public ResponseEntity<ResponseDTO> register(RegisterRequestDTO registerRequestDTO) {
         ResponseDTO responseDTO = new ResponseDTO();

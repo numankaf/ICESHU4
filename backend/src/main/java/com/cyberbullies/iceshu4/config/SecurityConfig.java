@@ -66,7 +66,7 @@ public class SecurityConfig {
                 .permitAll()
                 // .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
                 .anyRequest().authenticated();
-        // WILL BE UPDATED FOR ALL USER TYPES
+        // TODO: WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
