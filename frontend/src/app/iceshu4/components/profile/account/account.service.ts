@@ -20,12 +20,14 @@ export class AccountService{
 
 
   getUser(id: number): Observable<any>{
-    return this.httpClient.get(`${environment.apiUrl}/student/get/${id}`).pipe(catchError(this.handleError));
+    // @ts-ignore
+    return this.httpClient.get(`${environment.apiUrl}/student/get/${id}`,).pipe(catchError(this.handleError));
   }
 
   putUser(id: number, data: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.put<any>(`${environment.apiUrl}/student/update/${id}`, data, { headers }).pipe(catchError(this.handleError));
+    // @ts-ignore
+    return this.httpClient.put<any>(`${environment.apiUrl}/student/update/${id}`, data, {headers,responseType:"text"}).pipe(catchError(this.handleError),);
   }
 
   handleError(error: HttpErrorResponse) {

@@ -99,6 +99,8 @@ mat-divider {
 
 .profile-avatar{
   width: 42px;
+  height: 42px;
+  object-fit: cover;
   margin-right: .55rem;
   border-radius: 50%;
 }

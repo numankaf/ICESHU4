@@ -3,6 +3,7 @@ import {MatSidenav} from "@angular/material/sidenav";
 
 import {LayoutService} from "../layout.service";
 import {AuthenticationService} from "../../iceshu4/core/authentication.service";
+import {AccountService} from "../../iceshu4/components/profile/account/account.service";
 
 
 @Component({
@@ -14,14 +15,36 @@ import {AuthenticationService} from "../../iceshu4/core/authentication.service";
 export class TopbarComponent {
   @Input() sidenav!: MatSidenav;
   darkTheme = false;
+  id: any;
+  profileImage: any;
+  fullname: any;
+  role: any;
 
   constructor(public layoutService: LayoutService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private accountService: AccountService) {
   }
+
 
   ngOnInit() {
+    let token = this.authenticationService.getToken() || "";
+    this.decodeJwtToken(token);
+    this.id = this.decodeJwtToken(token);
+    this.getProfileImage();
   }
 
+  public decodeJwtToken(token: string): number {
+    const decodedToken = this.authenticationService.decodeToken(token);
+    return decodedToken.sub;
+  }
+
+  getProfileImage() {
+    this.accountService.getUser(this.id).subscribe(data => {
+      this.profileImage = data.profile_photo;
+      this.fullname = data.name + " " + data.surname;
+      this.role= data.role;
+    })
+  }
 
   changeTheme() {
     const theme = this.darkTheme ? 'dark' : 'light';
@@ -50,7 +73,7 @@ export class TopbarComponent {
     });
   }
 
-  logout(){
+  logout() {
     this.authenticationService.logout();
   }
 

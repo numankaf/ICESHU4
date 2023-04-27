@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="pb-2">
   <p-card class="border-round-xl" [style]="{ width: '100%'}">
     <ng-template pTemplate="header">
@@ -8,7 +9,8 @@
     <div class="flex justify-content-between">
       <div class="flex justify-content-start flex-wrap">
         <div class="m-2" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin: 0 auto; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);">
-          <img src="../../../../../assets/layout/images/profile_photo.jpg" style="width: 100%; height: 100%; object-fit: cover;" alt="Profil Resmi">
+          <img src="{{ this.form.get('profile_photo')?.value}}"
+               style="width: 100%; height: 100%; object-fit: cover;" >
         </div>
         <div class="m-2 justify-align-center align-items-center">
           <h1>{{fullName}}</h1>
@@ -17,8 +19,12 @@
       </div>
 
       <div class="m-2 justify-align-center align-items-center">
+
         <button (click)="editMode=false" *ngIf="editMode" pButton  pRipple label="Edit" icon="pi pi-pencil"></button>
-        <button (click)="editMode=true; update()" *ngIf="!editMode" type="submit" [disabled]="!this.form.valid" pButton pRipple label="Save Changes" icon="pi pi-save"></button>
+        <button (click)="editMode=true" *ngIf="!editMode" pButton class="p-button-danger" pRipple label="Cancel" icon="pi pi-times"></button>
+        <span class="pl-2"></span>
+        <button (click)="editMode=true; update()" *ngIf="!editMode" class="p-button-success"
+                type="submit" [disabled]="!this.form.valid" pButton pRipple label="Save Changes" icon="pi pi-save"></button>
       </div>
 
     </div>
@@ -27,6 +33,16 @@
 
         <div class="flex flex-column align-items-center justify-content-center">
           <div class="mb-3 pt-1 " style="width: 100%">
+            <div class="py-2 flex justify-content-between flex-wrap">
+                <span class="" style="width: 100%" *ngIf="!editMode">
+                        <label class="block text-base font-medium mb-2">Profile Photo Url</label>
+                        <div class="inline">
+                           <input id="profile_photo"  type="text" pInputText placeholder="Profile Photo"
+                                  class="w-full py-2 " formControlName="profile_photo">
+                        </div>
+                    </span>
+            </div>
+
             <div class="py-2 flex justify-content-between flex-wrap">
                   <span class="" style="width: 49%">
                         <label class="block text-base font-medium mb-2">Name</label>
@@ -87,7 +103,7 @@
                 <label class="block text-base font-medium mb-2">Birth Date</label>
                 <div class="p-input-icon-left inline">
                   <i class="pi pi-calendar pr-2"></i>
-                  <input [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" id="birth_date" type="text" pInputText placeholder="Birth Date (dd/mm/yyyy)"
+                  <input [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" id="birth_date" type="text" pInputText placeholder="Birth Date (dd.mm.yyyy)"
                          class="w-full py-2 " formControlName="birth_date" >
                 </div>
               </span>

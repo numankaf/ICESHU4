@@ -40,6 +40,7 @@ import {MessagesModule} from "primeng/messages";
 import {AuthInterceptor} from './iceshu4/core/auth-interceptor';
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {CalendarModule} from "primeng/calendar";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import {CalendarModule} from "primeng/calendar";
     MessagesModule,
     InputTextareaModule,
     CalendarModule,
+    ToastModule,
   ],
   providers: [
     {

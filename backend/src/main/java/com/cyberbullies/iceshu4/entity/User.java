@@ -17,6 +17,7 @@ public abstract class User {
     private Long id;
     private String name;
     private String surname;
+    @Column(name = "profile_photo", length = 10000)
     private String profile_photo;
     @Enumerated(EnumType.ORDINAL)
     private UserRole role;

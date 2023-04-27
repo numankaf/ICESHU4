@@ -68,6 +68,7 @@ public class AuthService {
             return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
         }
         Student student = new Student();
+        student.setProfile_photo("https://st2.depositphotos.com/1502311/12020/v/600/depositphotos_120206862-stock-illustration-profile-picture-vector.jpg");
         student.setEmail(registerRequestDTO.getEmail());
         student.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
         student.setName(registerRequestDTO.getName());
