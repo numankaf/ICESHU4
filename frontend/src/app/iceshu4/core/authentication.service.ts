@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {environment} from "../../../environments/environment";
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,12 @@ import {environment} from "../../../environments/environment";
 export class AuthenticationService {
 
   constructor(private router: Router, private http: HttpClient) {
+  }
+
+  jwtHelper = new JwtHelperService();
+
+  public decodeToken(token: string): any {
+    return this.jwtHelper.decodeToken(token);
   }
 
   login(credentials: any): Observable<any> {
