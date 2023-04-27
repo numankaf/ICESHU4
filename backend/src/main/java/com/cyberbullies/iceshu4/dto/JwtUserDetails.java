@@ -25,7 +25,7 @@ public class JwtUserDetails implements UserDetails {
         this.password= password;
         this.authorities = authorities;
     }
-    //TO DO: change student to the  general user class
+    //TODO: change student to the  general user class
     public static JwtUserDetails create(Student student){
         List<GrantedAuthority> authoritiesList = new ArrayList<>();
         authoritiesList.add(new SimpleGrantedAuthority(student.getRole().toString()));
