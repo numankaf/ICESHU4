@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AccountService} from "./account.service";
 import {Observable} from "rxjs";
 import {error} from "@angular/compiler-cli/src/transformers/util";
+import {AuthenticationService} from "../../../core/authentication.service";
 
 @Component({
   selector: 'app-account',
@@ -15,7 +16,11 @@ export class AccountComponent {
   editMode : boolean = true;
   userRole: String = "User Role";
   fullName: String = "Name Surname"
-  constructor(private formBuilder: FormBuilder, private accountService: AccountService) {
+  id : number;
+  constructor(private formBuilder: FormBuilder, private accountService: AccountService, private authenticationService: AuthenticationService) {
+    let token = this.authenticationService.getToken() || "";
+    this.decodeJwtToken(token);
+    this.id = this.decodeJwtToken(token);
     this.form = this.formBuilder.group({
       name: [[Validators.required]],
       surname: [[Validators.required]],
@@ -29,7 +34,8 @@ export class AccountComponent {
   }
 
   ngOnInit(){
-    this.accountService.getUser(1).subscribe(data =>{
+
+    this.accountService.getUser(this.id).subscribe(data =>{
         this.userRole = data.role;
         this.fullName = data.name + " " + data.surname;
         this.form.get('name')?.patchValue(data.name);
@@ -43,6 +49,10 @@ export class AccountComponent {
     })
   }
 
+  public decodeJwtToken(token: string): number {
+    const decodedToken = this.authenticationService.decodeToken(token);
+    return decodedToken.sub;
+  }
 
   update(){
     if(this.form.valid){
@@ -56,7 +66,7 @@ export class AccountComponent {
 
       const newData = {name, surname, email, birth_date, address, about};
 
-      this.accountService.putUser(1, newData).subscribe(
+      this.accountService.putUser(this.id, newData).subscribe(
         response => {
           console.log(response)
         }
