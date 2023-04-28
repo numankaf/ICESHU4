@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class StudentDetailDTO {
+public class UserDetailDTO {
     private String name;
     private String surname;
     private String email;
@@ -21,4 +21,5 @@ public class StudentDetailDTO {
     private String address;
     private String school_id;
     private Department department;
+    private Boolean banned;
 }

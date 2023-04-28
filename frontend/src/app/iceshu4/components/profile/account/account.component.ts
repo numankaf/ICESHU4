@@ -18,14 +18,14 @@ export class AccountComponent {
   editMode: boolean = true;
   userRole: String = "User Role";
   fullName: String = "Name Surname"
-  id: number;
+  // id: number;
 
   constructor(private formBuilder: FormBuilder, private router: Router,
               private accountService: AccountService, private authenticationService: AuthenticationService,
               private messageService: MessageService) {
-    let token = this.authenticationService.getToken() || "";
-    this.decodeJwtToken(token);
-    this.id = this.decodeJwtToken(token);
+    // let token = this.authenticationService.getToken() || "";
+    // this.decodeJwtToken(token);
+    // this.id = this.decodeJwtToken(token);
     this.form = this.formBuilder.group({
       profile_photo: [],
       name: [[Validators.required]],
@@ -41,13 +41,15 @@ export class AccountComponent {
 
   ngOnInit() {
 
-    this.accountService.getUser(this.id).subscribe(data => {
+    this.accountService.getUser().subscribe(data => {
       this.userRole = data.role;
       this.fullName = data.name + " " + data.surname;
       this.form.get('name')?.patchValue(data.name);
       this.form.get('surname')?.patchValue(data.surname);
       this.form.get('school_id')?.patchValue(data.school_id);
-      this.form.get('department')?.patchValue(data.department.name);
+      if (data.department !== null){
+        this.form.get('department')?.patchValue(data.department.name);
+      }
       this.form.get('email')?.patchValue(data.email);
       this.form.get('birth_date')?.patchValue(data.birth_date);
       this.form.get('address')?.patchValue(data.address);
@@ -57,10 +59,10 @@ export class AccountComponent {
 
   }
 
-  public decodeJwtToken(token: string): number {
-    const decodedToken = this.authenticationService.decodeToken(token);
-    return decodedToken.sub;
-  }
+  // public decodeJwtToken(token: string): number {
+  //   const decodedToken = this.authenticationService.decodeToken(token);
+  //   return decodedToken.sub;
+  // }
 
   cancel(){
     this.ngOnInit();
@@ -77,7 +79,7 @@ export class AccountComponent {
       const profile_photo = this.form.get('profile_photo')?.value;
       const newData = {name, surname, email, birth_date, address, about, profile_photo};
 
-      this.accountService.putUser(this.id, newData).subscribe(
+      this.accountService.putUser(newData).subscribe(
         response => {
           location.reload();
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Profile Updated' });

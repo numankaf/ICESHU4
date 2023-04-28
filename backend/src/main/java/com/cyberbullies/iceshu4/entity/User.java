@@ -2,6 +2,8 @@ package com.cyberbullies.iceshu4.entity;
 
 import com.cyberbullies.iceshu4.enums.UserRole;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +11,10 @@ import javax.persistence.*;
 
 @Setter
 @Getter
-@MappedSuperclass
-public abstract class User {
+@Entity
+@Table(name = "users")
+@Data
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
@@ -26,4 +30,10 @@ public abstract class User {
     private String birth_date;
     private String about;
     private String address;
+    private String school_id;
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
+    private Boolean banned;
 }

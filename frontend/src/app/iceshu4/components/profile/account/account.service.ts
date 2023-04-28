@@ -14,20 +14,26 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AccountService{
+  headers = new HttpHeaders({ 'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*' ,
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+    'Access-Control-Expose-Headers' : 'Content-Disposition',
+    "Access-Control-Max-Age": "86400"});
   constructor(private router: Router, private httpClient: HttpClient) {
   }
 
 
 
-  getUser(id: number): Observable<any>{
+  getUser(): Observable<any>{
+
     // @ts-ignore
-    return this.httpClient.get(`${environment.apiUrl}/student/get/${id}`,).pipe(catchError(this.handleError));
+    return this.httpClient.get(`${environment.apiUrl}/account/get`,{headers: this.headers}).pipe(catchError(this.handleError));
   }
 
-  putUser(id: number, data: any): Observable<any> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  putUser(data: any): Observable<any> {
+
     // @ts-ignore
-    return this.httpClient.put<any>(`${environment.apiUrl}/student/update/${id}`, data, {headers,responseType:"text"}).pipe(catchError(this.handleError),);
+    return this.httpClient.put<any>(`${environment.apiUrl}/account/update`, data, {headers: this.headers,responseType:"text"}).pipe(catchError(this.handleError),);
   }
 
   handleError(error: HttpErrorResponse) {

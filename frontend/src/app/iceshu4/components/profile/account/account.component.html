@@ -70,14 +70,14 @@
             </div>
 
             <div class="py-2 flex justify-content-between flex-wrap">
-                    <span class="" style="width: 49%">
+                    <span class="" style="width: 49%" *ngIf="this.form.value['school_id'] !== null">
                         <label class="block text-base font-medium mb-2">School Id</label>
                         <div class="inline">
                            <input id="school_id"  tabindex="-1" [disabled]="true" [style]="'pointer-events:none'" type="text" pInputText placeholder="School Id"
                                   class="w-full py-2" formControlName="school_id">
                         </div>
                      </span>
-                    <span class="" style="width: 49%">
+                    <span class="" style="width: 49%" *ngIf="this.form.value['department'] !== null">
                         <label class="block text-base font-medium mb-2">Department</label>
                         <div class="inline">
                            <input id="department" tabindex="-1" [disabled]="true" [style]="'pointer-events:none'" type="text" pInputText placeholder="Department"

@@ -15,7 +15,6 @@ import {AccountService} from "../../iceshu4/components/profile/account/account.s
 export class TopbarComponent {
   @Input() sidenav!: MatSidenav;
   darkTheme = false;
-  id: any;
   profileImage: any;
   fullname: any;
   role: any;
@@ -29,19 +28,19 @@ export class TopbarComponent {
   ngOnInit() {
     let token = this.authenticationService.getToken() || "";
     this.decodeJwtToken(token);
-    this.id = this.decodeJwtToken(token);
+    this.decodeJwtToken(token);
     this.getProfileImage();
     this.darkTheme = localStorage.getItem("theme") === 'dark';
     this.changeTheme();
   }
 
-  public decodeJwtToken(token: string): number {
+  public decodeJwtToken(token: string): void {
     const decodedToken = this.authenticationService.decodeToken(token);
-    return decodedToken.sub;
+    this.role = decodedToken.role;
   }
 
   getProfileImage() {
-    this.accountService.getUser(this.id).subscribe(data => {
+    this.accountService.getUser().subscribe(data => {
       this.profileImage = data.profile_photo;
       this.fullname = data.name + " " + data.surname;
       this.role= data.role;

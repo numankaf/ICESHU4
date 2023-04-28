@@ -52,7 +52,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.headers().frameOptions().disable();
         httpSecurity
-                .csrf().disable()
+                .csrf().disable().cors().and()
                 .exceptionHandling().authenticationEntryPoint(handler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
@@ -60,10 +60,10 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/h2-console/**")
                 .permitAll()
-                .antMatchers("/student/**")
-                .permitAll()
                 .antMatchers("/department/**")
                 .permitAll()
+                .antMatchers("/user/**").hasAnyAuthority("ADMIN")
+//                .permitAll()
                 // .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
                 .anyRequest().authenticated();
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
