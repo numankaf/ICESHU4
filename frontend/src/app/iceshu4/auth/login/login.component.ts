@@ -14,7 +14,7 @@ export class LoginComponent {
   clickedButton = false;
   errorMessages: Message[] =[];
   form = new FormGroup({
-    email: new FormControl(null, [Validators.required]),
+    email: new FormControl(null, [Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     password: new FormControl(null, [Validators.required]),
   });
 
@@ -32,7 +32,7 @@ export class LoginComponent {
       this.authenticationService.login(this.form.value).subscribe(
         (res:any)=>{
           sessionStorage.setItem('accessToken', res.accessToken);
-          this.router.navigate(['main']);
+          this.authenticationService.finishLogin();
         },
       error=>{
           this.errorMessages=[];

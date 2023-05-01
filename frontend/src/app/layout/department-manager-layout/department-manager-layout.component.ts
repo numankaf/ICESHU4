@@ -3,46 +3,32 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {LayoutService} from "../layout.service";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../../iceshu4/core/authentication.service";
 
 @Component({
-  selector: 'app-profile-layout',
+  selector: 'app-department-manager-layout',
   templateUrl: '../main-layout.component.html',
   styleUrls: ['../main-layout.component.scss']
 })
-export class ProfileLayoutComponent implements AfterViewInit {
+export class DepartmentManagerLayoutComponent implements AfterViewInit{
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   menuItems: any;
 
   constructor(private observer: BreakpointObserver,
               public layoutService: LayoutService,
-              private router: Router,
-              private authenticationService: AuthenticationService) {
+              private router: Router) {
   }
-
 
   ngOnInit() {
     this.menuItems = [
-      {icon: 'account_circle', name: 'Account', route: '/profile/account'},
-      {icon: 'key', name: 'Change Password', route: '/profile/changepassword'},
-      {icon: 'sms', name: 'Messages', route: '/profile/messages'},
-      {icon: 'first_page', name: 'Back to Main Menu', route: this.getRoute()},
+      {icon: 'dashboard',name:'Dashboard', route:'/departmentmanager/dashboard'},
+      {icon: 'library_books',name:'Classes', route:'/departmentmanager/classes'},
+      {icon: 'feed',name:'All Forms', route:'/departmentmanager/forms'},
+      {icon: 'folder_copy',name:'Resources', route:'/departmentmanager/resources'},
+      {icon: 'request_quote',name:'Re-evaluation Requests', route:'/departmentmanager/re-evaluationrequests'},
+
 
     ]
-  }
-
-  getRoute() {
-    const role = this.authenticationService.getRole();
-    if (role === "ADMIN") {
-      return '/admin';
-    } else if (role === "DEPARTMENT_MANAGER") {
-      return '/departmentmanager';
-    } else if (role === "INSTRUCTOR") {
-      return '/instructor';
-    } else {
-      return '/student';
-    }
   }
 
   ngAfterViewInit() {
@@ -60,5 +46,4 @@ export class ProfileLayoutComponent implements AfterViewInit {
         });
     });
   }
-
 }

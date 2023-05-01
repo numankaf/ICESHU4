@@ -38,7 +38,7 @@
                         <label class="block text-base font-medium mb-2">Profile Photo Url</label>
                         <div class="inline">
                            <input id="profile_photo"  type="text" pInputText placeholder="Profile Photo"
-                                  class="w-full py-2 " formControlName="profile_photo">
+                                  class="w-full py-2 " formControlName="profile_photo" >
                         </div>
                     </span>
             </div>
@@ -48,7 +48,7 @@
                         <label class="block text-base font-medium mb-2">Name</label>
                         <div class="inline">
                            <input id="name" [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" type="text" pInputText placeholder="Name"
-                                  class="w-full py-2 " formControlName="name">
+                                  class="w-full py-2 " formControlName="name" required>
                         </div>
                         <div *ngIf="f['name'].invalid && (f['name'].dirty )" style="text-align: left;">
                            <small class="p-error"
@@ -59,7 +59,7 @@
                         <label class="block text-base font-medium mb-2">Surname</label>
                         <div class="inline">
                            <input id="surname" [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" type="text" pInputText placeholder="Surname"
-                                  class="w-full py-2 " formControlName="surname">
+                                  class="w-full py-2 " formControlName="surname" required>
                         </div>
                         <div *ngIf="f['surname'].invalid && (f['surname'].dirty )"
                              style="text-align: left;">
@@ -92,11 +92,13 @@
                 <div class="p-input-icon-left inline">
                   <i class="pi pi-envelope pr-2"></i>
                   <input [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" id="email" type="text" pInputText placeholder="Email address"
-                         class="w-full py-2 " formControlName="email">
+                         class="w-full py-2 " formControlName="email" required>
                 </div>
                 <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
                   <small class="p-error"
                          *ngIf="f['email'].errors?.['required']">Email required!</small>
+                  <small class="p-error"
+                         *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
                 </div>
               </span>
               <span style="width: 49%">
