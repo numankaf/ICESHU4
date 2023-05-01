@@ -24,7 +24,7 @@ export class RegisterComponent {
       name: [null, [Validators.required]],
       surname: [null, [Validators.required]],
       department: [null, [Validators.required]],
-      email: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: [null, [Validators.required]],
       confirmpassword: [null, [Validators.required]]
     }, {
@@ -55,7 +55,7 @@ export class RegisterComponent {
       this.authenticationService.signup(this.form.value).subscribe(
         (res:any)=>{
           sessionStorage.setItem('accessToken', res.accessToken);
-          this.router.navigate(['main']);
+          this.router.navigate(['student']);
         },
         error=>{
           this.errorMessages=[];

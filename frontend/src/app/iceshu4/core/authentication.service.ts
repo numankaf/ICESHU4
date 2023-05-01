@@ -23,6 +23,21 @@ export class AuthenticationService {
     return this.http.post<any>(`${environment.apiUrl}/auth/login`, credentials).pipe(catchError(this.handleError));
   }
 
+  finishLogin(){
+    if(this.getRole()==="ADMIN"){
+      this.router.navigate(['admin']);
+    }
+    else if(this.getRole()==="DEPARTMENT_MANAGER"){
+      this.router.navigate(['departmentmanager']);
+    }
+    else if(this.getRole()==="INSTRUCTOR"){
+      this.router.navigate(['instructor']);
+    }
+    else {
+      this.router.navigate(['student']);
+    }
+  }
+
   signup(credentials: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/auth/register`, credentials).pipe(catchError(this.handleError));
   }
@@ -43,6 +58,21 @@ export class AuthenticationService {
   logout(): void {
     sessionStorage.removeItem('accessToken');
     this.router.navigate(['']);
+  }
+
+  getRole(){
+    const token = this.getToken();
+    const decoded = this.decodeToken(token || "");
+    return decoded.role[0].authority;
+  }
+
+  hasAnyRole(roles: any){
+    for (const role of roles){
+      if(role ===this.getRole()){
+        return true;
+      }
+    }
+    return false;
   }
 
   handleError(error: HttpErrorResponse) {
