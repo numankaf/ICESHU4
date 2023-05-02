@@ -91,4 +91,9 @@ public class UserService {
         return dtos;
     }
 
+    public List<UserDetailDTO> findAllByRole(Long id) {
+        List<User> users = userRepository.findAllByRole(id);
+        return users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
+    }
+
 }

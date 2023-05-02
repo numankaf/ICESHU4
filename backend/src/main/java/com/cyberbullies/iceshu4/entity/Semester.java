@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.*;
 
@@ -19,7 +19,7 @@ public class Semester {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
     private String name;
-    private Timestamp start_date;
-    private Timestamp end_date;
+    private LocalDate start_date;
+    private LocalDate end_date;
 
 }

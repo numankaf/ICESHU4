@@ -1,5 +1,7 @@
 package com.cyberbullies.iceshu4.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.cyberbullies.iceshu4.dto.SemesterCreateRequestDTO;
@@ -23,5 +25,9 @@ public class SemesterService {
         createdSemester.setStart_date(semester.getStart_date());
         createdSemester.setEnd_date(semester.getEnd_date());
         semesterRepository.save(createdSemester);
+    }
+
+    public List<Semester> findAll() {
+        return semesterRepository.findAll();
     }
 }

@@ -1,13 +1,11 @@
 package com.cyberbullies.iceshu4.controller;
 
-import com.cyberbullies.iceshu4.service.SemesterService;
 import com.cyberbullies.iceshu4.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
-import com.cyberbullies.iceshu4.dto.SemesterCreateRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import lombok.AllArgsConstructor;
@@ -15,11 +13,10 @@ import lombok.AllArgsConstructor;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/user")
 @AllArgsConstructor
-public class AdminController {
+public class UserController {
     private UserService userService;
-    private SemesterService semesterService;
 
     @GetMapping("/findAll")
     public List<UserDetailDTO> findAll() {
@@ -29,6 +26,11 @@ public class AdminController {
     @GetMapping("/get/{id}")
     public UserDetailDTO getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/findAllByRole/{id}")
+    public List<UserDetailDTO> getUserByRole(@PathVariable Long id) {
+        return userService.findAllByRole(id);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -46,22 +48,13 @@ public class AdminController {
         return new ResponseEntity<String>("User is updated!", HttpStatus.OK);
     }
 
-    @PostMapping("/create/user")
+    @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody RegisterRequestDTO user) {
         if (userService.getUserByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>("There is already a user with given email", HttpStatus.BAD_REQUEST);
         }
         userService.createUser(user);
         return new ResponseEntity<>("User is created", HttpStatus.OK);
-    }
-
-    @PostMapping("/create/semester")
-    public ResponseEntity<String> createSemester(@RequestBody SemesterCreateRequestDTO semester) {
-        if (semesterService.getSemesterByName(semester.getName()) != null) {
-            return new ResponseEntity<>("There is already a semester with given name", HttpStatus.BAD_REQUEST);
-        }
-        semesterService.createSemester(semester);
-        return new ResponseEntity<>("Semester is created", HttpStatus.OK);
     }
 
 }

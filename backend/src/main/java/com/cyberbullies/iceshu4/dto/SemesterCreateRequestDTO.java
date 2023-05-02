@@ -1,6 +1,6 @@
 package com.cyberbullies.iceshu4.dto;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import lombok.Data;
 import lombok.Getter;
@@ -11,6 +11,6 @@ import lombok.Setter;
 @Data
 public class SemesterCreateRequestDTO {
     private String name;
-    private Timestamp start_date;
-    private Timestamp end_date;
+    private LocalDate start_date;
+    private LocalDate end_date;
 }
