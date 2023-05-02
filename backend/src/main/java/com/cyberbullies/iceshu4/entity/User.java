@@ -3,6 +3,7 @@ package com.cyberbullies.iceshu4.entity;
 import com.cyberbullies.iceshu4.enums.UserRole;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.sql.Timestamp;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,8 @@ public class User {
     private Long id;
     private String name;
     private String surname;
-    @Column(name = "profile_photo", length = 10000)
+    @Lob
+    @Column(name = "profile_photo")
     private String profile_photo;
     @Enumerated(EnumType.ORDINAL)
     private UserRole role;

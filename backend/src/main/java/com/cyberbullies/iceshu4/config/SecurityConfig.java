@@ -60,8 +60,10 @@ public class SecurityConfig {
                 .permitAll()
                 .antMatchers("/department/**")
                 .permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated();
+                // .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                // .anyRequest().authenticated();
+                .antMatchers("/admin/**")
+                .permitAll();
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
