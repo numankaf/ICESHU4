@@ -113,6 +113,7 @@ export class UsersComponent {
         console.log(error)
       }
     );
+    this.createDialog = false;
   }
 
   openAddDialog(){
