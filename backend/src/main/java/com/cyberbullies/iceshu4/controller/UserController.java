@@ -6,7 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
+import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.CreateUserRequestDTO;
+
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import lombok.AllArgsConstructor;
@@ -54,7 +58,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody CreateUserRequestDTO user) {
+    public ResponseEntity<String> createUser(@RequestBody UserCreateRequestDTO user) {
         if (userService.getUserByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>("There is already a user with given email", HttpStatus.BAD_REQUEST);
         }
