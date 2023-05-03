@@ -1,5 +1,6 @@
 package com.cyberbullies.iceshu4.service;
 
+import com.cyberbullies.iceshu4.dto.CreateUserRequestDTO;
 import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
@@ -57,13 +58,16 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void createUser(RegisterRequestDTO user) {
+    public void createUser(CreateUserRequestDTO user) {
         User createdUser = new User();
         createdUser.setName(user.getName());
         createdUser.setSurname(user.getSurname());
         createdUser.setEmail(user.getEmail());
+        createdUser.setRole(user.getRole());
         createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        createdUser.setSchool_id(user.getSchool_id());
         createdUser.setDepartment(user.getDepartment());
+        createdUser.setBanned(user.getBanned());
         userRepository.save(createdUser);
     }
 
