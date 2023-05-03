@@ -54,14 +54,13 @@ public class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(handler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/auth/**")
-                .permitAll()
-                .antMatchers("/h2-console/**")
-                .permitAll()
-                .antMatchers("/department/**")
-                .permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/department/**").permitAll()
+                // .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                // .anyRequest().authenticated();
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/semester/**").permitAll();
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
