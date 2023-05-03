@@ -1,5 +1,6 @@
 package com.cyberbullies.iceshu4.controller;
 
+import com.cyberbullies.iceshu4.enums.UserRole;
 import com.cyberbullies.iceshu4.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,5 +42,9 @@ public class UserController {
         }
         userService.updateUserById(id, student);
         return new ResponseEntity<String>("Student is updated!", HttpStatus.OK);
+    }
+    @GetMapping("/findUserRoles")
+    public List<UserRole> findUserRoles(){
+        return List.of(UserRole.STUDENT,UserRole.INSTRUCTOR,UserRole.ADMIN,UserRole.DEPARTMENT_MANAGER);
     }
 }
