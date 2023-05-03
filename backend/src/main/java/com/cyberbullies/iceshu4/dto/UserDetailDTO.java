@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Data
 public class UserDetailDTO {
+    private Long id;
     private String name;
     private String surname;
     private String email;

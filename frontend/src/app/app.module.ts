@@ -46,6 +46,9 @@ import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.compone
 import { DepartmentManagerLayoutComponent } from './layout/department-manager-layout/department-manager-layout.component';
 import { UsersComponent } from './iceshu4/components/admin/users/users.component';
 import { SemestersComponent } from './iceshu4/components/admin/semesters/semesters.component';
+import {TableModule} from "primeng/table";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ConfirmationService} from "primeng/api";
 
 @NgModule({
   declarations: [
@@ -98,13 +101,15 @@ import { SemestersComponent } from './iceshu4/components/admin/semesters/semeste
     InputTextareaModule,
     CalendarModule,
     ToastModule,
+    TableModule,
+    ConfirmDialogModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    }, ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

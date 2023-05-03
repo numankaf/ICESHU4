@@ -1,12 +1,16 @@
 package com.cyberbullies.iceshu4.controller;
 
+import com.cyberbullies.iceshu4.enums.UserRole;
 import com.cyberbullies.iceshu4.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
 import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
+import com.cyberbullies.iceshu4.dto.CreateUserRequestDTO;
+
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import lombok.AllArgsConstructor;
@@ -47,6 +51,10 @@ public class UserController {
         }
         userService.updateUserById(id, student);
         return new ResponseEntity<String>("User is updated!", HttpStatus.OK);
+    }
+    @GetMapping("/findUserRoles")
+    public List<UserRole> findUserRoles(){
+        return List.of(UserRole.STUDENT,UserRole.INSTRUCTOR,UserRole.ADMIN,UserRole.DEPARTMENT_MANAGER);
     }
 
     @PostMapping("/create")

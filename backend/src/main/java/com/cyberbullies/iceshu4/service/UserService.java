@@ -23,6 +23,7 @@ public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -74,6 +75,7 @@ public class UserService {
 
     public UserDetailDTO userToDto(User user) {
         UserDetailDTO dto = new UserDetailDTO();
+        dto.setId(user.getId());
         dto.setAbout(user.getAbout());
         dto.setName(user.getName());
         dto.setSurname(user.getSurname());
@@ -100,5 +102,4 @@ public class UserService {
         List<User> users = userRepository.findAllByRole(id);
         return users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
     }
-
 }
