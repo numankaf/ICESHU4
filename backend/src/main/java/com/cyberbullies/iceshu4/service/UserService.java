@@ -1,6 +1,5 @@
 package com.cyberbullies.iceshu4.service;
 
-import com.cyberbullies.iceshu4.dto.StudentRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import com.cyberbullies.iceshu4.entity.User;
@@ -8,7 +7,7 @@ import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class UserService {
-    private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
 
     public User getUserByEmail(String email) {
@@ -72,7 +70,9 @@ public class UserService {
     }
 
     public List<UserDetailDTO> findAll(){
-        List<User> users = userRepository.findAll();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User admin = userRepository.findByEmail(email);
+        List<User> users = userRepository.findAllByIdNot(admin.getId());
         List<UserDetailDTO> dtos = users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
         return dtos;
     }

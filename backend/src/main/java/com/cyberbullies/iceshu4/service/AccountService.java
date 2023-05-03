@@ -1,6 +1,5 @@
 package com.cyberbullies.iceshu4.service;
 
-import com.cyberbullies.iceshu4.auth.Iceshu4UserDetails;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import com.cyberbullies.iceshu4.entity.User;
@@ -8,11 +7,8 @@ import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,7 +16,7 @@ public class AccountService {
     private UserRepository userRepository;
 
     public UserDetailDTO get() {
-        String email =SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email);
 
         UserDetailDTO dto = new UserDetailDTO();

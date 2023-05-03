@@ -1,15 +1,15 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {BreakpointObserver} from "@angular/cdk/layout";
-import {Router} from "@angular/router";
 import {LayoutService} from "../layout.service";
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-main-layout',
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['main-layout.component.scss']
+  selector: 'app-admin-layout',
+  templateUrl: '../main-layout.component.html',
+  styleUrls: ['../main-layout.component.scss']
 })
-export class MainLayoutComponent implements AfterViewInit {
+export class AdminLayoutComponent implements AfterViewInit{
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   menuItems: any;
@@ -21,13 +21,11 @@ export class MainLayoutComponent implements AfterViewInit {
 
   ngOnInit() {
     this.menuItems = [
-      {icon: 'dashboard',name:'Dashboard', route:'/main/dashboard'},
-      {icon: 'library_books',name:'Classes', route:'/main/classes'},
-      {icon: 'feed',name:'Forms', route:'/main/forms'},
-      {icon: 'info',name:'About', route:'/main/about'},
-      {icon: 'help',name:'Help', route:'/main/help'},
-
-      ]
+      {icon: 'group', name: 'System Users', route: '/admin/users'},
+      {icon: 'calendar_view_week', name: 'Semesters', route: '/admin/semesters'},
+      {icon: 'forum', name: 'Messages', route: '/admin/messages'},
+      {icon: 'block', name: 'Ban Students', route: '/admin/bans'},
+    ]
   }
 
   ngAfterViewInit() {
@@ -45,5 +43,4 @@ export class MainLayoutComponent implements AfterViewInit {
         });
     });
   }
-
 }

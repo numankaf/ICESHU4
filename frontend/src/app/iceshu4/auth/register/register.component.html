@@ -51,6 +51,8 @@
               <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
                 <small class="p-error"
                        *ngIf="f['email'].errors?.['required']">Email required!</small>
+                <small class="p-error"
+                       *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
               </div>
               <label for="department" class="block text-base font-medium mb-2 pt-3">Department</label>
               <p-dropdown id="department" formControlName="department"

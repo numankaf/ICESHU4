@@ -1,13 +1,11 @@
 package com.cyberbullies.iceshu4.controller;
 
-import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
-import com.cyberbullies.iceshu4.dto.StudentRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import lombok.AllArgsConstructor;
 
@@ -37,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateStudent(@PathVariable Long id, @RequestBody UserUpdateRequestDTO student) {
+    public ResponseEntity<String> updateUserById(@PathVariable Long id, @RequestBody UserUpdateRequestDTO student) {
         if (userService.getUserById(id) == null) {
             return new ResponseEntity<>("There is no student by this id!", HttpStatus.BAD_REQUEST);
         }
