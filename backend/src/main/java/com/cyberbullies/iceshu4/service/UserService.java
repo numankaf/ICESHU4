@@ -1,5 +1,7 @@
 package com.cyberbullies.iceshu4.service;
 
+import com.cyberbullies.iceshu4.dto.CreateUserRequestDTO;
+import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import com.cyberbullies.iceshu4.entity.User;
@@ -8,6 +10,7 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService {
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
+
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -29,6 +35,7 @@ public class UserService {
         }
         return userToDto(user.get());
     }
+
     public void save(User user) {
         userRepository.save(user);
     }
@@ -46,13 +53,28 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        if(userRepository.findById(id).isEmpty()){
+        if (userRepository.findById(id).isEmpty()) {
             throw new BadCredentialsException("There is no user with this id.");
         }
         userRepository.deleteById(id);
     }
-    public UserDetailDTO userToDto(User user ){
+
+    public void createUser(CreateUserRequestDTO user) {
+        User createdUser = new User();
+        createdUser.setName(user.getName());
+        createdUser.setSurname(user.getSurname());
+        createdUser.setEmail(user.getEmail());
+        createdUser.setRole(user.getRole());
+        createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        createdUser.setSchool_id(user.getSchool_id());
+        createdUser.setDepartment(user.getDepartment());
+        createdUser.setBanned(user.getBanned());
+        userRepository.save(createdUser);
+    }
+
+    public UserDetailDTO userToDto(User user) {
         UserDetailDTO dto = new UserDetailDTO();
+        dto.setId(user.getId());
         dto.setAbout(user.getAbout());
         dto.setName(user.getName());
         dto.setSurname(user.getSurname());
@@ -67,7 +89,7 @@ public class UserService {
         return dto;
     }
 
-    public List<UserDetailDTO> findAll(){
+    public List<UserDetailDTO> findAll() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User admin = userRepository.findByEmail(email);
         List<User> users = userRepository.findAllByIdNot(admin.getId());
@@ -75,6 +97,8 @@ public class UserService {
         return dtos;
     }
 
-
-
+    public List<UserDetailDTO> findAllByRole(Long id) {
+        List<User> users = userRepository.findAllByRole(id);
+        return users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
+    }
 }
