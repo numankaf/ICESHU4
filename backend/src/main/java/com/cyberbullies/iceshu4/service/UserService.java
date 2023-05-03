@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -31,6 +32,7 @@ public class UserService {
         }
         return userToDto(user.get());
     }
+
     public void save(User user) {
         userRepository.save(user);
     }
@@ -74,7 +76,5 @@ public class UserService {
         List<UserDetailDTO> dtos = users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
         return dtos;
     }
-
-
 
 }
