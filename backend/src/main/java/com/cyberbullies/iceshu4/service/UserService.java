@@ -1,6 +1,6 @@
 package com.cyberbullies.iceshu4.service;
 
-import com.cyberbullies.iceshu4.dto.CreateUserRequestDTO;
+import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
 import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
@@ -58,16 +58,17 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void createUser(CreateUserRequestDTO user) {
+    public void createUser(UserCreateRequestDTO user) {
         User createdUser = new User();
         createdUser.setName(user.getName());
         createdUser.setSurname(user.getSurname());
         createdUser.setEmail(user.getEmail());
         createdUser.setRole(user.getRole());
         createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        createdUser.setSchool_id(user.getSchool_id());
         createdUser.setDepartment(user.getDepartment());
-        createdUser.setBanned(user.getBanned());
+        createdUser.setProfile_photo(
+                "https://st2.depositphotos.com/1502311/12020/v/600/depositphotos_120206862-stock-illustration-profile-picture-vector.jpg");
+        createdUser.setSchool_id("2023" + Integer.toString((int) Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)));
         userRepository.save(createdUser);
     }
 

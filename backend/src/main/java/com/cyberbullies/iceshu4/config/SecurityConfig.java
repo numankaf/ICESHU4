@@ -57,10 +57,10 @@ public class SecurityConfig {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/department/**").permitAll()
-                // .antMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                // .anyRequest().authenticated();
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/semester/**").permitAll();
+                .antMatchers("/user/**").hasAnyAuthority("ADMIN")
+                .anyRequest().authenticated()
+                .antMatchers("/semester/**").hasAnyAuthority("ADMIN")
+                .anyRequest().authenticated();
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

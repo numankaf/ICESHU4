@@ -10,13 +10,11 @@ import lombok.Getter;
 @Setter
 @Getter
 @Data
-public class CreateUserRequestDTO {
+public class UserCreateRequestDTO {
     private String name;
     private String surname;
     private String email;
     private UserRole role;
     private String password;
-    private String school_id;
     private Department department;
-    private Boolean banned;
 }
