@@ -63,10 +63,9 @@ export class UsersComponent {
 
     this.http.get<any>(`${environment.apiUrl}/user/findUserRoles`).subscribe(
       (data) =>{
-        this.roles = data;
+        this.roles=data;
       }
     );
-    //get role
   }
 
   loadUsers(){
@@ -105,10 +104,15 @@ export class UsersComponent {
     const email = this.form.get('email')?.value;
     const password = this.form.get('password')?.value;
     const newData = {name, surname, email, department, role, password};
-    console.log(newData)
-    if (this.form.valid){
 
-    }
+    this.userService.addUserByAdmin(newData).subscribe(
+      response =>{
+        console.log(response);
+      },
+      error => {
+        console.log(error)
+      }
+    );
   }
 
   openAddDialog(){
@@ -129,7 +133,7 @@ export class UsersComponent {
       const address = this.updateUserByAdmin.get('address')?.value;
       const profile_photo = this.updateUserByAdmin.get('profile_photo')?.value;
       const newData = {name, surname, email, birth_date, about, address, profile_photo};
-      this.userService.updateUser(1, newData).subscribe(
+      this.userService.updateUser(id, newData).subscribe(
         response => {
           location.reload();
         }

@@ -32,7 +32,8 @@ export class UsersService{
   }
 
   addUserByAdmin(data: any): Observable<any>{
-    return this.httpClient.post(`${environment.apiUrl}/user/update/${id}`,data)
+    console.log(data);
+    return this.httpClient.post(`${environment.apiUrl}/user/create`,data)
   }
 
   handleError(error: HttpErrorResponse) {
