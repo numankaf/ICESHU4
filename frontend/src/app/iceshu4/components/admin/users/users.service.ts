@@ -28,12 +28,10 @@ export class UsersService{
   updateUser(id: number, data: any): Observable<any>{
     // @ts-ignore
     return this.httpClient.put(`${environment.apiUrl}/user/update/${id}`, data, {headers: this.headers,responseType:"text"}).pipe(catchError(this.handleError),);
-
   }
 
   addUserByAdmin(data: any): Observable<any>{
-    console.log(data);
-    return this.httpClient.post(`${environment.apiUrl}/user/create`,data)
+    return this.httpClient.post(`${environment.apiUrl}/user/create`,data, {responseType: "text"}).pipe(catchError(this.handleError))
   }
 
   handleError(error: HttpErrorResponse) {
