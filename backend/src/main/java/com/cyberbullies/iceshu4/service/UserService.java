@@ -5,6 +5,7 @@ import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
 import com.cyberbullies.iceshu4.entity.User;
+import com.cyberbullies.iceshu4.enums.UserRole;
 import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
@@ -22,7 +23,6 @@ import java.util.stream.Collectors;
 public class UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -69,7 +69,10 @@ public class UserService {
         createdUser.setDepartment(user.getDepartment());
         createdUser.setProfile_photo(
                 "https://st2.depositphotos.com/1502311/12020/v/600/depositphotos_120206862-stock-illustration-profile-picture-vector.jpg");
-        createdUser.setSchool_id("2023" + Integer.toString((int) Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)));
+        if (createdUser.getRole() == UserRole.STUDENT) {
+            createdUser.setSchool_id(
+                    "2023" + Integer.toString((int) Math.floor(Math.random() * (9999 - 1000 + 1) + 1000)));
+        }
         userRepository.save(createdUser);
     }
 

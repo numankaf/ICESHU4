@@ -6,10 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
-import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
-import com.cyberbullies.iceshu4.dto.CreateUserRequestDTO;
 
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
@@ -49,12 +46,17 @@ public class UserController {
         if (userService.getUserById(id) == null) {
             return new ResponseEntity<>("There are no user by this id!", HttpStatus.BAD_REQUEST);
         }
+        if (!userService.getUserById(id).getEmail().equals(student.getEmail())
+                && userService.getUserByEmail(student.getEmail()) != null) {
+            return new ResponseEntity<>("There are already user with this email!", HttpStatus.BAD_REQUEST);
+        }
         userService.updateUserById(id, student);
         return new ResponseEntity<String>("User is updated!", HttpStatus.OK);
     }
+
     @GetMapping("/findUserRoles")
-    public List<UserRole> findUserRoles(){
-        return List.of(UserRole.STUDENT,UserRole.INSTRUCTOR,UserRole.ADMIN,UserRole.DEPARTMENT_MANAGER);
+    public List<UserRole> findUserRoles() {
+        return List.of(UserRole.STUDENT, UserRole.INSTRUCTOR, UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER);
     }
 
     @PostMapping("/create")
