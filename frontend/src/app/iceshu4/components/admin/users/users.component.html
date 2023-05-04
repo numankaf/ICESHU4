@@ -97,7 +97,6 @@
   <p-dialog header="Create User" [(visible)]="createDialog" [modal]="true" [style]="{ width: '50vw' }" styleClass="p-fluid" [draggable]="false" [resizable]="false" [dismissableMask]="true">
     <ng-template pTemplate="content">
       <form [formGroup]="form" (ngSubmit)="addUser()">
-
           <div class="py-3 flex justify-content-between flex-wrap">
               <span class="" style="width: 49%">
                 <label for="name" class="block text-base font-medium mb-2">Name</label>
@@ -133,19 +132,22 @@
             <small class="p-error"
                    *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
           </div>
+
+          <label for="role" class="block text-base font-medium mb-2 pt-3">Role</label>
+          <p-dropdown id="role" formControlName="role"
+                      [style]="{'width':'100%', 'padding': '0.15rem 0 '}" [options]="roles"
+                      placeholder="Select a role">
+          </p-dropdown>
+
+        <div [style]="!(f['role'].value=='ADMIN')?'':'display:none'">
           <label for="department" class="block text-base font-medium mb-2 pt-3">Department</label>
-          <p-dropdown id="department" formControlName="department"
+          <p-dropdown [required]="(f['role'].value=='ADMIN')? false:true" id="department" formControlName="department"
                       [style]="{'width':'100%', 'padding': '0.15rem 0 '}" [options]="departments" optionLabel="name"
                       placeholder="Select a department">
           </p-dropdown>
+        </div>
 
-        <label for="department" class="block text-base font-medium mb-2 pt-3">Role</label>
-        <p-dropdown id="role" formControlName="role"
-                    [style]="{'width':'100%', 'padding': '0.15rem 0 '}" [options]="roles"
-                    placeholder="Select a role">
-        </p-dropdown>
-
-        <div class="mb-3 py-2" style="width: 100%">
+        <div class="mt-3 py-2" style="width: 100%">
           <label for="password" class="block text-base font-medium mb-2">Password</label>
           <div class="p-input-icon-left inline">
             <p-password formControlName="password" id="password"
@@ -159,25 +161,8 @@
           </div>
         </div>
 
-        <div class="mb-3 pb-2" style="width: 100%">
-          <label for="confirmpassword" class="block text-base font-medium mb-2">Confirm password</label>
-          <div class="p-input-icon-left inline">
-            <p-password formControlName="confirmpassword" id="confirmpassword"
-                        [inputStyle]="{'width':'100%' ,'padding': '0.6rem'}"
-                        [style]="{'width':'100%'}"
-                        [toggleMask]="true" [feedback]="false" class="w-full " placeholder="Confirm password"></p-password>
-          </div>
-          <div *ngIf="f['confirmpassword'].invalid && (f['confirmpassword'].dirty)" style="text-align: left;">
-            <small class="p-error "
-                   *ngIf="f['confirmpassword'].errors?.['required']">Confirm password required!</small>
-          </div>
-          <div *ngIf="(f['confirmpassword'].dirty)" style="text-align: left;">
-            <small class="p-error "
-                   *ngIf="form.errors!=null && this.form.errors['passwordNotMatch']">Passwords does not match!</small>
-          </div>
-        </div>
-
       </form>
+      <p-messages [value]="errorMessages"></p-messages>
     </ng-template>
 
     <ng-template pTemplate="footer">
@@ -190,7 +175,7 @@
         </div>
 
         <div class="flex align-items-center justify-content-center m-2">
-          <button pButton pRipple [disabled]="!this.form.valid" label="Create" icon="pi pi-check"
+          <button pButton pRipple [disabled]="!this.form.valid " label="Create" icon="pi pi-check"
                   class="p-button-info mr-2 mb-2"
                   (click)="addUser()">
           </button>
@@ -243,6 +228,7 @@
               </div>
               <span *ngIf="updateControls['email'].invalid && (updateControls['email'].dirty )" style="text-align: left;" class="block mt-1">
                 <small class="p-error" *ngIf="updateControls['email'].errors?.['required']">Email required.</small>
+                <small class="p-error" *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
               </span>
            </span>
           <span style="width: 49%">
@@ -293,12 +279,11 @@
     </ng-template>
   </p-dialog>
 
-  <p-confirmDialog #cd
-                   [style]="{width: '50vw'}" [draggable]="false" [dismissableMask]="true">
+  <p-confirmDialog #cd [style]="{width: '50vw'}" [draggable]="false" [dismissableMask]="true">
     rejectButtonStyleClass="p-button-text">
     <ng-template pTemplate="footer">
-      <button type="button" class="p-button-raised p-button-danger" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-      <button type="button" class="p-button-raised p-button-success" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+      <button type="button" class="p-button-danger p-button-outlined" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+      <button type="button" class="p-button-success p-button-outlined" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
     </ng-template>
   </p-confirmDialog>
 

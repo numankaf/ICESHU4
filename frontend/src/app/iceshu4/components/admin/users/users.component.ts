@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {UsersService} from "./users.service";
-import {ConfirmationService, LazyLoadEvent} from "primeng/api";
+import {ConfirmationService, LazyLoadEvent, Message} from "primeng/api";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../../../environments/environment";
@@ -22,6 +22,7 @@ export class UsersComponent {
   form: FormGroup;
   departments!: Department[];
   roles! : Role[];
+  errorMessages: Message[] =[];
 
   constructor(private userService: UsersService,
               private confirmationService: ConfirmationService,
@@ -42,14 +43,11 @@ export class UsersComponent {
     this.form = this.fb.group({
       name: [null, [Validators.required]],
       surname: [null, [Validators.required]],
-      department: [null, [Validators.required]],
+      department: [null],
       role: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: [null, [Validators.required]],
-      confirmpassword: [null, [Validators.required]]
-    }, {
-      validators: this.password.bind(this)
-    });
+    },);
   }
 
   ngOnInit(): void{
@@ -97,46 +95,46 @@ export class UsersComponent {
   }
 
   addUser() {
-    const name = this.form.get('name')?.value;
-    const surname = this.form.get('surname')?.value;
-    const department = this.form.get('department')?.value;
-    const role = this.form.get('role')?.value;
-    const email = this.form.get('email')?.value;
-    const password = this.form.get('password')?.value;
-    const newData = {name, surname, email, department, role, password};
-
-    this.userService.addUserByAdmin(newData).subscribe(
-      response =>{
-        console.log(response);
-      },
-      error => {
-        console.log(error)
-      }
-    );
-    this.createDialog = false;
+    if (this.form.valid){
+      this.userService.addUserByAdmin(this.form.value).subscribe(
+        response =>{
+          this.createDialog = false;
+          location.reload();
+        },
+        error => {
+          this.errorMessages=[];
+          this.errorMessages.push({
+            severity: 'error',
+            summary: 'Error:',
+            detail: 'This email is already in use!'
+          })
+        }
+      );
+    }
+    else{
+      return;
+    }
   }
 
   openAddDialog(){
+    this.form.reset();
     this.createDialog = true;
+
   }
 
   closeAddDialog(){
     this.createDialog = false;
+    this.form.reset();
   }
 
   updateUser() {
       const id = this.updateUserByAdmin.get('id')?.value;
-      const name = this.updateUserByAdmin.get('name')?.value;
-      const surname = this.updateUserByAdmin.get('surname')?.value;
-      const email = this.updateUserByAdmin.get('email')?.value;
-      const birth_date = this.updateUserByAdmin.get('birth_date')?.value;
-      const about = this.updateUserByAdmin.get('about')?.value;
-      const address = this.updateUserByAdmin.get('address')?.value;
-      const profile_photo = this.updateUserByAdmin.get('profile_photo')?.value;
-      const newData = {name, surname, email, birth_date, about, address, profile_photo};
-      this.userService.updateUser(id, newData).subscribe(
+      this.userService.updateUser(id, this.updateUserByAdmin.value).subscribe(
         response => {
           location.reload();
+        },
+        error => {
+          console.log(error);
         }
       );
       this.updateDialog = false;
@@ -144,14 +142,7 @@ export class UsersComponent {
 
   openUpdateDialog(allUsers: any){
     this.updateDialog = true;
-    this.updateUserByAdmin.controls['id'].setValue(allUsers.id);
-    this.updateUserByAdmin.controls['name'].setValue(allUsers.name);
-    this.updateUserByAdmin.controls['surname'].setValue(allUsers.surname);
-    this.updateUserByAdmin.controls['email'].setValue(allUsers.email);
-    this.updateUserByAdmin.controls['birth_date'].setValue(allUsers.birth_date);
-    this.updateUserByAdmin.controls['about'].setValue(allUsers.about);
-    this.updateUserByAdmin.controls['address'].setValue(allUsers.address);
-    this.updateUserByAdmin.controls['profile_photo'].setValue(allUsers.profile_photo);
+    this.updateUserByAdmin.patchValue(allUsers);
   }
 
   closeUpdateDialog(){
@@ -164,14 +155,6 @@ export class UsersComponent {
 
   get f() {
     return this.form.controls;
-  }
-
-  password(formGroup: FormGroup) {
-    // @ts-ignore
-    const { value: password } = formGroup.get('password');
-    // @ts-ignore
-    const { value: confirmPassword } = formGroup.get('confirmpassword');
-    return password === confirmPassword ? null : { passwordNotMatch: true };
   }
 
 }
