@@ -47,7 +47,7 @@
         <ng-template pTemplate="body" let-allUsers>
           <tr>
             <td><span class="p-column-title"></span>
-              <p-avatar image="{{allUsers.profile_photo}}" styleClass="mr-2" size="" shape="circle"></p-avatar>
+              <img alt="avatar" class="profile-avatar ml-2" src="{{allUsers.profile_photo}}" >
             </td>
             <td><span class="p-column-title">Name</span>
               {{allUsers.name}}
@@ -297,8 +297,8 @@
                    [style]="{width: '50vw'}" [draggable]="false" [dismissableMask]="true">
     rejectButtonStyleClass="p-button-text">
     <ng-template pTemplate="footer">
-      <button type="button" class="p-button-raised p-button-success" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
-      <button type="button" class="p-button-raised p-button-danger" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+      <button type="button" class="p-button-raised p-button-danger" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+      <button type="button" class="p-button-raised p-button-success" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
     </ng-template>
   </p-confirmDialog>
 

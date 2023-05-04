@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
-import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
-import com.cyberbullies.iceshu4.dto.CreateUserRequestDTO;
 
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;

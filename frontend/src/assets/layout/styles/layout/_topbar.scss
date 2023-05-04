@@ -136,3 +136,15 @@ mat-divider {
 .mdc-button__label{
   text-align: start;
 }
+
+.mat-drawer.mat-drawer-side {
+  z-index: 1!important;
+}
+
+.mat-drawer-content {
+  z-index: auto!important;
+}
+
+.mat-drawer-container {
+  z-index: auto!important;
+}
