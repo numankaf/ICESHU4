@@ -4,21 +4,17 @@ import com.cyberbullies.iceshu4.entity.Department;
 import com.cyberbullies.iceshu4.enums.UserRole;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.Setter;
+import lombok.Getter;
 
-@Getter
 @Setter
+@Getter
 @Data
-public class StudentDetailDTO {
+public class UserCreateRequestDTO {
     private String name;
     private String surname;
     private String email;
     private UserRole role;
-    private String birth_date;
-    private String profile_photo;
-    private String about;
-    private String address;
-    private String school_id;
+    private String password;
     private Department department;
 }

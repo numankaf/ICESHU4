@@ -1,6 +1,6 @@
 package com.cyberbullies.iceshu4.dto;
 
-import com.cyberbullies.iceshu4.entity.Student;
+import com.cyberbullies.iceshu4.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,10 +26,10 @@ public class JwtUserDetails implements UserDetails {
         this.authorities = authorities;
     }
     //TODO: change student to the  general user class
-    public static JwtUserDetails create(Student student){
+    public static JwtUserDetails create(User user){
         List<GrantedAuthority> authoritiesList = new ArrayList<>();
-        authoritiesList.add(new SimpleGrantedAuthority(student.getRole().toString()));
-        return new JwtUserDetails(student.getId(),student.getEmail(),student.getPassword(),authoritiesList);
+        authoritiesList.add(new SimpleGrantedAuthority(user.getRole().toString()));
+        return new JwtUserDetails(user.getId(),user.getEmail(),user.getPassword(),authoritiesList);
     }
 
     @Override

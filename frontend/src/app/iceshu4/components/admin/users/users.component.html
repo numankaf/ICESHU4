@@ -1,0 +1,290 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+
+      <p-table #dt [value]="allUsers" [rowHover]="true" dataKey="id">
+
+        <ng-template pTemplate="caption">
+          <div class="grid justify-content-between m-1">
+            <div class="flex md:flex-row table-header align-items-center justify-content-center">
+              <h1 class="m-0">System Users</h1>
+            </div>
+
+            <div class="flex md:flex-row align-items-center justify-content-center">
+              <button pButton pRipple label="Create User" icon="pi pi-plus" class="p-button-success mr-2 mb-2"
+                      (click)="openAddDialog()">
+              </button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>
+            </th>
+            <th>
+              Name
+            </th>
+            <th>
+              Surname
+            </th>
+            <th>
+              Email
+            </th>
+            <th>
+              Role
+            </th>
+            <th>
+              Department
+            </th>
+            <th class="text-center">
+              Actions
+            </th>
+          </tr>
+
+        </ng-template>
+
+        <ng-template pTemplate="body" let-allUsers>
+          <tr>
+            <td><span class="p-column-title"></span>
+              <img alt="avatar" class="profile-avatar ml-2" src="{{allUsers.profile_photo}}" >
+            </td>
+            <td><span class="p-column-title">Name</span>
+              {{allUsers.name}}
+            </td>
+            <td><span
+              class="p-column-title">Surname</span>
+              {{allUsers.surname}}
+            </td>
+            <td><span class="p-column-title">Email</span>
+              {{allUsers.email}}
+            </td>
+            <td><span
+              class="p-column-title">Role</span>
+              {{allUsers.role}}
+            </td>
+            <td>
+              <span class="p-column-title">Role</span>
+              <p *ngIf="allUsers.department==null"></p>
+              <p *ngIf="allUsers.department!=null">{{allUsers.department.name}}</p>
+
+            </td>
+            <td><span class="p-column-title">Actions</span>
+
+              <div class="flex flex-wrap md:justify-content-center justify-content-center card-container">
+
+                <button (click)="openUpdateDialog(allUsers)" pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-info mx-1" pTooltip="Edit" tooltipPosition="bottom"></button>
+
+                <button (click)="deleteUser(allUsers.id)" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger mx-1" pTooltip="Share" tooltipPosition="right"></button>
+
+              </div>
+
+
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            Total Records: {{allUsersSize}}
+          </div>
+        </ng-template>
+
+      </p-table>
+    </div>
+  </div>
+
+  <p-dialog header="Create User" [(visible)]="createDialog" [modal]="true" [style]="{ width: '50vw' }" styleClass="p-fluid" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+    <ng-template pTemplate="content">
+      <form [formGroup]="form" (ngSubmit)="addUser()">
+          <div class="py-3 flex justify-content-between flex-wrap">
+              <span class="" style="width: 49%">
+                <label for="name" class="block text-base font-medium mb-2">Name</label>
+                <div class="inline">
+                  <input id="name" type="text" pInputText placeholder="Name" class="w-full py-2 " formControlName="name">
+                </div>
+                <div *ngIf="f['name'].invalid && (f['name'].dirty )" style="text-align: left;">
+                <small class="p-error"
+                       *ngIf="f['name'].errors?.['required']">Name required!</small>
+                </div>
+              </span>
+             <span class="" style="width: 49%">
+                <label for="surname" class="block text-base font-medium mb-2">Surname</label>
+                <div class="inline">
+                    <input id="surname" type="text" pInputText placeholder="Surname" class="w-full py-2 " formControlName="surname">
+                </div>
+               <div *ngIf="f['surname'].invalid && (f['surname'].dirty )"
+                    style="text-align: left;">
+                  <small class="p-error" *ngIf="f['surname'].errors?.['required']">Surname required!</small>
+               </div>
+             </span>
+          </div>
+
+          <label for="email" class="block text-base font-medium mb-2">Email</label>
+          <div class="p-input-icon-left inline">
+            <i class="pi pi-envelope pr-2"></i>
+            <input id="email" type="text" pInputText placeholder="Email address"
+                   class="w-full py-2 " formControlName="email">
+          </div>
+          <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
+            <small class="p-error"
+                   *ngIf="f['email'].errors?.['required']">Email required!</small>
+            <small class="p-error"
+                   *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
+          </div>
+
+          <label for="role" class="block text-base font-medium mb-2 pt-3">Role</label>
+          <p-dropdown id="role" formControlName="role"
+                      [style]="{'width':'100%', 'padding': '0.15rem 0 '}" [options]="roles"
+                      placeholder="Select a role">
+          </p-dropdown>
+
+        <div [style]="!(f['role'].value=='ADMIN')?'':'display:none'">
+          <label for="department" class="block text-base font-medium mb-2 pt-3">Department</label>
+          <p-dropdown [required]="(f['role'].value=='ADMIN')? false:true" id="department" formControlName="department"
+                      [style]="{'width':'100%', 'padding': '0.15rem 0 '}" [options]="departments" optionLabel="name"
+                      placeholder="Select a department">
+          </p-dropdown>
+        </div>
+
+        <div class="mt-3 py-2" style="width: 100%">
+          <label for="password" class="block text-base font-medium mb-2">Password</label>
+          <div class="p-input-icon-left inline">
+            <p-password formControlName="password" id="password"
+                        [inputStyle]="{'width':'100%' ,'padding': '0.6rem'}"
+                        [style]="{'width':'100%'}"
+                        [toggleMask]="true" [feedback]="false" class="w-full " placeholder="Password"></p-password>
+          </div>
+          <div *ngIf="f['password'].invalid && (f['password'].dirty)" style="text-align: left;">
+            <small class="p-error "
+                   *ngIf="f['password'].errors?.['required']">Password required!</small>
+          </div>
+        </div>
+
+      </form>
+      <p-messages [value]="errorMessages"></p-messages>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-end">
+        <div class="flex align-items-center justify-content-center m-2">
+          <button pButton pRipple label="Close" icon="pi pi-times"
+                  class="p-button-secondary p-button-outlined mr-2 mb-2"
+                  (click)="closeAddDialog()">
+          </button>
+        </div>
+
+        <div class="flex align-items-center justify-content-center m-2">
+          <button pButton pRipple [disabled]="!this.form.valid " label="Create" icon="pi pi-check"
+                  class="p-button-info mr-2 mb-2"
+                  (click)="addUser()">
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+
+  <p-dialog header="Update User" [(visible)]="updateDialog" [modal]="true" [style]="{ width: '50vw' }" styleClass="p-fluid" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+    <ng-template pTemplate="content">
+      <form [formGroup]="updateUserByAdmin" (ngSubmit)="updateUser()">
+        <div class="py-2 flex justify-content-between flex-wrap">
+                <span class="" style="width: 100%" >
+                        <label class="block text-base font-medium mb-2">Profile Photo Url</label>
+                        <div class="inline">
+                           <input  type="text" pInputText placeholder="Profile Photo"
+                                  class="w-full py-2 " formControlName="profile_photo" >
+                        </div>
+                </span>
+        </div>
+
+        <div class="py-2 flex justify-content-between flex-wrap">
+          <span class="" style="width: 49%;">
+            <label class="block text-base font-medium mb-2">Name</label>
+              <div class="inline">
+                  <input type="text" pInputText placeholder="Name" class="w-full" formControlName="name" />
+              </div>
+              <span *ngIf="updateControls['name'].invalid && (updateControls['name'].dirty )" style="text-align: left;" class="block mt-1">
+                <small class="p-error" *ngIf="updateControls['name'].errors?.['required']">Name required.</small>
+              </span>
+           </span>
+          <span class="" style="width: 49%;">
+              <label class="block text-base font-medium mb-2">Surname</label>
+              <div class="inline">
+                  <input type="text" pInputText placeholder="Surname" class="w-full" formControlName="surname" />
+              </div>
+              <span *ngIf="updateControls['surname'].invalid && (updateControls['surname'].dirty )" style="text-align: left;" class="block mt-1">
+                <small class="p-error" *ngIf="updateControls['surname'].errors?.['required']">Surname required.</small>
+              </span>
+           </span>
+        </div>
+
+        <div class="py-2 flex justify-content-between flex-wrap">
+          <span class="" style="width: 49%;">
+              <label class="block text-base font-medium mb-2">Email</label>
+              <div class="p-input-icon-left">
+                  <i class="pi pi-envelope pr-2"></i>
+                  <input type="text" pInputText placeholder="Email" class="w-full" formControlName="email" />
+              </div>
+              <span *ngIf="updateControls['email'].invalid && (updateControls['email'].dirty )" style="text-align: left;" class="block mt-1">
+                <small class="p-error" *ngIf="updateControls['email'].errors?.['required']">Email required.</small>
+                <small class="p-error" *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
+              </span>
+           </span>
+          <span style="width: 49%">
+                <label class="block text-base font-medium mb-2">Birth Date</label>
+                <div class="p-input-icon-left inline">
+                  <i class="pi pi-calendar pr-2"></i>
+                  <input type="text" pInputText placeholder="Birth Date (dd.mm.yyyy)"
+                         class="w-full py-2 " formControlName="birth_date" >
+                </div>
+              </span>
+        </div>
+
+        <div class="pt-2 flex justify-content-between flex-wrap">
+             <span class="" style="width: 49%">
+                 <label class="block text-base font-medium mb-2">Address</label>
+                   <div class="inline">
+                      <textarea formControlName="address" rows="5" pInputTextarea placeholder="Address" style="width: 100%">
+                      </textarea>
+                   </div>
+             </span>
+          <span class="" style="width: 49%">
+                <label class="block text-base font-medium mb-2">About</label>
+                  <div class="inline">
+                    <textarea formControlName="about" rows="5" pInputTextarea placeholder="About" style="width: 100%"></textarea>
+                  </div>
+            </span>
+        </div>
+
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-end">
+        <div class="flex align-items-center justify-content-center m-2">
+          <button pButton pRipple label="Close" icon="pi pi-times"
+                  class="p-button-secondary p-button-outlined mr-2 mb-2"
+                  (click)="closeUpdateDialog()">
+          </button>
+        </div>
+
+        <div class="flex align-items-center justify-content-center m-2">
+          <button pButton pRipple label="Update" icon="pi pi-check"
+                  class="p-button-info mr-2 mb-2"
+                  (click)="updateUser()">
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog #cd [style]="{width: '50vw'}" [draggable]="false" [dismissableMask]="true">
+    rejectButtonStyleClass="p-button-text">
+    <ng-template pTemplate="footer">
+      <button type="button" class="p-button-danger p-button-outlined" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+      <button type="button" class="p-button-success p-button-outlined" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+  </p-confirmDialog>
+
+</div>

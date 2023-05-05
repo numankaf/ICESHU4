@@ -1,1 +1,140 @@
-<p>account works!</p>
+<p-toast></p-toast>
+<div class="pb-2">
+  <p-card class="border-round-xl" [style]="{ width: '100%'}">
+    <ng-template pTemplate="header">
+      <img style="width: 100%; max-height: 120px; object-fit: cover;" alt="Card" src="../../../../../assets/layout/images/profile-page-bg.jpg" />
+    </ng-template>
+    <form [formGroup]="form" (ngSubmit)="update()">
+
+    <div class="flex justify-content-between">
+      <div class="flex justify-content-start flex-wrap">
+        <div class="m-2" style="width: 180px; height: 180px; border-radius: 50%; overflow: hidden; margin: 0 auto; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);">
+          <img src="{{ this.form.get('profile_photo')?.value}}"
+               style="width: 100%; height: 100%; object-fit: cover;" >
+        </div>
+        <div class="m-2 pl-4 flex flex-column justify-content-center ">
+          <h1 class="text-4xl ">{{fullName}}</h1>
+          <h4 class="text-2xl ">{{userRole}}</h4>
+        </div>
+      </div>
+
+      <div class="m-2 justify-align-center align-items-center">
+
+        <button (click)="editMode=false" *ngIf="editMode" pButton  pRipple label="Edit" icon="pi pi-pencil"></button>
+        <button (click)="editMode=true;cancel()" *ngIf="!editMode" pButton class="p-button-danger" pRipple label="Cancel" icon="pi pi-times"></button>
+        <span class="pl-2"></span>
+        <button (click)="editMode=true; update()" *ngIf="!editMode" class="p-button-success"
+                type="submit" [disabled]="!this.form.valid" pButton pRipple label="Save Changes" icon="pi pi-save"></button>
+      </div>
+
+    </div>
+
+    <div>
+
+        <div class="flex flex-column align-items-center justify-content-center">
+          <div class="mb-3 pt-1 " style="width: 100%">
+            <div class="py-2 flex justify-content-between flex-wrap">
+                <span class="" style="width: 100%" *ngIf="!editMode">
+                        <label class="block text-base font-medium mb-2">Profile Photo Url</label>
+                        <div class="inline">
+                           <input id="profile_photo"  type="text" pInputText placeholder="Profile Photo"
+                                  class="w-full py-2 " formControlName="profile_photo" >
+                        </div>
+                    </span>
+            </div>
+
+            <div class="py-2 flex justify-content-between flex-wrap">
+                  <span class="" style="width: 49%">
+                        <label class="block text-base font-medium mb-2">Name</label>
+                        <div class="inline">
+                           <input id="name" [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" type="text" pInputText placeholder="Name"
+                                  class="w-full py-2 " formControlName="name" required>
+                        </div>
+                        <div *ngIf="f['name'].invalid && (f['name'].dirty )" style="text-align: left;">
+                           <small class="p-error"
+                                  *ngIf="f['name'].errors?.['required']">Name required!</small>
+                        </div>
+                    </span>
+                    <span class="" style="width: 49%">
+                        <label class="block text-base font-medium mb-2">Surname</label>
+                        <div class="inline">
+                           <input id="surname" [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" type="text" pInputText placeholder="Surname"
+                                  class="w-full py-2 " formControlName="surname" required>
+                        </div>
+                        <div *ngIf="f['surname'].invalid && (f['surname'].dirty )"
+                             style="text-align: left;">
+                           <small class="p-error"
+                                  *ngIf="f['surname'].errors?.['required']">Surname required!</small>
+                        </div>
+                     </span>
+            </div>
+
+            <div class="py-2 flex justify-content-between flex-wrap">
+                    <span class="" style="width: 49%" *ngIf="this.form.value['school_id'] !== null">
+                        <label class="block text-base font-medium mb-2">School Id</label>
+                        <div class="inline">
+                           <input id="school_id"  tabindex="-1" [disabled]="true" [style]="'pointer-events:none'" type="text" pInputText placeholder="School Id"
+                                  class="w-full py-2" formControlName="school_id">
+                        </div>
+                     </span>
+                    <span class="" style="width: 49%" *ngIf="this.form.value['department'] !== null">
+                        <label class="block text-base font-medium mb-2">Department</label>
+                        <div class="inline">
+                           <input id="department" tabindex="-1" [disabled]="true" [style]="'pointer-events:none'" type="text" pInputText placeholder="Department"
+                                  class="w-full py-2 " formControlName="department">
+                        </div>
+                     </span>
+            </div>
+
+            <div class="py-2 flex justify-content-between flex-wrap">
+              <span style="width: 49%">
+                <label class="block text-base font-medium mb-2">Email</label>
+                <div class="p-input-icon-left inline">
+                  <i class="pi pi-envelope pr-2"></i>
+                  <input [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" id="email" type="text" pInputText placeholder="Email address"
+                         class="w-full py-2 " formControlName="email" required>
+                </div>
+                <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
+                  <small class="p-error"
+                         *ngIf="f['email'].errors?.['required']">Email required!</small>
+                  <small class="p-error"
+                         *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
+                </div>
+              </span>
+              <span style="width: 49%">
+                <label class="block text-base font-medium mb-2">Birth Date</label>
+                <div class="p-input-icon-left inline">
+                  <i class="pi pi-calendar pr-2"></i>
+                  <input [disabled]="!editMode" [style]="!editMode?'':'pointer-events:none'" id="birth_date" type="text" pInputText placeholder="Birth Date (dd.mm.yyyy)"
+                         class="w-full py-2 " formControlName="birth_date" >
+                </div>
+              </span>
+            </div>
+
+            <div class="py-2 flex justify-content-between flex-wrap">
+                    <span class="" style="width: 49%">
+                        <label class="block text-base font-medium mb-2">Address</label>
+                        <div class="inline">
+                          <textarea [disabled]="editMode" [style]="!editMode?'':'pointer-events:none'" formControlName="address" id="address" rows="5" pInputTextarea placeholder="Address" style="width: 100%">
+
+                          </textarea>
+                        </div>
+                     </span>
+                    <span class="" style="width: 49%">
+                        <label class="block text-base font-medium mb-2">About</label>
+                        <div class="inline">
+                          <textarea [disabled]="editMode" [style]="!editMode?'':'pointer-events:none'" formControlName="about" id="about" rows="5" pInputTextarea placeholder="About" style="width: 100%"></textarea>
+                        </div>
+                     </span>
+            </div>
+          </div>
+        </div>
+
+
+
+
+    </div>
+    </form>
+
+  </p-card>
+</div>

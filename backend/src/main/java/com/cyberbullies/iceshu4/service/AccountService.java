@@ -10,12 +10,14 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class AccountService {
     private UserRepository userRepository;
+
     private PasswordEncoder passwordEncoder;
 
     public UserDetailDTO get() {
@@ -62,6 +64,8 @@ public class AccountService {
         {
             user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
         }
+
+        userRepository.save(user);
 
         System.out.println(user.getPassword());
 

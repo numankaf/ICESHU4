@@ -1,0 +1,103 @@
+<p-toast></p-toast>
+<div class="card">
+  <div class="flex align-items-center justify-content-between my-3">
+    <h1 class="m-0 font-medium text-3xl">Semesters</h1>
+    <button pButton pRipple label="Create a Semester" icon="pi pi-plus" class="p-button-success mr-2 mb-2"
+            (click)="addSemester = !addSemester"></button>
+  </div>
+  <ng-container *ngFor="let semester of semesters" >
+    <div class="border-primary border-solid border-2 p-3 my-2" style="border-radius: 0.75rem">
+      <div class="flex justify-content-between mb-3">
+        <div>
+          <span class="block text-4xl font-medium my-2 text-primary">{{semester.name}}</span>
+        </div>
+        <div class=" py-2 text-xl">Ends in <span class="text-green-500 ">{{getNumberOfDays(semester.end_date)}}</span>
+          days
+        </div>
+
+      </div>
+
+      <div class="flex justify-content-between align-items-end">
+        <div>
+          <div class="font-medium  py-1 text-lg">Start date: <span
+            class="font-normal text-color">{{semester.start_date |date : 'dd/MM/yyyy'  }}</span></div>
+          <div class="font-medium  py-1 text-lg">End date: <span
+            class="font-normal text-color">{{semester.end_date |date : 'dd/MM/yyyy'}}</span></div>
+        </div>
+        <button pButton pRipple label="Delete"  icon="pi pi-trash"  class="p-button-danger mr-2 mb-2"
+                (click)="confirm(semester.id)"></button>
+      </div>
+
+    </div>
+  </ng-container>
+
+</div>
+
+<p-dialog header="Add Semester" [(visible)]="addSemester" [dismissableMask]="true" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+          [resizable]="false">
+  <ng-template pTemplate="content">
+    <form [formGroup]="form" (ngSubmit)="createSemester()">
+
+
+      <div class="py-2 flex justify-content-between flex-wrap">
+          <span class="" style="width: 100%;">
+            <label class="block text-base font-medium mb-2">Name</label>
+              <div class="inline">
+                  <input type="text" pInputText placeholder="Name" class="w-full" formControlName="name"/>
+              </div>
+              <span *ngIf="f['name'].invalid && (f['name'].dirty )" style="text-align: left;" class="block mt-1">
+                <small class="p-error" *ngIf="f['name'].errors?.['required']">Name required.</small>
+              </span>
+           </span>
+      </div>
+      <div class="py-2 flex justify-content-between flex-wrap">
+          <span class="" style="width: 49%;">
+            <label class="block text-base font-medium mb-2">Start Date</label>
+
+              <p-calendar placeholder="Start Date" appendTo="body" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [minDate]="dateCurrent"
+                          formControlName="start_date"
+                          [readonlyInput]="true" [showIcon]="true"></p-calendar>
+              <span *ngIf="f['start_date'].invalid && (f['start_date'].dirty )" style="text-align: left;"
+                    class="block mt-1">
+                <small class="p-error" *ngIf="f['start_date'].errors?.['required']">Start Date required.</small>
+              </span>
+           </span>
+        <span class="" style="width: 49%;">
+            <label class="block text-base font-medium mb-2">End Date</label>
+            <p-calendar placeholder="End Date" appendTo="body" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}" [minDate]="form.value['start_date']"
+                        formControlName="end_date"
+                        [readonlyInput]="true" [showIcon]="true"></p-calendar>
+              <span *ngIf="f['end_date'].invalid && (f['end_date'].dirty )" style="text-align: left;"
+                    class="block mt-1">
+                <small class="p-error" *ngIf="f['end_date'].errors?.['required']">End Date required.</small>
+              </span>
+           </span>
+      </div>
+
+
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-end">
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple label="Close" icon="pi pi-times"
+                class="p-button-danger p-button-outlined mr-2 mb-2" (click)="addSemester =!addSemester">
+        </button>
+      </div>
+
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple label="Submit" icon="pi pi-check"
+                [disabled]="form.invalid"
+                class="p-button-success mr-2 mb-2" (click)="createSemester()">
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+<p-confirmDialog #cd [style]="{width: '50vw'}" [dismissableMask]="true">
+  <ng-template pTemplate="footer">
+    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

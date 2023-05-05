@@ -99,6 +99,8 @@ mat-divider {
 
 .profile-avatar{
   width: 42px;
+  height: 42px;
+  object-fit: cover;
   margin-right: .55rem;
   border-radius: 50%;
 }
@@ -130,4 +132,19 @@ mat-divider {
       margin-top: -0.45rem;
     }
   }
+}
+.mdc-button__label{
+  text-align: start;
+}
+
+.mat-drawer.mat-drawer-side {
+  z-index: 1!important;
+}
+
+.mat-drawer-content {
+  z-index: auto!important;
+}
+
+.mat-drawer-container {
+  z-index: auto!important;
 }

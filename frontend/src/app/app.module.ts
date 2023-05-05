@@ -2,7 +2,8 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {MainLayoutComponent} from './layout/main-layout/main-layout.component';
+import {StudentLayoutComponent} from './layout/student-layout/student-layout.component';
+import {InstructorLayoutComponent} from "./layout/instructor-layout/instructor-layout.component";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
@@ -38,11 +39,22 @@ import {DialogModule} from "primeng/dialog";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MessagesModule} from "primeng/messages";
 import {AuthInterceptor} from './iceshu4/core/auth-interceptor';
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {CalendarModule} from "primeng/calendar";
+import {ToastModule} from "primeng/toast";
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
+import { DepartmentManagerLayoutComponent } from './layout/department-manager-layout/department-manager-layout.component';
+import { UsersComponent } from './iceshu4/components/admin/users/users.component';
+import { SemestersComponent } from './iceshu4/components/admin/semesters/semesters.component';
+import {TableModule} from "primeng/table";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {ConfirmationService} from "primeng/api";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainLayoutComponent,
+    StudentLayoutComponent,
+    InstructorLayoutComponent,
     DashboardComponent,
     LoginComponent,
     RegisterComponent,
@@ -50,7 +62,11 @@ import {AuthInterceptor} from './iceshu4/core/auth-interceptor';
     ForgotpasswordComponent,
     ProfileLayoutComponent,
     AccountComponent,
-    TopbarComponent
+    TopbarComponent,
+    AdminLayoutComponent,
+    DepartmentManagerLayoutComponent,
+    UsersComponent,
+    SemestersComponent
   ],
   imports: [
     HttpClientModule,
@@ -82,13 +98,18 @@ import {AuthInterceptor} from './iceshu4/core/auth-interceptor';
     DropdownModule,
     DialogModule,
     MessagesModule,
+    InputTextareaModule,
+    CalendarModule,
+    ToastModule,
+    TableModule,
+    ConfirmDialogModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    }, ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

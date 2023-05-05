@@ -2,11 +2,9 @@ package com.cyberbullies.iceshu4.config;
 
 import com.cyberbullies.iceshu4.auth.JwtAuthenticationEntryPoint;
 import com.cyberbullies.iceshu4.auth.JwtAuthenticationFilter;
-import com.cyberbullies.iceshu4.enums.UserRole;
 import com.cyberbullies.iceshu4.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,19 +50,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.headers().frameOptions().disable();
         httpSecurity
-                .csrf().disable()
+                .csrf().disable().cors().and()
                 .exceptionHandling().authenticationEntryPoint(handler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/auth/**")
-                .permitAll()
-                .antMatchers("/h2-console/**")
-                .permitAll()
-                .antMatchers("/student/**")
-                .permitAll()
-                .antMatchers("/department/**")
-                .permitAll()
-                // .hasAnyAuthority(String.valueOf(UserRole.STUDENT))
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/department/**").permitAll()
+                .antMatchers("/user/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/semester/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated();
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
 

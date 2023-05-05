@@ -26,6 +26,9 @@
              <div *ngIf="f['email'].invalid && (f['email'].dirty )" style="text-align: left;">
                <small class="p-error"
                       *ngIf="f['email'].errors?.['required']">Email required!</small>
+               <small class="p-error"
+                      *ngIf="f['email'].errors?.['pattern']">Please provide a valid email address!</small>
+
              </div>
            </div>
            <div class="mb-4 pb-3" style="width: 90%">
