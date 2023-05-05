@@ -30,4 +30,7 @@ public class SemesterService {
     public List<Semester> findAll() {
         return semesterRepository.findAll();
     }
+    public void delete(Long id){
+        this.semesterRepository.deleteById(id);
+    }
 }

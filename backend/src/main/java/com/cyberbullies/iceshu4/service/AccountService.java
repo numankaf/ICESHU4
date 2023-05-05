@@ -56,14 +56,13 @@ public class AccountService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email);
 
-        System.out.println(user.getPassword());
-
-        if (user.getPassword().equals(passwordEncoder.encode(changePasswordDTO.getCurrentPassword())))
+        if (!passwordEncoder.matches(changePasswordDTO.getCurrentPassword(),user.getPassword()))
         {
-            user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+            throw new BadCredentialsException("Current password is wrong");
         }
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        userRepository.save(user);
 
-        System.out.println(user.getPassword());
 
     }
 

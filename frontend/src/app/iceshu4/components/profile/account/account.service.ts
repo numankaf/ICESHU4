@@ -35,6 +35,11 @@ export class AccountService{
     // @ts-ignore
     return this.httpClient.put<any>(`${environment.apiUrl}/account/update`, data, {headers: this.headers,responseType:"text"}).pipe(catchError(this.handleError),);
   }
+  changepassword(data: any): Observable<any> {
+
+    // @ts-ignore
+    return this.httpClient.post<any>(`${environment.apiUrl}/account/changepassword`, data, {headers: this.headers,responseType:"text"}).pipe(catchError(this.handleError),);
+  }
 
   handleError(error: HttpErrorResponse) {
     let msg = '';

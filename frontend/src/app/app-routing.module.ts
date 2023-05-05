@@ -14,6 +14,7 @@ import {InstructorLayoutComponent} from "./layout/instructor-layout/instructor-l
 import {DepartmentManagerLayoutComponent} from "./layout/department-manager-layout/department-manager-layout.component";
 import {UsersComponent} from "./iceshu4/components/admin/users/users.component";
 import {SemestersComponent} from "./iceshu4/components/admin/semesters/semesters.component";
+import {ChangepasswordComponent} from "./iceshu4/components/profile/changepassword/changepassword.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -94,7 +95,7 @@ import {SemestersComponent} from "./iceshu4/components/admin/semesters/semesters
       children: [
         {path: '', redirectTo: 'account', pathMatch: 'full'},
         {path: 'account', component: AccountComponent},
-        {path: 'changepassword', component: AccountComponent},
+        {path: 'changepassword', component: ChangepasswordComponent},
         {path: 'messages', component: AccountComponent},
       ]
     },
