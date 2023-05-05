@@ -1,10 +1,7 @@
 package com.cyberbullies.iceshu4.service;
 
 import com.cyberbullies.iceshu4.auth.TokenManager;
-import com.cyberbullies.iceshu4.dto.ForgotPasswordDTO;
-import com.cyberbullies.iceshu4.dto.LoginRequestDTO;
-import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
-import com.cyberbullies.iceshu4.dto.ResponseDTO;
+import com.cyberbullies.iceshu4.dto.*;
 import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.enums.UserRole;
 import lombok.AllArgsConstructor;
@@ -56,7 +53,7 @@ public class AuthService {
                 " and special characters. If you did not request a password reset, please contact our customer support team immediately. " +
                 "\nThank you for choosing our service. \nBest regards,\nIceshu4, Cyberbullies ";
         emailSenderService.sendEmail(user.getEmail(), "New Password Created",
-                context );
+                context);
 
        user.setPassword(passwordEncoder.encode(newPassword));
 

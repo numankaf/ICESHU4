@@ -1,9 +1,6 @@
 package com.cyberbullies.iceshu4.controller;
 
-import com.cyberbullies.iceshu4.dto.ForgotPasswordDTO;
-import com.cyberbullies.iceshu4.dto.LoginRequestDTO;
-import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
-import com.cyberbullies.iceshu4.dto.ResponseDTO;
+import com.cyberbullies.iceshu4.dto.*;
 import com.cyberbullies.iceshu4.service.AuthService;
 
 import lombok.AllArgsConstructor;
@@ -37,4 +34,5 @@ public class AuthController {
         authService.forgotPassword(forgotPasswordDTO);
         return new ResponseEntity<String>("success", HttpStatus.OK);
     }
+
 }
