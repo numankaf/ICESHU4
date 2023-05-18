@@ -9,12 +9,10 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class EmailSenderService
-{
-    private JavaMailSender mailSender;
+public class EmailSenderService {
+    private final JavaMailSender mailSender;
 
-    public void sendEmail(String toEmail, String subject, String body)
-    {
+    public void sendEmail(String toEmail, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("Iceshu4cyberbullies@gmail.com");
         message.setTo(toEmail);
@@ -24,9 +22,7 @@ public class EmailSenderService
         mailSender.send(message);
     }
 
-
-    public String generatePassword()
-    {
+    public String generatePassword() {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
 

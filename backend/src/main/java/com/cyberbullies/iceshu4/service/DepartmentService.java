@@ -12,13 +12,17 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class DepartmentService {
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
-    public List<Department> getDepartment() {
+    public List<Department> findAll() {
         return departmentRepository.findAll();
     }
 
     public Department getDepartmentByName(String name) {
         return departmentRepository.findByName(name);
+    }
+
+    public Department getDepartmentById(Long id) {
+        return departmentRepository.findById(id).get();
     }
 }

@@ -32,9 +32,14 @@ public class SemesterController {
         return semesterService.findAll();
     }
 
+    @GetMapping("/get/{id}")
+    public Semester getSemesterById(@PathVariable Long id) {
+        return semesterService.getSemesterById(id);
+    }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         semesterService.delete(id);
-        return new ResponseEntity<>("Deleted semester with id :" +id, HttpStatus.OK);
+        return new ResponseEntity<>("Deleted semester with id :" + id, HttpStatus.OK);
     }
 }
