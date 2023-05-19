@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Setter
@@ -27,14 +29,26 @@ public class User {
     @Enumerated(EnumType.ORDINAL)
     private UserRole role;
     private String password;
-    private String email;// will be used as username in JwtUserDetails
+    private String email;
     private String birth_date;
     private String about;
     private String address;
     private String school_id;
-    @JsonIgnore
-    @OneToOne
+    private Boolean banned;
+    // @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
-    private Boolean banned;
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "managed_department_id", referencedColumnName = "id")
+    private Department managed_department;
+    @JsonIgnore
+    @ManyToMany
+    @JoinColumn(name = "student_courses_id", referencedColumnName = "id")
+    private List<Course> student_courses;
+    @JsonIgnore
+    @ManyToMany
+    @JoinColumn(name = "instructor_courses_id", referencedColumnName = "id")
+    private List<Course> instructor_courses;
 }

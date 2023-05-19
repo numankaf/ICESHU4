@@ -5,8 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
 @Setter
@@ -21,5 +24,8 @@ public class Semester {
     private String name;
     private LocalDate start_date;
     private LocalDate end_date;
+    @JsonIgnore
+    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL)
+    private List<Course> courses;
 
 }

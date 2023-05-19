@@ -4,7 +4,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
 @Setter
@@ -17,4 +21,13 @@ public class Department {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
     private String name;
+    @JsonIgnore
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Course> courses;
+    @JsonIgnore
+    @OneToMany(mappedBy = "department")
+    private List<User> users;
+    // @JsonIgnore
+    @OneToOne(mappedBy = "managed_department")
+    private User department_manager;
 }

@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
 
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/forgotpassword")
-    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO)
-    {
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) {
         authService.forgotPassword(forgotPasswordDTO);
         return new ResponseEntity<String>("success", HttpStatus.OK);
     }
