@@ -50,6 +50,9 @@ import {TableModule} from "primeng/table";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import { ChangepasswordComponent } from './iceshu4/components/profile/changepassword/changepassword.component';
+import { HasRoleDirective } from './iceshu4/core/has-role.directive';
+import { CourseComponent } from './iceshu4/components/course/course.component';
+import {MenuModule} from "primeng/menu";
 
 @NgModule({
   declarations: [
@@ -68,7 +71,9 @@ import { ChangepasswordComponent } from './iceshu4/components/profile/changepass
     DepartmentManagerLayoutComponent,
     UsersComponent,
     SemestersComponent,
-    ChangepasswordComponent
+    ChangepasswordComponent,
+    HasRoleDirective,
+    CourseComponent
   ],
   imports: [
     HttpClientModule,
@@ -104,7 +109,8 @@ import { ChangepasswordComponent } from './iceshu4/components/profile/changepass
     CalendarModule,
     ToastModule,
     TableModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MenuModule
   ],
   providers: [
     {

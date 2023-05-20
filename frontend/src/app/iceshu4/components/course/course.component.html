@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="flex align-items-center justify-content-between my-3">
+    <h1 *appHasRole="['STUDENT', 'INSTRUCTOR']" class="m-0 font-medium text-3xl">My Courses</h1>
+    <h1 *appHasRole="['DEPARTMENT_MANAGER', 'ADMIN']" class="m-0 font-medium text-3xl">All Courses</h1>
+    <button *appHasRole="['STUDENT']" pButton pRipple
+            label="Enroll to Another Course" icon="pi pi-plus" class="p-button-info mr-2 mb-2"></button>
+  </div>
+  <div class="flex flex-wrap m-2">
+    <ng-container *ngFor="let course of courses">
+      <div class=" course m-2" style="border-radius: 0.75rem;">
+        <div class="surface-card shadow-2 border-round p-4">
+          <div class="flex align-items-center justify-content-between mb-4">
+            <span class="text-xl font-medium text-900 text-primary">{{course.name}}</span>
+            <div class="ml-auto">
+              <button pbutton="" pripple="" icon="pi pi-ellipsis-v" (click)="menuOpen = !menuOpen"
+                      class="p-element p-button-text p-button-plain p-button-rounded p-button p-component p-button-icon-only">
+                <span class="p-button-icon pi pi-ellipsis-v" aria-hidden="true"></span>
+              </button>
+            </div>
+            <p-overlay [(visible)]="menuOpen"  [responsive]="{ breakpoint: '640px', direction: 'bottom', contentStyleClass: 'h-20rem' }"
+                       contentStyleClass="p-4 surface-overlay shadow-2 border-round">
+              Content
+            </p-overlay>
+          </div>
+          <span class="text-xl font-medium text-900">Evaluation Forms</span>
+          <ul class="mt-4 list-none p-0 mx-0">
+            <li class="flex align-items-center pb-3">
+             <div class="hover:focus-ring cursor-pointer">
+               <span class="text-xl font-medium text-90">Watch</span>
+               <span class=" text-primary ml-auto pi pi-angle-right"></span>
+             </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

@@ -20,6 +20,7 @@ public class TokenManager {
         JwtUserDetails userDetails = (JwtUserDetails) auth.getPrincipal();
         Date expireDate = new Date(new Date().getTime() + EXPIRES_IN);
         return Jwts.builder().setSubject(Long.toString(userDetails.getId())).claim("role", userDetails.getAuthorities()).
+                setSubject(Long.toString(userDetails.getId())).claim("departmentId", userDetails.getDepartmentId()).
                 setIssuedAt(new Date()).setExpiration(expireDate).
                 signWith(SignatureAlgorithm.HS512, APP_SECRET).compact();
     }

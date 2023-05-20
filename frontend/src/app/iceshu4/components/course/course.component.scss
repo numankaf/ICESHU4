@@ -1,0 +1,8 @@
+.course{
+  width: calc(50% - 1rem)
+}
+@media (max-width: 1200px){
+  .course {
+    width: 100%;
+  }
+}

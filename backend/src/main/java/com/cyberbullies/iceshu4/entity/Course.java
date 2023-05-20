@@ -30,9 +30,7 @@ public class Course {
     @JoinColumn(name = "semester_id", referencedColumnName = "id", nullable = false)
     private Semester semester;
     @JsonIgnore
-    @ManyToMany(mappedBy = "student_courses")
-    private List<User> students;
-    @JsonIgnore
-    @ManyToMany(mappedBy = "instructor_courses")
-    private List<User> instructors;
+    @ManyToMany(mappedBy = "user_courses")
+    private List<User> users;
+
 }
