@@ -1,0 +1,8 @@
+.card-section{
+  width: calc(50% - 0.5rem)
+}
+@media (max-width: 1200px){
+  .card-section {
+    width: 100%;
+  }
+}

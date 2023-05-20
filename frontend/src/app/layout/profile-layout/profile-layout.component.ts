@@ -26,7 +26,6 @@ export class ProfileLayoutComponent implements AfterViewInit {
     this.menuItems = [
       {icon: 'account_circle', name: 'Account', route: '/profile/account'},
       {icon: 'key', name: 'Change Password', route: '/profile/changepassword'},
-      {icon: 'sms', name: 'Messages', route: '/profile/messages'},
       {icon: 'first_page', name: 'Back to Main Menu', route: this.getRoute()},
 
     ]

@@ -100,12 +100,14 @@ public class UserService {
 
     public List<User> findCourseStudents(Long id) {
         Course course = courseRepository.findById(id).get();
-        return course.getUsers();
+        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.STUDENT).collect(Collectors.toList());
+        return users;
     }
 
     public List<User> findCourseInstructors(Long id) {
         Course course = courseRepository.findById(id).get();
-        return course.getUsers();
+        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.INSTRUCTOR).collect(Collectors.toList());
+        return users;
     }
 
     public List<User> getInstructorsByDepartmentId(Long id) {
