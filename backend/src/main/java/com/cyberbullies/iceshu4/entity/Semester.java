@@ -25,7 +25,7 @@ public class Semester {
     private LocalDate start_date;
     private LocalDate end_date;
     @JsonIgnore
-    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Course> courses;
 
 }

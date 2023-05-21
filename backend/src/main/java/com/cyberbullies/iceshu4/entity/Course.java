@@ -21,16 +21,21 @@ public class Course {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
     private String name;
-    // @JsonIgnore
-    @ManyToOne
+     @JsonIgnore
+    @ManyToOne(targetEntity = Department.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
-    // @JsonIgnore
-    @ManyToOne
+     @JsonIgnore
+    @ManyToOne(targetEntity = Semester.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "semester_id", referencedColumnName = "id", nullable = false)
     private Semester semester;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "courses_users",
+                joinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "id")},
+                inverseJoinColumns = {@JoinColumn(name="user_id",referencedColumnName = "id")}
+    )
     @JsonIgnore
-    @ManyToMany(mappedBy = "user_courses")
     private List<User> users;
 
 }

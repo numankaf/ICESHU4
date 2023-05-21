@@ -22,12 +22,12 @@ public class Department {
     private Long id;
     private String name;
     @JsonIgnore
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Course> courses;
     @JsonIgnore
-    @OneToMany(mappedBy = "department")
+    @OneToMany(mappedBy = "department",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<User> users;
-    // @JsonIgnore
+     @JsonIgnore
     @OneToOne(mappedBy = "managed_department")
     private User department_manager;
 }
