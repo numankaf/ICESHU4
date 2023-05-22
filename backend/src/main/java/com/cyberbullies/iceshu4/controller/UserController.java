@@ -70,7 +70,7 @@ public class UserController {
         return new ResponseEntity<>("User is created", HttpStatus.OK);
     }
 
-    @PutMapping("/enrollCourse/{UserID}/{CourseID}")
+    @PostMapping("/enrollCourse/{UserID}/{CourseID}")
     public ResponseEntity<String> enrollCourse(@PathVariable Long UserID, @PathVariable Long CourseID) {
         if (userService.getUserById(UserID) == null) {
             return new ResponseEntity<>("There is no user with given id", HttpStatus.BAD_REQUEST);

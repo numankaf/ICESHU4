@@ -18,5 +18,5 @@ public class CourseCreateRequestDTO {
     private String name;
     private Department department;
     private Semester semester;
-    private List<User> instructors;
+    private List<User> users;
 }

@@ -45,10 +45,7 @@ public class User {
     private Department managed_department;
     @JsonIgnore
     @ManyToMany
-    @JoinColumn(name = "student_courses_id", referencedColumnName = "id")
-    private List<Course> student_courses;
-    @JsonIgnore
-    @ManyToMany
-    @JoinColumn(name = "instructor_courses_id", referencedColumnName = "id")
-    private List<Course> instructor_courses;
+    @JoinColumn(name = "user_courses_id", referencedColumnName = "id")
+    private List<Course> user_courses;
+
 }

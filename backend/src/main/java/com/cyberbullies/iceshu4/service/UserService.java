@@ -87,25 +87,27 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Student can't take courses from another department!");
         }
-        if (!user.getStudent_courses().stream().filter(student_course -> CourseID == student_course.getId()).findAny()
+        if (!user.getUser_courses().stream().filter(student_course -> CourseID == student_course.getId()).findAny()
                 .isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Student can't take courses that already taken'");
         }
-        List<Course> courses = user.getStudent_courses();
+        List<Course> courses = user.getUser_courses();
         courses.add(course);
-        user.setStudent_courses(courses);
+        user.setUser_courses(courses);
         userRepository.save(user);
     }
 
     public List<User> findCourseStudents(Long id) {
         Course course = courseRepository.findById(id).get();
-        return course.getStudents();
+        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.STUDENT).collect(Collectors.toList());
+        return users;
     }
 
     public List<User> findCourseInstructors(Long id) {
         Course course = courseRepository.findById(id).get();
-        return course.getInstructors();
+        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.INSTRUCTOR).collect(Collectors.toList());
+        return users;
     }
 
     public List<User> getInstructorsByDepartmentId(Long id) {
@@ -124,8 +126,11 @@ public class UserService {
         dto.setRole(user.getRole());
         dto.setBirth_date(user.getBirth_date());
         dto.setSchool_id(user.getSchool_id());
-        dto.setDepartment(user.getDepartment());
-        dto.setManaged_Department(user.getManaged_department());
+        if(user.getRole()==UserRole.DEPARTMENT_MANAGER){
+            dto.setDepartment(user.getManaged_department());
+        }else{
+            dto.setDepartment(user.getDepartment());
+        }
         dto.setBanned(user.getBanned());
         return dto;
     }

@@ -22,6 +22,5 @@ public class UserDetailDTO {
     private String address;
     private String school_id;
     private Department department;
-    private Department managed_Department;
     private Boolean banned;
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,13 +33,13 @@ public class CourseService {
         createdCourse.setName(course.getName());
         createdCourse.setDepartment(course.getDepartment());
         createdCourse.setSemester(course.getSemester());
-        if (!course.getInstructors().stream()
+        if (!course.getUsers().stream()
                 .filter(instructor -> instructor.getDepartment().getId() != course.getDepartment().getId()).findAny()
                 .isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Instructor at given department required!");
         }
-        createdCourse.setInstructors(course.getInstructors());
+        createdCourse.setUsers(course.getUsers());
         courseRepository.save(createdCourse);
     }
 
@@ -62,15 +63,17 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
-    public List<Course> getStudentCourses(Long id) {
-        User student = userRepository.findById(id).get();
-        return student.getStudent_courses();
+//    public List<Course> getCourses() {
+//        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+//        User user = userRepository.findByEmail(email);
+//        return user.getUser_courses();
+//    }
+    public List<Course> getCoursesById(Long id) {
+        User user = userRepository.findById(id).get();
+        return user.getUser_courses();
     }
 
-    public List<Course> getInstructorCourses(Long id) {
-        User instructor = userRepository.findById(id).get();
-        return instructor.getInstructor_courses();
-    }
+
 
     public List<Course> getDepartmentCourses(Long id) {
         Department department = departmentRepository.findById(id).get();

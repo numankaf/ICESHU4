@@ -53,15 +53,15 @@ public class CourseController {
         return new ResponseEntity<>("Course is deleted", HttpStatus.OK);
     }
 
-    @GetMapping("/getStudentCourses/{id}")
-    public List<Course> getStudentCourses(@PathVariable Long id) {
-        return courseService.getStudentCourses(id);
+    @GetMapping("/getUserCourses/{id}")
+    public List<Course> getCoursesById(@PathVariable Long id) {
+        return courseService.getCoursesById(id);
     }
 
-    @GetMapping("/getInstructorCourses/{id}")
-    public List<Course> getInstructorCourses(@PathVariable Long id) {
-        return courseService.getInstructorCourses(id);
-    }
+//    @GetMapping("/getUserCourses")
+//    public List<Course> getCourses() {
+//        return courseService.getCourses();
+//    }
 
     @GetMapping("getDepartmentCourses/{id}")
     public List<Course> getDepartmentCourses(@PathVariable Long id) {

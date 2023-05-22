@@ -15,6 +15,8 @@ import {DepartmentManagerLayoutComponent} from "./layout/department-manager-layo
 import {UsersComponent} from "./iceshu4/components/admin/users/users.component";
 import {SemestersComponent} from "./iceshu4/components/admin/semesters/semesters.component";
 import {ChangepasswordComponent} from "./iceshu4/components/profile/changepassword/changepassword.component";
+import {CourseComponent} from "./iceshu4/components/course/course.component";
+import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/coursedetail.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -36,8 +38,10 @@ import {ChangepasswordComponent} from "./iceshu4/components/profile/changepasswo
       children: [
         {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
         {path: 'dashboard', component: DashboardComponent},
-        {path: 'classes', component: DashboardComponent},
+        {path: 'courses', component: CourseComponent},
+        {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: DashboardComponent},
+        {path: 'messages', component: DashboardComponent},
         {path: 'about', component: DashboardComponent},
         {path: 'help', component: DashboardComponent},
       ]
@@ -52,6 +56,8 @@ import {ChangepasswordComponent} from "./iceshu4/components/profile/changepasswo
         {path: '', redirectTo: 'users', pathMatch: 'full'},
         {path: 'users', component: UsersComponent},
         {path: 'semesters', component: SemestersComponent},
+        {path: 'courses', component: CourseComponent},
+        {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'messages', component: DashboardComponent},
         {path: 'bans', component: DashboardComponent},
       ]
@@ -65,7 +71,8 @@ import {ChangepasswordComponent} from "./iceshu4/components/profile/changepasswo
       children: [
         {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
         {path: 'dashboard', component: DashboardComponent},
-        {path: 'classes', component: DashboardComponent},
+        {path: 'courses', component: CourseComponent},
+        {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: DashboardComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
@@ -80,7 +87,8 @@ import {ChangepasswordComponent} from "./iceshu4/components/profile/changepasswo
       children: [
         {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
         {path: 'dashboard', component: DashboardComponent},
-        {path: 'classes', component: DashboardComponent},
+        {path: 'courses', component: CourseComponent},
+        {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: DashboardComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
@@ -96,7 +104,6 @@ import {ChangepasswordComponent} from "./iceshu4/components/profile/changepasswo
         {path: '', redirectTo: 'account', pathMatch: 'full'},
         {path: 'account', component: AccountComponent},
         {path: 'changepassword', component: ChangepasswordComponent},
-        {path: 'messages', component: AccountComponent},
       ]
     },
 
