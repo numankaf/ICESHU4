@@ -60,8 +60,7 @@ public class SecurityConfig {
                 .antMatchers("/course/**").permitAll()
                 .antMatchers("/user/**").hasAnyAuthority("ADMIN","INSTRUCTOR","DEPARTMENT_MANAGER","STUDENT")
                 .antMatchers("/semester/**").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated();//for semester: hasAnyAuthority("ADMIN")
-        //for user: hasAnyAuthority("ADMIN","INSTRUCTOR","DEPARTMENT_MANAGER","STUDENT")
+                .anyRequest().authenticated();
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

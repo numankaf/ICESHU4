@@ -21,12 +21,12 @@ public class Course {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
     private String name;
-     @JsonIgnore
-    @ManyToOne(targetEntity = Department.class,fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(targetEntity = Department.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
-     @JsonIgnore
-    @ManyToOne(targetEntity = Semester.class,fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(targetEntity = Semester.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "semester_id", referencedColumnName = "id", nullable = false)
     private Semester semester;
 

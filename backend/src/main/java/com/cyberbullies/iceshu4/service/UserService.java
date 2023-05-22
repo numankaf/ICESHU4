@@ -80,36 +80,6 @@ public class UserService {
         userRepository.save(createdUser);
     }
 
-    public void enrollCourse(Long UserID, long CourseID) {
-        User user = userRepository.findById(UserID).get();
-        Course course = courseRepository.findById(CourseID).get();
-        if (user.getDepartment().getId() != course.getDepartment().getId()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Student can't take courses from another department!");
-        }
-        if (!user.getUser_courses().stream().filter(student_course -> CourseID == student_course.getId()).findAny()
-                .isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Student can't take courses that already taken'");
-        }
-        List<Course> courses = user.getUser_courses();
-        courses.add(course);
-        user.setUser_courses(courses);
-        userRepository.save(user);
-    }
-
-    public List<User> findCourseStudents(Long id) {
-        Course course = courseRepository.findById(id).get();
-        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.STUDENT).collect(Collectors.toList());
-        return users;
-    }
-
-    public List<User> findCourseInstructors(Long id) {
-        Course course = courseRepository.findById(id).get();
-        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.INSTRUCTOR).collect(Collectors.toList());
-        return users;
-    }
-
     public List<User> getInstructorsByDepartmentId(Long id) {
         return userRepository.getInstructorsByDepartmentId(id);
     }
