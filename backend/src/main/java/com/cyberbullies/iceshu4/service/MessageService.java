@@ -1,40 +1,58 @@
 package com.cyberbullies.iceshu4.service;
 
 import com.cyberbullies.iceshu4.dto.MessageDTO;
+import com.cyberbullies.iceshu4.dto.MessageResponseDTO;
 import com.cyberbullies.iceshu4.entity.Message;
+import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.repository.MessageRepository;
+import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 @AllArgsConstructor
 public class MessageService
 {
     private MessageRepository messageRepository;
-    //private UserRepository userRepository;
+    private UserRepository userRepository;
 
+
+    public void createMessage(MessageDTO message)
+    {
+        Message newMessage = new Message();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByEmail(email);
+        newMessage.setStudent_id(user.getId());
+        newMessage.setSubject(message.getSubject());
+        newMessage.setContent(message.getContent());
+        newMessage.setCreated_date(message.getCreated_date());
+        newMessage.setOpenned(true);
+        messageRepository.save(newMessage);
+    }
+
+    public void responseMessage(MessageResponseDTO messageResponse)
+    {
+        Message message = messageRepository.findById(messageResponse.getId()).orElse(null);
+        message.setAdmin_response(messageResponse.getAdmin_response());
+        message.setOpenned(false);
+        messageRepository.save(message);
+
+    }
 
     public List<Message> findAll()
     {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println(email);
-        //User user = userRepository.findByEmail(email);
-        List<Message> messages = messageRepository.findAllByEmail(email);
-        //User fromUser = userRepository.findByEmail(messages.get(0).getFromUserEmail());  --> to access who sent the message
-        //User toUser = userRepository.findByEmail(messages.get(0).getToUserEmail());  --> to access who received the message
-        return messages;
+        User user = userRepository.findByEmail(email);
+        return messageRepository.findAllById(user.getId());
     }
 
-
-    public void sendMessage(MessageDTO message)
+    public List<Message> findAllAdmin()
     {
-        Message newMessage = new Message();
-        newMessage.setFrom_user_email(message.getFromUserEmail());
-        newMessage.setTo_user_email(message.getToUserEmail());
-        newMessage.setBody(message.getBody());
-        messageRepository.save(newMessage);
+        return messageRepository.findAll();
     }
+
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -18,7 +19,11 @@ public class Message
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
-    private String from_user_email;
-    private String to_user_email;
-    private String body;
+    private long student_id;
+    private String subject;
+    private String content;
+    private Timestamp created_date;
+    private boolean openned;
+    private String admin_response;
+
 }

@@ -3,11 +3,14 @@ package com.cyberbullies.iceshu4.dto;
 import lombok.Data;
 import lombok.Getter;
 
+import java.sql.Timestamp;
+
 @Getter
 @Data
 public class MessageDTO
 {
-    String fromUserEmail;
-    String toUserEmail;
-    String body;
+    String subject;
+    String content;
+    Timestamp created_date;
+
 }

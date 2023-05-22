@@ -1,6 +1,7 @@
 package com.cyberbullies.iceshu4.controller;
 
 import com.cyberbullies.iceshu4.dto.MessageDTO;
+import com.cyberbullies.iceshu4.dto.MessageResponseDTO;
 import com.cyberbullies.iceshu4.entity.Message;
 import com.cyberbullies.iceshu4.service.MessageService;
 import com.cyberbullies.iceshu4.service.UserService;
@@ -19,23 +20,30 @@ public class MessageController
     private UserService userService;
     private MessageService messageService;
 
-    @PostMapping("/sendMessage")
+    @PostMapping("/createMessage")
     public ResponseEntity<String> sendMessage(@RequestBody MessageDTO message)
     {
-        /*
-        if (userService.getUserByEmail(message.getToUserEmail()) == null)
-            return new ResponseEntity<>("There is not such user", HttpStatus.BAD_REQUEST);
-        */
+        messageService.createMessage(message);
+        return new ResponseEntity<>("Message sent.", HttpStatus.OK);
+    }
 
-        System.out.println(message.getBody());
-
-        messageService.sendMessage(message);
-        return new ResponseEntity<>("Message sent", HttpStatus.OK);
+    @PutMapping("/responseMessage")
+    public ResponseEntity<String> responseMessage(@RequestBody MessageResponseDTO messageResponse)
+    {
+        messageService.responseMessage(messageResponse);
+        return new ResponseEntity<>("Response sent.", HttpStatus.OK);
     }
 
     @GetMapping("/findAll")
     public List<Message> findAll()
     {
         return messageService.findAll();
+    }
+
+
+    @GetMapping("/findAllAdmin")
+    public List<Message> findAllAdmin()
+    {
+        return messageService.findAllAdmin();
     }
 }
