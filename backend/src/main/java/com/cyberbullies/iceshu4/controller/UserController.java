@@ -6,11 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
 
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
+import com.cyberbullies.iceshu4.entity.User;
+
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -47,12 +48,17 @@ public class UserController {
         if (userService.getUserById(id) == null) {
             return new ResponseEntity<>("There are no user by this id!", HttpStatus.BAD_REQUEST);
         }
+        if (!userService.getUserById(id).getEmail().equals(student.getEmail())
+                && userService.getUserByEmail(student.getEmail()) != null) {
+            return new ResponseEntity<>("There are already user with this email!", HttpStatus.BAD_REQUEST);
+        }
         userService.updateUserById(id, student);
         return new ResponseEntity<String>("User is updated!", HttpStatus.OK);
     }
+
     @GetMapping("/findUserRoles")
-    public List<UserRole> findUserRoles(){
-        return List.of(UserRole.STUDENT,UserRole.INSTRUCTOR,UserRole.ADMIN,UserRole.DEPARTMENT_MANAGER);
+    public List<UserRole> findUserRoles() {
+        return List.of(UserRole.STUDENT, UserRole.INSTRUCTOR, UserRole.ADMIN, UserRole.DEPARTMENT_MANAGER);
     }
 
     @PostMapping("/create")
@@ -62,6 +68,30 @@ public class UserController {
         }
         userService.createUser(user);
         return new ResponseEntity<>("User is created", HttpStatus.OK);
+    }
+
+    @PutMapping("/enrollCourse/{UserID}/{CourseID}")
+    public ResponseEntity<String> enrollCourse(@PathVariable Long UserID, @PathVariable Long CourseID) {
+        if (userService.getUserById(UserID) == null) {
+            return new ResponseEntity<>("There is no user with given id", HttpStatus.BAD_REQUEST);
+        }
+        userService.enrollCourse(UserID, CourseID);
+        return new ResponseEntity<>("User enrolled the Course", HttpStatus.OK);
+    }
+
+    @GetMapping("/findCourseStudents/{id}")
+    public List<User> findCourseStudents(@PathVariable Long id) {
+        return userService.findCourseStudents(id);
+    }
+
+    @GetMapping("/findCourseInstructors/{id}")
+    public List<User> findCourseInstructors(@PathVariable Long id) {
+        return userService.findCourseInstructors(id);
+    }
+
+    @GetMapping("/getInstructorsByDepartmentId/{id}")
+    public List<User> getInstructorsByDepartmentId(@PathVariable Long id) {
+        return userService.getInstructorsByDepartmentId(id);
     }
 
 }

@@ -49,6 +49,7 @@ import { SemestersComponent } from './iceshu4/components/admin/semesters/semeste
 import {TableModule} from "primeng/table";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
+import { ChangepasswordComponent } from './iceshu4/components/profile/changepassword/changepassword.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {ConfirmationService} from "primeng/api";
     AdminLayoutComponent,
     DepartmentManagerLayoutComponent,
     UsersComponent,
-    SemestersComponent
+    SemestersComponent,
+    ChangepasswordComponent
   ],
   imports: [
     HttpClientModule,

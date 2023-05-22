@@ -4,11 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cyberbullies.iceshu4.dto.SemesterCreateRequestDTO;
 import com.cyberbullies.iceshu4.service.SemesterService;
@@ -34,5 +30,16 @@ public class SemesterController {
     @GetMapping("/findAll")
     public List<Semester> findAll() {
         return semesterService.findAll();
+    }
+
+    @GetMapping("/get/{id}")
+    public Semester getSemesterById(@PathVariable Long id) {
+        return semesterService.getSemesterById(id);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        semesterService.delete(id);
+        return new ResponseEntity<>("Deleted semester with id :" + id, HttpStatus.OK);
     }
 }

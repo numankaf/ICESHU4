@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {UsersService} from "./users.service";
-import {ConfirmationService, LazyLoadEvent, Message} from "primeng/api";
+import {ConfirmationService, Message, MessageService} from "primeng/api";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {environment} from "../../../../../environments/environment";
@@ -11,7 +11,8 @@ import {Role} from "./role";
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: ['./users.component.scss'],
+  providers:[MessageService, ConfirmationService]
 })
 export class UsersComponent {
   allUsers: any;
@@ -22,10 +23,10 @@ export class UsersComponent {
   form: FormGroup;
   departments!: Department[];
   roles! : Role[];
-  errorMessages: Message[] =[];
 
   constructor(private userService: UsersService,
               private confirmationService: ConfirmationService,
+              private messageService:MessageService,
               private router: Router, private fb: FormBuilder,
               private http: HttpClient) {
     this.updateUserByAdmin = this.fb.group({
@@ -102,12 +103,7 @@ export class UsersComponent {
           location.reload();
         },
         error => {
-          this.errorMessages=[];
-          this.errorMessages.push({
-            severity: 'error',
-            summary: 'Error:',
-            detail: 'This email is already in use!'
-          })
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'This email is already in use' });
         }
       );
     }
@@ -131,13 +127,14 @@ export class UsersComponent {
       const id = this.updateUserByAdmin.get('id')?.value;
       this.userService.updateUser(id, this.updateUserByAdmin.value).subscribe(
         response => {
+          this.updateDialog = false;
           location.reload();
         },
         error => {
-          console.log(error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'This email is already in use' });
         }
       );
-      this.updateDialog = false;
+
   }
 
   openUpdateDialog(allUsers: any){

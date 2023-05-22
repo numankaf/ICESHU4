@@ -1,10 +1,7 @@
 package com.cyberbullies.iceshu4.service;
 
 import com.cyberbullies.iceshu4.auth.TokenManager;
-import com.cyberbullies.iceshu4.dto.ForgotPasswordDTO;
-import com.cyberbullies.iceshu4.dto.LoginRequestDTO;
-import com.cyberbullies.iceshu4.dto.RegisterRequestDTO;
-import com.cyberbullies.iceshu4.dto.ResponseDTO;
+import com.cyberbullies.iceshu4.dto.*;
 import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.enums.UserRole;
 import lombok.AllArgsConstructor;
@@ -22,11 +19,11 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class AuthService {
-    private PasswordEncoder passwordEncoder;
-    private AuthenticationManager authenticationManager;
-    private UserService userService;
-    private TokenManager tokenManager;
-    private EmailSenderService emailSenderService;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final TokenManager tokenManager;
+    private final EmailSenderService emailSenderService;
 
     public ResponseDTO login(LoginRequestDTO loginRequestDTO) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -42,28 +39,28 @@ public class AuthService {
         return responseDTO;
     }
 
-    public void forgotPassword(ForgotPasswordDTO forgotPasswordDTO)
-    {
+    public void forgotPassword(ForgotPasswordDTO forgotPasswordDTO) {
         User user = userService.getUserByEmail(forgotPasswordDTO.getEmail());
-        if (user == null){
+        if (user == null) {
             throw new BadCredentialsException("This email is invalid");
         }
         String newPassword = emailSenderService.generatePassword();
-        String context= "Dear "+user.getName()+",\n"+
-                "Your password has been reset for security reasons. \n Your new password is: "+newPassword+
-            "\nWe recommend changing your password as soon as possible to ensure the safety of your account. " +
-                "Please create a strong and unique password consisting of a combination of uppercase and lowercase letters, numbers," +
-                " and special characters. If you did not request a password reset, please contact our customer support team immediately. " +
+        String context = "Dear " + user.getName() + ",\n" +
+                "Your password has been reset for security reasons. \n Your new password is: " + newPassword +
+                "\nWe recommend changing your password as soon as possible to ensure the safety of your account. " +
+                "Please create a strong and unique password consisting of a combination of uppercase and lowercase letters, numbers,"
+                +
+                " and special characters. If you did not request a password reset, please contact our customer support team immediately. "
+                +
                 "\nThank you for choosing our service. \nBest regards,\nIceshu4, Cyberbullies ";
         emailSenderService.sendEmail(user.getEmail(), "New Password Created",
-                context );
+                context);
 
-       user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPassword(passwordEncoder.encode(newPassword));
 
-       userService.save(user);
+        userService.save(user);
 
     }
-
 
     public ResponseEntity<ResponseDTO> register(RegisterRequestDTO registerRequestDTO) {
         ResponseDTO responseDTO = new ResponseDTO();
@@ -72,7 +69,8 @@ public class AuthService {
             return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
         }
         User user = new User();
-        user.setProfile_photo("https://st2.depositphotos.com/1502311/12020/v/600/depositphotos_120206862-stock-illustration-profile-picture-vector.jpg");
+        user.setProfile_photo(
+                "https://st2.depositphotos.com/1502311/12020/v/600/depositphotos_120206862-stock-illustration-profile-picture-vector.jpg");
         user.setEmail(registerRequestDTO.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequestDTO.getPassword()));
         user.setName(registerRequestDTO.getName());

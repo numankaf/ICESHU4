@@ -55,7 +55,7 @@ export class SemestersComponent {
 
     this.semesterService.save(this.form.value).subscribe((data) => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Semester Created'});
-        location.reload();
+        this.ngOnInit();
       },
       (error) => {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Semester creation failed'});
@@ -67,7 +67,7 @@ export class SemestersComponent {
   deleteSemester(id: any) {
     this.semesterService.delete(id).subscribe((data) => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Semester deleted'});
-        location.reload();
+        this.ngOnInit();
       },
       (error) => {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Semester deletion failed'});

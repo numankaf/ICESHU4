@@ -23,7 +23,7 @@ export class SemesterService{
   delete(id:any): Observable<any> {
 
     // @ts-ignore
-    return this.httpClient.delete<any>(`${environment.apiUrl}/semester/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError),);
+    return this.httpClient.delete<any>(`${environment.apiUrl}/semester/delete/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError),);
   }
 
   handleError(error: HttpErrorResponse) {

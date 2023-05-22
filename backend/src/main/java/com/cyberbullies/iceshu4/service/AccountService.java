@@ -7,7 +7,7 @@ import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
-
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -16,9 +16,8 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class AccountService {
-    private UserRepository userRepository;
-
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserDetailDTO get() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -40,7 +39,7 @@ public class AccountService {
     }
 
     public User update(UserUpdateRequestDTO userUpdateRequestDTO) {
-        String email =SecurityContextHolder.getContext().getAuthentication().getName();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User updateUser = userRepository.findByEmail(email);
         updateUser.setName(userUpdateRequestDTO.getName());
         updateUser.setSurname(userUpdateRequestDTO.getSurname());
@@ -53,22 +52,17 @@ public class AccountService {
     }
 
 
-    public void changePassword(ChangePasswordDTO changePasswordDTO)
-    {
+    public void changePassword(ChangePasswordDTO changePasswordDTO) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email);
 
-        System.out.println(user.getPassword());
-
-        if (user.getPassword().equals(passwordEncoder.encode(changePasswordDTO.getCurrentPassword())))
-        {
-            user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        if (!passwordEncoder.matches(changePasswordDTO.getCurrentPassword(), user.getPassword())) {
+            throw new BadCredentialsException("Current password is wrong");
         }
-
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
         userRepository.save(user);
 
-        System.out.println(user.getPassword());
-
     }
+
 
 }
