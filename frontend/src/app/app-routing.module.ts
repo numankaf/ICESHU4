@@ -17,6 +17,7 @@ import {SemestersComponent} from "./iceshu4/components/admin/semesters/semesters
 import {ChangepasswordComponent} from "./iceshu4/components/profile/changepassword/changepassword.component";
 import {CourseComponent} from "./iceshu4/components/course/course.component";
 import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/coursedetail.component";
+import {BanStudentsComponent} from "./iceshu4/components/admin/ban-students/ban-students.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -59,7 +60,7 @@ import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/co
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'messages', component: DashboardComponent},
-        {path: 'bans', component: DashboardComponent},
+        {path: 'bans', component: BanStudentsComponent},
       ]
     },
     {

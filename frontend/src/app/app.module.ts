@@ -57,6 +57,7 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import { CoursedetailComponent } from './iceshu4/components/course/coursedetail/coursedetail.component';
 import {DataViewModule} from "primeng/dataview";
 import {TagModule} from "primeng/tag";
+import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ban-students.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import {TagModule} from "primeng/tag";
     ChangepasswordComponent,
     HasRoleDirective,
     CourseComponent,
-    CoursedetailComponent
+    CoursedetailComponent,
+    BanStudentsComponent
   ],
     imports: [
         HttpClientModule,
