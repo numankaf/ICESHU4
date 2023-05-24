@@ -18,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM USERS u WHERE u.department_id = ?1 AND u.role = 2", nativeQuery = true)
     List<User> getInstructorsByDepartmentId(Long id);
+
+    @Query(value = "SELECT * FROM USERS u WHERE u.banned = true", nativeQuery = true)
+    List<User> getBannedUsers();
 }
