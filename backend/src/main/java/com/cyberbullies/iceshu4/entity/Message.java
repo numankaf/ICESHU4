@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -23,6 +21,7 @@ public class Message
     private Long id;
     private long student_id;
     private String subject;
+    @Lob
     private String content;
     private Date created_date;
     private Date response_date;
