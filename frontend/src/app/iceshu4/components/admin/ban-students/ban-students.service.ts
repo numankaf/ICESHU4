@@ -8,6 +8,11 @@ import {environment} from "../../../../../environments/environment";
 })
 
 export class BanStudentsService{
+  headers = new HttpHeaders({ 'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*' ,
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+    'Access-Control-Expose-Headers' : 'Content-Disposition',
+    "Access-Control-Max-Age": "86400"});
   constructor(private httpClient : HttpClient) {
   }
 
@@ -15,8 +20,17 @@ export class BanStudentsService{
     return this.httpClient.get(`${environment.apiUrl}/user/findAllByRole/0`).pipe(catchError(this.handleError))
   }
 
+  getUnbannedStudents():Observable<any> {
+    return this.httpClient.get(`${environment.apiUrl}/user/getBannedUsers`).pipe(catchError(this.handleError))
+  }
+
   banStudent(userId: number) : Observable<any> {
-    return this.httpClient.put(`${environment.apiUrl}/user/ban/${userId}`,null).pipe(catchError(this.handleError))
+    return this.httpClient.put(`${environment.apiUrl}/user/banUser/${userId}`, null,{headers: this.headers,responseType:"text"}).pipe(catchError(this.handleError))
+  }
+
+  unbanStudent(userId: number): Observable<any>{
+    return this.httpClient.put(`${environment.apiUrl}/user/unbanUser/${userId}`, null,{headers: this.headers,responseType:"text"}).pipe(catchError(this.handleError))
+
   }
 
   handleError(error: HttpErrorResponse) {

@@ -12,7 +12,7 @@
             </div>
 
             <div class="flex md:flex-row align-items-center justify-content-center">
-
+              <p-selectButton (click)="this.ngOnInit()" [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value"></p-selectButton>
             </div>
           </div>
         </ng-template>
@@ -67,7 +67,7 @@
                   <button (click)="banUser(students)" pButton pRipple label="Ban User" type="button" icon="pi pi-ban" class="p-button-rounded p-button-danger mx-1" pTooltip="Ban {{students.name}}" tooltipPosition="left"></button>
                 </div>
                 <div *ngIf="students.banned">
-                  <p-button label="Banned" [disabled]="true" styleClass="p-button-rounded p-button-warning"></p-button>
+                  <p-button label="Unban" (click)="unBanUser(students)" styleClass="p-button-rounded p-button-warning"></p-button>
                 </div>
 
               </div>
