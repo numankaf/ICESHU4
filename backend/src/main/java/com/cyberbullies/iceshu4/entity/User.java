@@ -36,7 +36,6 @@ public class User {
     private String address;
     private String school_id;
     private Boolean banned;
-     @JsonIgnore
     @ManyToOne(targetEntity = Department.class)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;

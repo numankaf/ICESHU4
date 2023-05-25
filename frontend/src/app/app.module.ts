@@ -57,6 +57,9 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import { CoursedetailComponent } from './iceshu4/components/course/coursedetail/coursedetail.component';
 import {DataViewModule} from "primeng/dataview";
 import {TagModule} from "primeng/tag";
+import { FormComponent } from './iceshu4/components/form/form.component';
+import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @NgModule({
   declarations: [
@@ -78,7 +81,9 @@ import {TagModule} from "primeng/tag";
     ChangepasswordComponent,
     HasRoleDirective,
     CourseComponent,
-    CoursedetailComponent
+    CoursedetailComponent,
+    FormComponent,
+    FormDetailComponent
   ],
     imports: [
         HttpClientModule,
@@ -118,7 +123,8 @@ import {TagModule} from "primeng/tag";
         MenuModule,
         AutoCompleteModule,
         DataViewModule,
-        TagModule
+        TagModule,
+        MultiSelectModule
     ],
   providers: [
     {

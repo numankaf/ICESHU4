@@ -32,30 +32,44 @@ export class CourseService {
     return this.httpClient.get<any>(`${environment.apiUrl}/course/getDepartmentCourses/${id}`).pipe(catchError(this.handleError));
   }
 
+  getEnrollableCourses(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/course/getEnrollableCourses/${id}`).pipe(catchError(this.handleError));
+  }
+
   getSemesterCourses(id: number): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}/course/getSemesterCourses/${id}`).pipe(catchError(this.handleError));
   }
 
+  getInstructorsByDepartmentId(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/user/getInstructorsByDepartmentId/${id}`).pipe(catchError(this.handleError));
+  }
+
   findCourseStudents(id: string | null): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}/user/findCourseStudents/${id}`).pipe(catchError(this.handleError));
+    return this.httpClient.get<any>(`${environment.apiUrl}/course/findCourseStudents/${id}`).pipe(catchError(this.handleError));
   }
 
   findCourseInstructors(id: string | null): Observable<any> {
-    return this.httpClient.get<any>(`${environment.apiUrl}/user/findCourseInstructors/${id}`).pipe(catchError(this.handleError));
+    return this.httpClient.get<any>(`${environment.apiUrl}/course/findCourseInstructors/${id}`).pipe(catchError(this.handleError));
   }
 
   create(data: any): Observable<any> {
     // @ts-ignore
-    return this.httpClient.post<any>(`${environment.apiUrl}/course/create}`, data, {responseType: 'text'}).pipe(catchError(this.handleError));
+    return this.httpClient.post<any>(`${environment.apiUrl}/course/create`, data, {responseType: 'text'}).pipe(catchError(this.handleError));
   }
 
   delete(id: number): Observable<any> {
     // @ts-ignore
     return this.httpClient.delete<any>(`${environment.apiUrl}/course/delete/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError));
   }
-  enroll(userId:any, courseId: any):Observable<any>{
+
+  enroll(userId: any, courseId: any): Observable<any> {
     // @ts-ignore
-    return this.httpClient.post<any>(`${environment.apiUrl}/user/enrollCourse/${userId}/${courseId}`,null, {responseType: 'text'}).pipe(catchError(this.handleError));
+    return this.httpClient.post<any>(`${environment.apiUrl}/course/enrollCourse/${userId}/${courseId}`, null, {responseType: 'text'}).pipe(catchError(this.handleError));
+  }
+
+  drop(userId: any, courseId: any): Observable<any> {
+    // @ts-ignore
+    return this.httpClient.post<any>(`${environment.apiUrl}/course/quitCourse/${userId}/${courseId}`, null, {responseType: 'text'}).pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {
