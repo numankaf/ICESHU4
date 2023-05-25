@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cyberbullies.iceshu4.dto.CourseCreateRequestDTO;
 import com.cyberbullies.iceshu4.entity.Course;
+import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.service.CourseService;
+import com.cyberbullies.iceshu4.service.UserService;
 
 import lombok.AllArgsConstructor;
 
@@ -23,7 +25,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CourseController {
 
-    private CourseService courseService;
+    private final CourseService courseService;
+    private final UserService userService;
 
     @PostMapping("/create")
     public ResponseEntity<String> createCourse(@RequestBody CourseCreateRequestDTO course) {
@@ -58,11 +61,6 @@ public class CourseController {
         return courseService.getCoursesById(id);
     }
 
-//    @GetMapping("/getUserCourses")
-//    public List<Course> getCourses() {
-//        return courseService.getCourses();
-//    }
-
     @GetMapping("getDepartmentCourses/{id}")
     public List<Course> getDepartmentCourses(@PathVariable Long id) {
         return courseService.getDepartmentCourses(id);
@@ -71,5 +69,38 @@ public class CourseController {
     @GetMapping("getSemesterCourses/{id}")
     public List<Course> getSemesterCourses(@PathVariable Long id) {
         return courseService.getSemesterCourses(id);
+    }
+
+    @PostMapping("/enrollCourse/{UserID}/{CourseID}")
+    public ResponseEntity<String> enrollCourse(@PathVariable Long UserID, @PathVariable Long CourseID) {
+        if (userService.getUserById(UserID) == null) {
+            return new ResponseEntity<>("There is no user with given id", HttpStatus.BAD_REQUEST);
+        }
+        courseService.enrollCourse(UserID, CourseID);
+        return new ResponseEntity<>("User enrolled the Course", HttpStatus.OK);
+    }
+
+    @PostMapping("/quitCourse/{UserID}/{CourseID}")
+    public ResponseEntity<String> quitCourse(@PathVariable Long UserID, @PathVariable Long CourseID) {
+        if (userService.getUserById(UserID) == null) {
+            return new ResponseEntity<>("There is no user with given id", HttpStatus.BAD_REQUEST);
+        }
+        courseService.quitCourse(UserID, CourseID);
+        return new ResponseEntity<>("User quitted the Course", HttpStatus.OK);
+    }
+
+    @GetMapping("/findCourseStudents/{id}")
+    public List<User> findCourseStudents(@PathVariable Long id) {
+        return courseService.findCourseStudents(id);
+    }
+
+    @GetMapping("/findCourseInstructors/{id}")
+    public List<User> findCourseInstructors(@PathVariable Long id) {
+        return courseService.findCourseInstructors(id);
+    }
+
+    @GetMapping("/getEnrollableCourses/{id}")
+    public List<Course> getEnrollableCourses(@PathVariable Long id) {
+        return courseService.getEnrollableCourses(id);
     }
 }

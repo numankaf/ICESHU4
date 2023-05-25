@@ -4,28 +4,24 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "semester")
+@Table(name = "survey")
 @Data
-public class Semester {
+public class Survey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
     private String name;
-    private LocalDate start_date;
-    private LocalDate end_date;
-    @JsonIgnore
-    @OneToMany(mappedBy = "semester", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Course> courses;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Question> questions;
 
 }

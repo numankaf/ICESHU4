@@ -58,6 +58,9 @@ import { CoursedetailComponent } from './iceshu4/components/course/coursedetail/
 import {DataViewModule} from "primeng/dataview";
 import {TagModule} from "primeng/tag";
 import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ban-students.component';
+import { FormComponent } from './iceshu4/components/form/form.component';
+import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @NgModule({
   declarations: [
@@ -80,7 +83,9 @@ import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ba
     HasRoleDirective,
     CourseComponent,
     CoursedetailComponent,
-    BanStudentsComponent
+    BanStudentsComponent,
+    FormComponent,
+    FormDetailComponent
   ],
     imports: [
         HttpClientModule,
@@ -120,7 +125,8 @@ import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ba
         MenuModule,
         AutoCompleteModule,
         DataViewModule,
-        TagModule
+        TagModule,
+        MultiSelectModule
     ],
   providers: [
     {
