@@ -19,6 +19,7 @@ import {CourseComponent} from "./iceshu4/components/course/course.component";
 import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/coursedetail.component";
 import {FormComponent} from "./iceshu4/components/form/form.component";
 import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-detail.component";
+import {CreateFormComponent} from "./iceshu4/components/form/create-form/create-form.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -77,6 +78,7 @@ import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-de
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
+        {path: 'forms/createform', component: CreateFormComponent},
         {path: 'forms/:id', component: FormDetailComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},

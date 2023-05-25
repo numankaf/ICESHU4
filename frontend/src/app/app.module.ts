@@ -60,6 +60,8 @@ import {TagModule} from "primeng/tag";
 import { FormComponent } from './iceshu4/components/form/form.component';
 import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
 import {MultiSelectModule} from "primeng/multiselect";
+import { CreateFormComponent } from './iceshu4/components/form/create-form/create-form.component';
+import {RadioButtonModule} from "primeng/radiobutton";
 
 @NgModule({
   declarations: [
@@ -83,7 +85,8 @@ import {MultiSelectModule} from "primeng/multiselect";
     CourseComponent,
     CoursedetailComponent,
     FormComponent,
-    FormDetailComponent
+    FormDetailComponent,
+    CreateFormComponent
   ],
     imports: [
         HttpClientModule,
@@ -124,7 +127,8 @@ import {MultiSelectModule} from "primeng/multiselect";
         AutoCompleteModule,
         DataViewModule,
         TagModule,
-        MultiSelectModule
+        MultiSelectModule,
+        RadioButtonModule
     ],
   providers: [
     {
