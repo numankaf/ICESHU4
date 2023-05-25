@@ -17,6 +17,7 @@ import {SemestersComponent} from "./iceshu4/components/admin/semesters/semesters
 import {ChangepasswordComponent} from "./iceshu4/components/profile/changepassword/changepassword.component";
 import {CourseComponent} from "./iceshu4/components/course/course.component";
 import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/coursedetail.component";
+import {BanStudentsComponent} from "./iceshu4/components/admin/ban-students/ban-students.component";
 import {FormComponent} from "./iceshu4/components/form/form.component";
 import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-detail.component";
 import {CreateFormComponent} from "./iceshu4/components/form/create-form/create-form.component";
@@ -63,7 +64,7 @@ import {CreateFormComponent} from "./iceshu4/components/form/create-form/create-
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'messages', component: DashboardComponent},
-        {path: 'bans', component: DashboardComponent},
+        {path: 'bans', component: BanStudentsComponent},
       ]
     },
     {
