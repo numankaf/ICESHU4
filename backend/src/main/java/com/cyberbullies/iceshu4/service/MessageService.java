@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,7 +30,7 @@ public class MessageService
         newMessage.setStudent_id(user.getId());
         newMessage.setSubject(message.getSubject());
         newMessage.setContent(message.getContent());
-        newMessage.setCreated_date(message.getCreated_date());
+        newMessage.setCreated_date(new Date());
         newMessage.setOpenned(true);
         messageRepository.save(newMessage);
     }
@@ -38,6 +39,7 @@ public class MessageService
     {
         Message message = messageRepository.findById(messageResponse.getId()).orElse(null);
         message.setAdmin_response(messageResponse.getAdmin_response());
+        message.setResponse_date(new Date());
         message.setOpenned(false);
         messageRepository.save(message);
 
@@ -53,6 +55,10 @@ public class MessageService
     public List<Message> findAllAdmin()
     {
         return messageRepository.findAll();
+    }
+
+    public Message findMessage(Long id){
+        return this.messageRepository.findById(id).get();
     }
 
 }

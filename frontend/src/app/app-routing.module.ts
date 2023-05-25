@@ -17,6 +17,8 @@ import {SemestersComponent} from "./iceshu4/components/admin/semesters/semesters
 import {ChangepasswordComponent} from "./iceshu4/components/profile/changepassword/changepassword.component";
 import {CourseComponent} from "./iceshu4/components/course/course.component";
 import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/coursedetail.component";
+import {MessageComponent} from "./iceshu4/components/message/message.component";
+import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -41,7 +43,8 @@ import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/co
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: DashboardComponent},
-        {path: 'messages', component: DashboardComponent},
+        {path: 'messages', component: MessageComponent},
+        {path: 'messages/:id', component: DetailMessageComponent},
         {path: 'about', component: DashboardComponent},
         {path: 'help', component: DashboardComponent},
       ]
@@ -58,7 +61,8 @@ import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/co
         {path: 'semesters', component: SemestersComponent},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
-        {path: 'messages', component: DashboardComponent},
+        {path: 'messages', component: MessageComponent},
+        {path: 'messages/:id', component: DetailMessageComponent},
         {path: 'bans', component: DashboardComponent},
       ]
     },

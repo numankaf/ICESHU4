@@ -1,5 +1,6 @@
 package com.cyberbullies.iceshu4.controller;
 
+import antlr.debug.MessageAdapter;
 import com.cyberbullies.iceshu4.dto.MessageDTO;
 import com.cyberbullies.iceshu4.dto.MessageResponseDTO;
 import com.cyberbullies.iceshu4.entity.Message;
@@ -45,5 +46,10 @@ public class MessageController
     public List<Message> findAllAdmin()
     {
         return messageService.findAllAdmin();
+    }
+
+    @GetMapping("/find/{id}")
+    public Message findMessageById(@PathVariable Long id){
+        return this.messageService.findMessage(id);
     }
 }

@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -22,7 +24,8 @@ public class Message
     private long student_id;
     private String subject;
     private String content;
-    private Timestamp created_date;
+    private Date created_date;
+    private Date response_date;
     private boolean openned;
     private String admin_response;
 

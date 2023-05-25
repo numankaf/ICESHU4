@@ -1,0 +1,89 @@
+<div class="card">
+  <div class="flex align-items-center justify-content-between my-3">
+    <h1 *appHasRole="['STUDENT']" class="m-0 font-medium text-3xl">My Previous Messages</h1>
+    <h1 *appHasRole="['ADMIN']" class="m-0 font-medium text-3xl">Student's Messages</h1>
+
+    <button *appHasRole="['STUDENT']" pButton pRipple (click)="createMessageDialog=true"
+            label="Send Message" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
+  </div>
+
+  <div class="text-center" *ngIf="messagesLen==0">
+    <p class="m-0 font-medium text-xl">There is no message!</p>
+  </div>
+
+  <ng-container *ngFor="let message of messages">
+    <p-card class="message mx-2">
+      <div class="grid">
+        <div class="col-11 p-0">
+          <h2 class="ml-2 mb-0" style="word-wrap: break-word;">{{message.subject}}</h2>
+          <p class="ml-2 mb-0" style="word-wrap: break-word;">
+            {{message.content}}
+          </p>
+
+        </div>
+        <div class="col-1 p-0" style="position: relative;">
+            <span style="position: absolute; top: 0; right: 0;">
+              <p-button *appHasRole="['ADMIN']" (click)="goChat(message.id)" label="Answer" icon="pi pi-arrow-up-right" iconPos="right"></p-button>
+              <p-button *appHasRole="['STUDENT']" (click)="goChat(message.id)" label="Details" icon="pi pi-arrow-up-right" iconPos="right"></p-button>
+            </span>
+        </div>
+      </div>
+    </p-card>
+  </ng-container>
+  <div class="text-left" *ngIf="messagesLen!=0">
+    <p class="m-0 font-medium" style="font-size: 16px">Message count: {{messagesLen}}</p>
+  </div>
+
+  <p-dialog header="Send Message" [(visible)]="createMessageDialog" [modal]="true" [style]="{ width: '50vw' }" styleClass="p-fluid" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+    <ng-template pTemplate="content">
+      <form [formGroup]="form" (ngSubmit)="createMessage()">
+
+        <div class="mb-3">
+          <label for="subject" class="block text-base font-medium mb-2">Subject</label>
+          <div class="p-input-icon-left inline">
+            <i class="pi pi-book pr-2"></i>
+            <input id="subject" type="text" pInputText placeholder="Subject"
+                   class="w-full py-2 " formControlName="subject">
+          </div>
+          <div *ngIf="f['subject'].invalid && (f['subject'].dirty )" style="text-align: left;">
+            <small class="p-error"
+                   *ngIf="f['subject'].errors?.['required']">Subject required!</small>
+          </div>
+        </div>
+
+        <div>
+          <label for="content" class="block text-base font-medium mb-2">Content</label>
+          <div class="inline">
+            <textarea id="content" formControlName="content" rows="5" pInputTextarea placeholder="Content" style="width: 100%"></textarea>
+
+          </div>
+          <div *ngIf="f['content'].invalid && (f['content'].dirty )" style="text-align: left;">
+            <small class="p-error"
+                   *ngIf="f['content'].errors?.['content']">Content required!</small>
+          </div>
+        </div>
+
+
+
+      </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-end">
+        <div class="flex align-items-center justify-content-center m-2">
+          <button pButton pRipple label="Close" icon="pi pi-times"
+                  class="p-button-secondary p-button-outlined mr-2 mb-2"
+                  (click)="createMessageDialog=false">
+          </button>
+        </div>
+
+        <div class="flex align-items-center justify-content-center m-2">
+          <button pButton pRipple [disabled]="!this.form.valid " label="Create" icon="pi pi-check"
+                  class="p-button-info mr-2 mb-2"
+                  (click)="createMessage()">
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </p-dialog>
+</div>
