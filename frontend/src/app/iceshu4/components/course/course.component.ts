@@ -38,7 +38,8 @@ export class CourseComponent {
   curDepartment: any;
   departments: any;
   instructors: any;
-  departmentAllCourses: any;
+  enrollableCourses:any;
+  filteredEnrollableCourses:any;
   userData: any;
   dropPopup: boolean = false;
   enrollDialog: boolean = false;
@@ -62,9 +63,9 @@ export class CourseComponent {
     })
     this.userData = authenticationService.decodeToken(this.authenticationService.getToken() || "");
     if (this.authenticationService.getRole() === "STUDENT") {
-      this.courseService.getEnrollableCourses(this.userData.departmentId).subscribe(
+      this.courseService.getEnrollableCourses(this.userData.sub).subscribe(
         (data) => {
-          this.departmentAllCourses = data;
+          this.enrollableCourses = data;
         }
       )
     }
@@ -160,17 +161,8 @@ export class CourseComponent {
   }
 
   filterCourse(event: any) {
-    let filtered: any[] = [];
     let query = event.query;
-
-    for (let i = 0; i < this.departmentAllCourses.length; i++) {
-      let course = this.departmentAllCourses[i];
-      if (course.name.toLowerCase().indexOf(query.toLowerCase()) == 0) {
-        filtered.push(course);
-      }
-    }
-
-    this.departmentAllCourses = filtered;
+    this.filteredEnrollableCourses = this.enrollableCourses.filter((data: any) =>  JSON.stringify(data).toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
 
   drop(courseId: any) {

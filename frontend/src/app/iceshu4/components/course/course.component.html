@@ -68,7 +68,7 @@
           [resizable]="false">
   <ng-template pTemplate="content">
     <label class="block text-base font-medium mb-2">Select a course to enroll</label>
-    <p-autoComplete [(ngModel)]="selectedCourse" [dropdown]="true" [suggestions]="departmentAllCourses" appendTo="body"
+    <p-autoComplete [(ngModel)]="selectedCourse" [dropdown]="true" [suggestions]="filteredEnrollableCourses" appendTo="body"
                     placeholder="Course"
                     [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
                     (completeMethod)="filterCourse($event)" field="name"></p-autoComplete>
