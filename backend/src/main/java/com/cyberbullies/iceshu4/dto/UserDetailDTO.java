@@ -7,10 +7,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
 @Getter
 @Setter
 @Data
-public class UserDetailDTO {
+public class UserDetailDTO{
     private Long id;
     private String name;
     private String surname;

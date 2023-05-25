@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/findAll")
     public List<UserDetailDTO> findAll() {
         return userService.findAll();
-    }
+    }//will be updated with userDetailDTO
 
     @GetMapping("/get/{id}")
     public UserDetailDTO getUserById(@PathVariable Long id) {

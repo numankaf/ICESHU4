@@ -92,10 +92,14 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Student can't take courses that already taken'");
         }
-        List<Course> courses = user.getUser_courses();
-        courses.add(course);
-        user.setUser_courses(courses);
-        userRepository.save(user);
+//        List<Course> courses = user.getUser_courses();
+//        courses.add(course);
+//        user.setUser_courses(courses);
+//        userRepository.save(user);
+        List<User> users = course.getUsers();
+        users.add(user);
+        course.setUsers(users);
+        courseRepository.save(course);
     }
 
     public List<User> findCourseStudents(Long id) {
@@ -139,9 +143,10 @@ public class UserService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User admin = userRepository.findByEmail(email);
         List<User> users = userRepository.findAllByIdNot(admin.getId());
+//        List<User> users = userRepository.findAll();
         List<UserDetailDTO> dtos = users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
         return dtos;
-    }
+    }//
 
     public List<UserDetailDTO> findAllByRole(Long id) {
         List<User> users = userRepository.findAllByRole(id);

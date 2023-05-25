@@ -58,8 +58,9 @@ public class SecurityConfig {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/department/**").permitAll()
                 .antMatchers("/course/**").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("ADMIN","INSTRUCTOR","DEPARTMENT_MANAGER","STUDENT")
+                .antMatchers("/user/**").permitAll()
                 .antMatchers("/semester/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/survey/**").permitAll()
                 .anyRequest().authenticated();//for semester: hasAnyAuthority("ADMIN")
         //for user: hasAnyAuthority("ADMIN","INSTRUCTOR","DEPARTMENT_MANAGER","STUDENT")
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
