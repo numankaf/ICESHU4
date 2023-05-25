@@ -1,9 +1,7 @@
 package com.cyberbullies.iceshu4.entity;
 
 import com.cyberbullies.iceshu4.dto.QuestionOption;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
