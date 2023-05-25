@@ -58,9 +58,11 @@ public class SecurityConfig {
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/department/**").permitAll()
                 .antMatchers("/course/**").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("ADMIN")
-                .antMatchers("/semester/**").hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated();
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/semester/**").hasAnyAuthority("ADMIN","DEPARTMENT_MANAGER")
+                .antMatchers("/survey/**").permitAll()
+                .anyRequest().authenticated();//for semester: hasAnyAuthority("ADMIN")
+        //for user: hasAnyAuthority("ADMIN","INSTRUCTOR","DEPARTMENT_MANAGER","STUDENT")
         // TODO: WILL BE UPDATED FOR ALL USER TYPES
 
         httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

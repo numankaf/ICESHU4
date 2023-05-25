@@ -21,18 +21,23 @@ public class Course {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
     private String name;
-    // @JsonIgnore
-    @ManyToOne
+//     @JsonIgnore
+    @ManyToOne(targetEntity = Department.class)
     @JoinColumn(name = "department_id", referencedColumnName = "id", nullable = false)
     private Department department;
-    // @JsonIgnore
-    @ManyToOne
+//     @JsonIgnore
+    @ManyToOne(targetEntity = Semester.class)
     @JoinColumn(name = "semester_id", referencedColumnName = "id", nullable = false)
     private Semester semester;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "courses_users",
+                joinColumns = {@JoinColumn(name = "course_id",referencedColumnName = "id")},
+                inverseJoinColumns = {@JoinColumn(name="user_id",referencedColumnName = "id")}
+    )
     @JsonIgnore
-    @ManyToMany(mappedBy = "student_courses")
-    private List<User> students;
-    @JsonIgnore
-    @ManyToMany(mappedBy = "instructor_courses")
-    private List<User> instructors;
+    private List<User> users;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Survey> surveys;
+
 }

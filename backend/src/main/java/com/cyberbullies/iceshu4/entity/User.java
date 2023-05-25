@@ -28,6 +28,7 @@ public class User {
     private String profile_photo;
     @Enumerated(EnumType.ORDINAL)
     private UserRole role;
+    @JsonIgnore
     private String password;
     private String email;
     private String birth_date;
@@ -35,20 +36,15 @@ public class User {
     private String address;
     private String school_id;
     private Boolean banned;
-    // @JsonIgnore
-    @ManyToOne
+    @ManyToOne(targetEntity = Department.class)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "managed_department_id", referencedColumnName = "id")
     private Department managed_department;
+    @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
     @JsonIgnore
-    @ManyToMany
-    @JoinColumn(name = "student_courses_id", referencedColumnName = "id")
-    private List<Course> student_courses;
-    @JsonIgnore
-    @ManyToMany
-    @JoinColumn(name = "instructor_courses_id", referencedColumnName = "id")
-    private List<Course> instructor_courses;
+    private List<Course> user_courses;
+
 }

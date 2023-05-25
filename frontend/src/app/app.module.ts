@@ -50,6 +50,17 @@ import {TableModule} from "primeng/table";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ConfirmationService} from "primeng/api";
 import { ChangepasswordComponent } from './iceshu4/components/profile/changepassword/changepassword.component';
+import { HasRoleDirective } from './iceshu4/core/has-role.directive';
+import { CourseComponent } from './iceshu4/components/course/course.component';
+import {MenuModule} from "primeng/menu";
+import {AutoCompleteModule} from "primeng/autocomplete";
+import { CoursedetailComponent } from './iceshu4/components/course/coursedetail/coursedetail.component';
+import {DataViewModule} from "primeng/dataview";
+import {TagModule} from "primeng/tag";
+import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ban-students.component';
+import { FormComponent } from './iceshu4/components/form/form.component';
+import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @NgModule({
   declarations: [
@@ -68,44 +79,55 @@ import { ChangepasswordComponent } from './iceshu4/components/profile/changepass
     DepartmentManagerLayoutComponent,
     UsersComponent,
     SemestersComponent,
-    ChangepasswordComponent
+    ChangepasswordComponent,
+    HasRoleDirective,
+    CourseComponent,
+    CoursedetailComponent,
+    BanStudentsComponent,
+    FormComponent,
+    FormDetailComponent
   ],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    CardModule,
-    MatListModule,
-    MatMenuModule,
-    SelectButtonModule,
-    FormsModule,
-    StyleClassModule,
-    RippleModule,
-    OverlayPanelModule,
-    ButtonModule,
-    InputSwitchModule,
-    CheckboxModule,
-    ChipsModule,
-    ReactiveFormsModule,
-    DividerModule,
-    PasswordModule,
-    CarouselModule,
-    AvatarModule,
-    DropdownModule,
-    DialogModule,
-    MessagesModule,
-    InputTextareaModule,
-    CalendarModule,
-    ToastModule,
-    TableModule,
-    ConfirmDialogModule
-  ],
+    imports: [
+        HttpClientModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        CardModule,
+        MatListModule,
+        MatMenuModule,
+        SelectButtonModule,
+        FormsModule,
+        StyleClassModule,
+        RippleModule,
+        OverlayPanelModule,
+        ButtonModule,
+        InputSwitchModule,
+        CheckboxModule,
+        ChipsModule,
+        ReactiveFormsModule,
+        DividerModule,
+        PasswordModule,
+        CarouselModule,
+        AvatarModule,
+        DropdownModule,
+        DialogModule,
+        MessagesModule,
+        InputTextareaModule,
+        CalendarModule,
+        ToastModule,
+        TableModule,
+        ConfirmDialogModule,
+        MenuModule,
+        AutoCompleteModule,
+        DataViewModule,
+        TagModule,
+        MultiSelectModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

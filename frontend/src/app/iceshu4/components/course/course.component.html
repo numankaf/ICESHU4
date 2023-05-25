@@ -1,0 +1,157 @@
+<p-toast></p-toast>
+<div class="card">
+  <div class="flex align-items-center justify-content-between my-3">
+    <h1 *appHasRole="['STUDENT', 'INSTRUCTOR']" class="m-0 font-medium text-3xl">My Courses</h1>
+    <h1 *appHasRole="['DEPARTMENT_MANAGER', 'ADMIN']" class="m-0 font-medium text-3xl">All Courses</h1>
+    <button *appHasRole="['STUDENT']" pButton pRipple (click)="enrollDialog=!enrollDialog"
+            label="Enroll to Another Course" icon="pi pi-sign-in" class="p-button-info mr-2 mb-2"></button>
+    <button *appHasRole="['DEPARTMENT_MANAGER']" pButton pRipple (click)="createDialog=!createDialog"
+            label="Create a New Course" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
+  </div>
+  <div class="flex flex-wrap m-2">
+    <ng-container *ngFor="let course of courses; let i = index">
+      <div class=" course m-2" style="border-radius: 0.75rem;">
+        <div class="surface-card shadow-4 border-round ">
+          <div class="relative overflow-hidden h-7rem  flex flex-column  border-round mb-3"
+               [style.background]="colorCombinations[i%colorCombinations.length].bg">
+            <!--            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute w-full top-0 left-0" >-->
+            <!--              <path attr.fill="{{colorCombinations[i%colorCombinations.length].c}}" fill-opacity="1"-->
+            <!--                    d="M0,64L48,90.7C96,117,192,171,288,208C384,245,480,267,576,256C672,245,768,203,864,165.3C960,128,1056,96,1152,74.7C1248,53,1344,43,1392,37.3L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>-->
+            <!--            </svg>-->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute w-full top-0 left-0">
+              <path attr.fill="{{colorCombinations[i%colorCombinations.length].c}}" fill-opacity="1"
+                    d="M0,192L0,32L36.9,32L36.9,32L73.8,32L73.8,64L110.8,64L110.8,256L147.7,256L147.7,64L184.6,64L184.6,160L221.5,160L221.5,64L258.5,64L258.5,192L295.4,192L295.4,160L332.3,160L332.3,96L369.2,96L369.2,32L406.2,32L406.2,96L443.1,96L443.1,160L480,160L480,160L516.9,160L516.9,160L553.8,160L553.8,256L590.8,256L590.8,192L627.7,192L627.7,224L664.6,224L664.6,256L701.5,256L701.5,128L738.5,128L738.5,32L775.4,32L775.4,224L812.3,224L812.3,192L849.2,192L849.2,288L886.2,288L886.2,192L923.1,192L923.1,256L960,256L960,96L996.9,96L996.9,192L1033.8,192L1033.8,64L1070.8,64L1070.8,160L1107.7,160L1107.7,224L1144.6,224L1144.6,160L1181.5,160L1181.5,96L1218.5,96L1218.5,192L1255.4,192L1255.4,96L1292.3,96L1292.3,288L1329.2,288L1329.2,96L1366.2,96L1366.2,32L1403.1,32L1403.1,32L1440,32L1440,0L1403.1,0L1403.1,0L1366.2,0L1366.2,0L1329.2,0L1329.2,0L1292.3,0L1292.3,0L1255.4,0L1255.4,0L1218.5,0L1218.5,0L1181.5,0L1181.5,0L1144.6,0L1144.6,0L1107.7,0L1107.7,0L1070.8,0L1070.8,0L1033.8,0L1033.8,0L996.9,0L996.9,0L960,0L960,0L923.1,0L923.1,0L886.2,0L886.2,0L849.2,0L849.2,0L812.3,0L812.3,0L775.4,0L775.4,0L738.5,0L738.5,0L701.5,0L701.5,0L664.6,0L664.6,0L627.7,0L627.7,0L590.8,0L590.8,0L553.8,0L553.8,0L516.9,0L516.9,0L480,0L480,0L443.1,0L443.1,0L406.2,0L406.2,0L369.2,0L369.2,0L332.3,0L332.3,0L295.4,0L295.4,0L258.5,0L258.5,0L221.5,0L221.5,0L184.6,0L184.6,0L147.7,0L147.7,0L110.8,0L110.8,0L73.8,0L73.8,0L36.9,0L36.9,0L0,0L0,0Z"></path>
+            </svg>
+            <div class="font-bold mb-5 text-5xl m-5 z-1 text-white">{{course.name.split(":")[0]}}</div>
+            <div class="text-white z-1 uppercase ml-5"> {{course.department.name}}</div>
+          </div>
+          <div class="flex align-items-center justify-content-between px-4 pb-4 mb-4">
+            <span class="text-xl font-medium text-900 uppercase">{{course.name}}</span>
+            <div class="ml-auto">
+              <p-overlayPanel #op appendTo="body">
+                <div class="flex flex-column">
+                  <p-button icon="pi pi-info-circle" (click)="goToDetail(course.id)" label="Detail"
+                            styleClass="p-button-info p-button-text"></p-button>
+                  <p-button *appHasRole="['STUDENT']" icon="pi pi-minus" (click)="confirmDrop(course.id)"
+                            label="Drop" styleClass="p-button-warning p-button-text"></p-button>
+                  <p-button *appHasRole="['DEPARTMENT_MANAGER','ADMIN']" icon="pi pi-trash"
+                            (click)="confirmDelete(course.id)"
+                            label="Delete" styleClass="p-button-danger p-button-text"></p-button>
+                </div>
+              </p-overlayPanel>
+              <button pbutton="" pripple="" icon="pi pi-ellipsis-v" (click)="op.toggle($event)"
+                      class="p-element p-button-text p-button-plain p-button-rounded p-button p-component p-button-icon-only">
+                <span class="p-button-icon pi pi-ellipsis-v" aria-hidden="true"></span>
+              </button>
+            </div>
+
+          </div>
+          <!--                    <span class="text-xl font-medium text-900">Evaluation Forms</span>-->
+          <!--                    <ul class="mt-4 list-none p-0 mx-0">-->
+          <!--                      <span *ngIf="course.forms==null" class="text-lg font-medium text-90">No Evaluation form found</span>-->
+          <!--                      <li *ngFor="let form of course.forms" class="flex align-items-center pb-3">-->
+          <!--                        <div class="form-go cursor-pointer w-full flex justify-content-between">-->
+          <!--                          <span class="text-lg font-medium text-90">Form 1 </span>-->
+          <!--                          <span class=" text-primary ml-auto pi pi-angle-right"></span>-->
+          <!--                        </div>-->
+          <!--                      </li>-->
+          <!--                    </ul>-->
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+
+<p-dialog header="Enroll to Another Course" [(visible)]="enrollDialog" [dismissableMask]="true" [modal]="true"
+          [style]="{ width: '50vw' }" [draggable]="false"
+          [resizable]="false">
+  <ng-template pTemplate="content">
+    <label class="block text-base font-medium mb-2">Select a course to enroll</label>
+    <p-autoComplete [(ngModel)]="selectedCourse" [dropdown]="true" [suggestions]="filteredEnrollableCourses" appendTo="body"
+                    placeholder="Course"
+                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                    (completeMethod)="filterCourse($event)" field="name"></p-autoComplete>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex align-items-center justify-content-center m-2">
+      <button pButton pRipple label="Enroll" icon="pi pi-check"
+              [disabled]="selectedCourse==null"
+              class="p-button-info mr-2 mb-2" (click)="enroll()">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog header="Create  a New Course" [(visible)]="createDialog" [dismissableMask]="true" [modal]="true"
+          [style]="{ width: '50vw' }" [draggable]="false"
+          [resizable]="false">
+  <ng-template pTemplate="content">
+    <form [formGroup]="createForm" (ngSubmit)="createCourse()">
+      <div class="mb-4 pt-2  ">
+        <label for="name" class="block text-base font-medium mb-2">Name</label>
+        <input id="name" type="text" pInputText placeholder="Name"
+               class="w-full " formControlName="name">
+        <div *ngIf="createForm.controls['name'].invalid && (createForm.controls['name'].dirty )"
+             style="text-align: left;">
+          <small class="p-error"
+                 *ngIf="createForm.controls['name'].errors?.['required']">Name required!</small>
+
+        </div>
+      </div>
+      <label class="block text-base font-medium mb-2">Semester</label>
+      <p-dropdown [options]="semesters" [style]="{'width':'100%'}"  placeholder="Select a Semester"
+                  appendTo="body" formControlName="semester" optionLabel="name"></p-dropdown>
+      <div *ngIf="createForm.controls['semester'].invalid && (createForm.controls['semester'].dirty )"
+           style="text-align: left;">
+        <small class="p-error"
+               *ngIf="createForm.controls['semester'].errors?.['required']">Semester required!</small>
+
+      </div>
+      <div>
+        <label class="block text-base font-medium mb-2 mt-4">Instructors</label>
+        <p-multiSelect [options]="instructors" formControlName="users" appendTo="body" [style]="{'width':'100%'}" [filter]="true"
+                       [virtualScroll]="true"
+                       defaultLabel="Select Instructors to Add" optionLabel="name" >
+
+          <ng-template let-instructor pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <img alt="avatar" class="profile-avatar ml-2" [src]="instructor.profile_photo">
+              <div>{{ instructor.name +" "+instructor.surname}}</div>
+            </div>
+          </ng-template>
+        </p-multiSelect>
+
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex align-items-center justify-content-end m-2">
+      <button pButton pRipple  icon="pi pi-times" label="Cancel"
+              class="p-button-danger mr-2 mb-2" (click)="createDialog = !createDialog; createForm.reset()">
+      </button>
+      <button pButton pRipple icon="pi pi-check" label="Create"
+              [disabled]="createForm.invalid"
+              class="p-button-success mr-2 mb-2" (click)="createCourse(); createForm.reset()">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+<p-confirmDialog #cdDrop key="dropDialog" [style]="{width: '50vw'}" [dismissableMask]="true">
+  <ng-template pTemplate="footer">
+    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"
+            (click)="cdDrop.reject()"></button>
+    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"
+            (click)="cdDrop.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
+<p-confirmDialog #cdDelete key="deleteDialog" [style]="{width: '50vw'}" [dismissableMask]="true">
+  <ng-template pTemplate="footer">
+    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"
+            (click)="cdDelete.reject()"></button>
+    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"
+            (click)="cdDelete.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

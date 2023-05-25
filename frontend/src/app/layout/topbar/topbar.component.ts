@@ -28,7 +28,6 @@ export class TopbarComponent {
   ngOnInit() {
     let token = this.authenticationService.getToken() || "";
     this.decodeJwtToken(token);
-    this.decodeJwtToken(token);
     this.getProfileImage();
     this.darkTheme = localStorage.getItem("theme") === 'dark';
     this.changeTheme();

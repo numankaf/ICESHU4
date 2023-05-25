@@ -5,6 +5,7 @@ import com.cyberbullies.iceshu4.entity.Course;
 import com.cyberbullies.iceshu4.entity.Department;
 import com.cyberbullies.iceshu4.entity.Semester;
 import com.cyberbullies.iceshu4.entity.User;
+import com.cyberbullies.iceshu4.enums.UserRole;
 import com.cyberbullies.iceshu4.repository.CourseRepository;
 import com.cyberbullies.iceshu4.repository.DepartmentRepository;
 import com.cyberbullies.iceshu4.repository.UserRepository;
@@ -12,8 +13,10 @@ import com.cyberbullies.iceshu4.repository.SemesterRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -32,13 +35,13 @@ public class CourseService {
         createdCourse.setName(course.getName());
         createdCourse.setDepartment(course.getDepartment());
         createdCourse.setSemester(course.getSemester());
-        if (!course.getInstructors().stream()
+        if (!course.getUsers().stream()
                 .filter(instructor -> instructor.getDepartment().getId() != course.getDepartment().getId()).findAny()
                 .isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Instructor at given department required!");
         }
-        createdCourse.setInstructors(course.getInstructors());
+        createdCourse.setUsers(course.getUsers());
         courseRepository.save(createdCourse);
     }
 
@@ -62,14 +65,9 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
-    public List<Course> getStudentCourses(Long id) {
-        User student = userRepository.findById(id).get();
-        return student.getStudent_courses();
-    }
-
-    public List<Course> getInstructorCourses(Long id) {
-        User instructor = userRepository.findById(id).get();
-        return instructor.getInstructor_courses();
+    public List<Course> getCoursesById(Long id) {
+        User user = userRepository.findById(id).get();
+        return user.getUser_courses();
     }
 
     public List<Course> getDepartmentCourses(Long id) {
@@ -80,5 +78,54 @@ public class CourseService {
     public List<Course> getSemesterCourses(Long id) {
         Semester semester = semesterRepository.findById(id).get();
         return semester.getCourses();
+    }
+
+    public void enrollCourse(Long UserID, Long CourseID) {
+        User user = userRepository.findById(UserID).get();
+        Course course = courseRepository.findById(CourseID).get();
+        if (user.getDepartment().getId() != course.getDepartment().getId()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Student can't take courses from another department!");
+        }
+        if (!user.getUser_courses().stream().filter(student_course -> CourseID == student_course.getId()).findAny()
+                .isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Student can't take courses that already taken'");
+        }
+        List<User> users = course.getUsers();
+        users.add(user);
+        course.setUsers(users);
+        courseRepository.save(course);
+    }
+
+    public void quitCourse(Long UserID, Long CourseID) {
+        User user = userRepository.findById(UserID).get();
+        Course course = courseRepository.findById(CourseID).get();
+        if (user.getUser_courses().stream().filter(student_course -> CourseID == student_course.getId()).findAny()
+        .isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Student can only quit courses that already taken!");
+        }
+        List<User> users = course.getUsers();
+        users.removeIf(u -> u.getId() == UserID);
+        course.setUsers(users);
+        courseRepository.save(course);
+    }
+
+    public List<User> findCourseStudents(Long id) {
+        Course course = courseRepository.findById(id).get();
+        List<User> users = course.getUsers().stream().map(s->s).filter(user -> user.getRole() == UserRole.STUDENT).collect(Collectors.toList());
+        return users;
+    }
+
+    public List<User> findCourseInstructors(Long id) {
+        Course course = courseRepository.findById(id).get();
+        List<User> users = course.getUsers().stream().map(s->s).filter(user -> user.getRole() == UserRole.INSTRUCTOR).collect(Collectors.toList());
+        return users;
+    }
+
+    public List<Course> getEnrollableCourses(Long id) {
+        User user = userRepository.findById(id).get();
+        return courseRepository.getEnrollableCourses(id, user.getDepartment().getId());
     }
 }
