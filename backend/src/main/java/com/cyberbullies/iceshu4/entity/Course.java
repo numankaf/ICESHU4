@@ -37,6 +37,7 @@ public class Course {
     )
     @JsonIgnore
     private List<User> users;
+    
     @OneToMany(cascade = CascadeType.ALL)
     private List<Survey> surveys;
 

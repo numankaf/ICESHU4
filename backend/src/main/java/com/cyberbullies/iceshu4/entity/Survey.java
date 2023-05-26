@@ -23,5 +23,6 @@ public class Survey {
     private LocalDate endDate;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;
+    private boolean published = false;
 
 }
