@@ -3,15 +3,19 @@ package com.cyberbullies.iceshu4.service;
 import com.cyberbullies.iceshu4.entity.Course;
 import com.cyberbullies.iceshu4.entity.Question;
 import com.cyberbullies.iceshu4.entity.Survey;
+import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.repository.CourseRepository;
 import com.cyberbullies.iceshu4.repository.QuestionRepository;
 import com.cyberbullies.iceshu4.repository.SurveyRepository;
+import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.util.*;
+
+
 
 
 @Service
@@ -20,6 +24,8 @@ public class SurveyService {
     private SurveyRepository surveyRepository;
     private CourseRepository courseRepository;
     private QuestionRepository questionRepository;
+    private UserRepository userRepository;
+
     public Survey create(Survey survey, Long courseID) {
         if(courseRepository.findById(courseID).isPresent()){
             Course course = courseRepository.findById(courseID).get();
@@ -44,6 +50,21 @@ public class SurveyService {
     public List<Survey> findAllSurveys() {
         return surveyRepository.findAll();
     }
+
+    public List<Survey> findAllSurveysOfUser(Long userID) {
+        if(userRepository.findById(userID).isPresent()){
+            List<Survey> allSurveys = new ArrayList<Survey>();
+            User user = userRepository.findById(userID).get();
+            if(userRepository.findById(userID).get().getManaged_department() == null){
+                List<Course> userCourses = user.getUser_courses();
+                for(Course course : userCourses) {
+                    allSurveys.addAll(course.getSurveys());
+                }
+            }
+            for(Course course : user.getManaged_department().getCourses()){
+                allSurveys.addAll(course.getSurveys());
+            }
+            return  allSurveys;
 
     public List<Survey> findAllSurveysOfCourses(Long courseID) {
         if(courseRepository.findById(courseID).isPresent() && !courseRepository.findById(courseID).get().getSurveys().isEmpty()){
