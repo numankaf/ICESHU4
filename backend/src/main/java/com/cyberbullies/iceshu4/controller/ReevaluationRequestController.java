@@ -13,40 +13,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/reevaluation")
 @AllArgsConstructor
-public class ReevaluationRequestController
-{
+public class ReevaluationRequestController {
     private ReevaluationRequestService reevaluationRequestService;
 
-    @PostMapping("/createRequest")
-    public ResponseEntity<String> createReevaluationRequest(@RequestBody ReevaluationRequestDTO dto)
-    {
+    @PostMapping("/create")
+    public ResponseEntity<String> createReevaluationRequest(@RequestBody ReevaluationRequestDTO dto) {
         reevaluationRequestService.createReevaluationRequest(dto);
         return new ResponseEntity<>("Reevaluation Request sent.", HttpStatus.OK);
     }
 
-    @PutMapping("/acceptRequest/{id}")
-    public ResponseEntity<String> acceptReevaluationRequest(@PathVariable Long id)
-    {
+    @PutMapping("/accept/{id}")
+    public ResponseEntity<String> acceptReevaluationRequest(@PathVariable Long id) {
         reevaluationRequestService.acceptReevaluationRequest(id);
-        return new ResponseEntity<>("Reevaluation Request sent.", HttpStatus.OK);
+        return new ResponseEntity<>("Reevaluation Request accepted.", HttpStatus.OK);
     }
 
-    @PutMapping("/declineRequest/{id}")
-    public ResponseEntity<String> declineReevaluationRequest(@PathVariable Long id)
-    {
+    @PutMapping("/decline/{id}")
+    public ResponseEntity<String> declineReevaluationRequest(@PathVariable Long id) {
         reevaluationRequestService.declineReevaluationRequest(id);
-        return new ResponseEntity<>("Reevaluation Request sent.", HttpStatus.OK);
+        return new ResponseEntity<>("Reevaluation Request declined.", HttpStatus.OK);
     }
 
     @GetMapping("/findAll")
-    public List<ReevaluationRequest> findAll()
-    {
+    public List<ReevaluationRequest> findAll() {
         return reevaluationRequestService.findAll();
     }
 
-    @GetMapping("/find/{id}")
-    public ReevaluationRequest findRequestById(@PathVariable Long id)
-    {
+    @GetMapping("/get/{id}")
+    public ReevaluationRequest findRequestById(@PathVariable Long id) {
         return reevaluationRequestService.findRequest(id);
     }
 }

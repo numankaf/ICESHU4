@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -23,5 +26,8 @@ public class Survey {
     private LocalDate endDate;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;
+    @JsonIgnoreProperties("survey")
+    @OneToOne(mappedBy = "survey")
+    private ReevaluationRequest reevaluation_request;
 
 }
