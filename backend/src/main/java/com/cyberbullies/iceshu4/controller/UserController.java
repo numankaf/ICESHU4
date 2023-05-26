@@ -78,4 +78,31 @@ public class UserController {
         return userService.getInstructorsByDepartmentId(id);
     }
 
+    @PutMapping("/banUser/{id}")
+    public ResponseEntity<String> banUser(@PathVariable Long id)
+    {
+        if (userService.getUserById(id) == null) {
+            return new ResponseEntity<>("There is no user by this id!", HttpStatus.BAD_REQUEST);
+        }
+        userService.banUser(id);
+        return new ResponseEntity<>("User is banned", HttpStatus.OK);
+    }
+
+    @GetMapping("/getBannedUsers")
+    public List<User> getBannedUsers()
+    {
+        return userService.getBannedUsers();
+    }
+
+    @PutMapping("/unbanUser/{id}")
+    public ResponseEntity<String> unbanuser(@PathVariable Long id)
+    {
+        if (userService.getUserById(id) == null) {
+            return new ResponseEntity<>("There are no user by this id!", HttpStatus.BAD_REQUEST);
+        }
+
+        userService.unbanUser(id);
+        return new ResponseEntity<>("User's ban is removed", HttpStatus.OK);
+    }
+
 }
