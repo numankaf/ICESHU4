@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,6 +51,7 @@ public class AccountService {
         return userRepository.save(updateUser);
     }
 
+
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email);
@@ -61,5 +63,6 @@ public class AccountService {
         userRepository.save(user);
 
     }
+
 
 }

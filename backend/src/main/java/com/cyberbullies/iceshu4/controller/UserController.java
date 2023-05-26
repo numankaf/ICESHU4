@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/findAll")
     public List<UserDetailDTO> findAll() {
         return userService.findAll();
-    }//will be updated with userDetailDTO
+    }// will be updated with userDetailDTO
 
     @GetMapping("/get/{id}")
     public UserDetailDTO getUserById(@PathVariable Long id) {
@@ -39,6 +39,9 @@ public class UserController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
+        if (userService.getUserById(id) == null) {
+            return new ResponseEntity<>("There are no user by this id!", HttpStatus.BAD_REQUEST);
+        }
         userService.deleteUserById(id);
         return new ResponseEntity<>("User deleted with id :" + id, HttpStatus.OK);
     }
@@ -73,6 +76,33 @@ public class UserController {
     @GetMapping("/getInstructorsByDepartmentId/{id}")
     public List<User> getInstructorsByDepartmentId(@PathVariable Long id) {
         return userService.getInstructorsByDepartmentId(id);
+    }
+
+    @PutMapping("/banUser/{id}")
+    public ResponseEntity<String> banUser(@PathVariable Long id)
+    {
+        if (userService.getUserById(id) == null) {
+            return new ResponseEntity<>("There is no user by this id!", HttpStatus.BAD_REQUEST);
+        }
+        userService.banUser(id);
+        return new ResponseEntity<>("User is banned", HttpStatus.OK);
+    }
+
+    @GetMapping("/getBannedUsers")
+    public List<User> getBannedUsers()
+    {
+        return userService.getBannedUsers();
+    }
+
+    @PutMapping("/unbanUser/{id}")
+    public ResponseEntity<String> unbanuser(@PathVariable Long id)
+    {
+        if (userService.getUserById(id) == null) {
+            return new ResponseEntity<>("There are no user by this id!", HttpStatus.BAD_REQUEST);
+        }
+
+        userService.unbanUser(id);
+        return new ResponseEntity<>("User's ban is removed", HttpStatus.OK);
     }
 
 }

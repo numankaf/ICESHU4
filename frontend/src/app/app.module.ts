@@ -57,6 +57,12 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import { CoursedetailComponent } from './iceshu4/components/course/coursedetail/coursedetail.component';
 import {DataViewModule} from "primeng/dataview";
 import {TagModule} from "primeng/tag";
+import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ban-students.component';
+import { FormComponent } from './iceshu4/components/form/form.component';
+import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
+import {MultiSelectModule} from "primeng/multiselect";
+import {MessageComponent} from "./iceshu4/components/message/message.component";
+import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
 
 @NgModule({
   declarations: [
@@ -78,7 +84,12 @@ import {TagModule} from "primeng/tag";
     ChangepasswordComponent,
     HasRoleDirective,
     CourseComponent,
-    CoursedetailComponent
+    CoursedetailComponent,
+    BanStudentsComponent,
+    FormComponent,
+    FormDetailComponent,
+    MessageComponent,
+    DetailMessageComponent
   ],
     imports: [
         HttpClientModule,
@@ -118,7 +129,8 @@ import {TagModule} from "primeng/tag";
         MenuModule,
         AutoCompleteModule,
         DataViewModule,
-        TagModule
+        TagModule,
+        MultiSelectModule
     ],
   providers: [
     {

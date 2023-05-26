@@ -37,7 +37,6 @@ public class User {
     private String address;
     private String school_id;
     private Boolean banned;
-     @JsonIgnore
     @ManyToOne(targetEntity = Department.class)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
@@ -45,8 +44,11 @@ public class User {
     @OneToOne
     @JoinColumn(name = "managed_department_id", referencedColumnName = "id")
     private Department managed_department;
-    @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Course> user_courses;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Message> messages;
 
 }
