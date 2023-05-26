@@ -89,6 +89,15 @@ public class CourseController {
         return new ResponseEntity<>("User quitted the Course", HttpStatus.OK);
     }
 
+    @PostMapping("/addInstructor/{CourseID}/{UserID}")
+    public ResponseEntity<String> addInstructor(@PathVariable Long CourseID, @PathVariable Long UserID) {
+        if (userService.getUserById(UserID) == null) {
+            return new ResponseEntity<>("There is no user with given id", HttpStatus.BAD_REQUEST);
+        }
+        courseService.addInstructor(CourseID, UserID);
+        return new ResponseEntity<>("Instructor added to the Course!", HttpStatus.OK);
+    }
+
     @GetMapping("/findCourseStudents/{id}")
     public List<User> findCourseStudents(@PathVariable Long id) {
         return courseService.findCourseStudents(id);
