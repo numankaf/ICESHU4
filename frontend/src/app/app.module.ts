@@ -61,6 +61,8 @@ import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ba
 import { FormComponent } from './iceshu4/components/form/form.component';
 import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
 import {MultiSelectModule} from "primeng/multiselect";
+import { CreateFormComponent } from './iceshu4/components/form/create-form/create-form.component';
+import {RadioButtonModule} from "primeng/radiobutton";
 import {MessageComponent} from "./iceshu4/components/message/message.component";
 import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
 
@@ -88,6 +90,7 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
     BanStudentsComponent,
     FormComponent,
     FormDetailComponent,
+    CreateFormComponent
     MessageComponent,
     DetailMessageComponent
   ],
@@ -130,7 +133,8 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         AutoCompleteModule,
         DataViewModule,
         TagModule,
-        MultiSelectModule
+        MultiSelectModule,
+        RadioButtonModule
     ],
   providers: [
     {

@@ -20,8 +20,10 @@ import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/co
 import {BanStudentsComponent} from "./iceshu4/components/admin/ban-students/ban-students.component";
 import {FormComponent} from "./iceshu4/components/form/form.component";
 import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-detail.component";
+import {CreateFormComponent} from "./iceshu4/components/form/create-form/create-form.component";
 import {MessageComponent} from "./iceshu4/components/message/message.component";
 import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
+
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -82,6 +84,7 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
+        {path: 'forms/createform', component: CreateFormComponent},
         {path: 'forms/:id', component: FormDetailComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
