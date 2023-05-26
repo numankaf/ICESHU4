@@ -60,6 +60,8 @@ import {TagModule} from "primeng/tag";
 import { FormComponent } from './iceshu4/components/form/form.component';
 import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
 import {MultiSelectModule} from "primeng/multiselect";
+import {MessageComponent} from "./iceshu4/components/message/message.component";
+import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import {MultiSelectModule} from "primeng/multiselect";
     CourseComponent,
     CoursedetailComponent,
     FormComponent,
-    FormDetailComponent
+    FormDetailComponent,
+    MessageComponent,
+    DetailMessageComponent
   ],
     imports: [
         HttpClientModule,
