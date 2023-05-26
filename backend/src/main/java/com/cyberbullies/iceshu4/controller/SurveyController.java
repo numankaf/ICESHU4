@@ -29,8 +29,8 @@ public class SurveyController {
     @GetMapping("/findAll/{userID}")
     public List<Survey> findAllSurveysOfUser(@PathVariable Long userID) {
         return surveyService.findAllSurveysOfUser(userID);
-
-    @GetMapping("/findAll/{courseID}")
+    }
+    @GetMapping("/findAllByCourseID/{courseID}")
     public List<Survey> findAllSurveysOfCourses(@PathVariable Long courseID) {
         return surveyService.findAllSurveysOfCourses(courseID);
 

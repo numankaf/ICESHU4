@@ -13,41 +13,49 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class CreateFormComponent {
   userData: any;
+  selOption:any;
   questionType= "Open Ended";
   dateCurrent = new Date();
   addQuestion: boolean = false;
   addOption: boolean= false;
   commonQuestions = [{
     name: "The Instructor satisfactorily responded to questions",
-    options: [{name: "Very Bad"}, {name: "Bad"}, {name: "Moderate"}, {name: "Good"}, {name: "Very Good"}]
+    options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
   },
     {
-      name: "Communication with the Instructor was adequate.",
-      options: [{name: "Very Bad"}, {name: "Bad"}, {name: "Moderate"}, {name: "Good"}, {name: "Very Good"}]
+      questionText: "Communication with the Instructor was adequate.",
+      questionType: "Multiple Choice",
+      options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
     },
     {
-      name: "The Instructor assessed course progress by questioning or using other appropriate means.",
-      options: [{name: "Very Bad"}, {name: "Bad"}, {name: "Moderate"}, {name: "Good"}, {name: "Very Good"}]
+      questionText: "The Instructor assessed course progress by questioning or using other appropriate means.",
+      questionType: "Multiple Choice",
+      options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
     },
     {
-      name: "The communication of information maintained my interest in the classroom or online",
-      options: [{name: "Very Bad"}, {name: "Bad"}, {name: "Moderate"}, {name: "Good"}, {name: "Very Good"}]
+      questionText: "The communication of information maintained my interest in the classroom or online",
+      questionType: "Multiple Choice",
+      options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
     },
     {
-      name: "The Instructor made clear the applications of the subject matter to my major, to other courses, or to my life",
-      options: [{name: "Very Bad"}, {name: "Bad"}, {name: "Moderate"}, {name: "Good"}, {name: "Very Good"}]
+      questionText: "The Instructor made clear the applications of the subject matter to my major, to other courses, or to my life",
+      questionType: "Multiple Choice",
+      options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
     },
     {
-      name: "The materials used to support assignments in the course (texts, readings, websites, etc.) were useful",
-      options: [{name: "Very Bad"}, {name: "Bad"}, {name: "Moderate"}, {name: "Good"}, {name: "Very Good"}]
+      questionText: "The materials used to support assignments in the course (texts, readings, websites, etc.) were useful",
+      questionType: "Multiple Choice",
+      options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
     },
     {
-      name: "What has been the best aspect of this course?",
-      options: [{name: ""}]
+      questionText: "What has been the best aspect of this course?",
+      questionType: "Open Ended",
+      options: [{content: ""}]
     },
     {
-      name: "Would you change anything about this course/instructor? If so, what would you change?",
-      options: [{name: ""}]
+      questionText: "Would you change anything about this course/instructor? If so, what would you change?",
+      questionType: "Open Ended",
+      options: [{content: ""}]
     }
   ]
 
@@ -70,29 +78,40 @@ export class CreateFormComponent {
     });
     this.questionForm = this.formBuilder.group({
       questionText: new FormControl(null, [Validators.required]),
-      options: new FormControl([' '], []),
+      questionType: new FormControl(null, []),
+      options: new FormControl([{content: ""}], []),
     })
     this.optionForm = this.formBuilder.group({
-      option: new FormControl(null, [Validators.required]),
+      content: new FormControl(null, [Validators.required]),
     })
   }
 
   ngOnInit(): void {
-
   }
 
   createSurvey() {
+    const courseId = this.route.snapshot.paramMap.get('id');
+    if(this.survey.invalid){return;}
+    this.formService.createSurvey(courseId,this.survey.value).subscribe(
+      (data)=>{
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Form created Successfully'});
+      },
+      (error)=>{
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Form Create Failed'});
+      },
+      )
 
   }
 
   createQuestion(){
+    this.questionForm.controls['questionType'].setValue(this.questionType);
     this.survey.value['questions'].push(this.questionForm.value);
     this.addQuestion = false;
 
   }
 
   createOption(){
-    this.questionForm.value['options'].push({option:this.optionForm.value['option']});
+    this.questionForm.value['options'].push({content:this.optionForm.value['content']});
     this.addOption = false;
     this.optionForm.reset();
 
@@ -102,9 +121,13 @@ export class CreateFormComponent {
     this.addOption = false;
     this.optionForm.reset();
     this.questionForm.reset();
-    this.questionForm.controls['options'].setValue([' ']);
-    let questions = this.survey.value["questions"];
+    this.questionForm.controls['options'].setValue([{content: ""}]);
+    let oldSurvey = this.survey.value;
     this.survey.reset();
-    this.survey.controls['questions'].setValue(questions);
+    this.survey.controls['questions'].setValue(oldSurvey.questions);
+    this.survey.controls['startDate'].setValue(oldSurvey.startDate);
+    this.survey.controls['endDate'].setValue(oldSurvey.endDate);
+    this.survey.controls['name'].setValue(oldSurvey.name);
+
   }
 }

@@ -1,1 +1,37 @@
-<p>form works!</p>
+<p-toast></p-toast>
+<div class="card">
+  <div class="flex align-items-center justify-content-between my-3">
+    <h1 *appHasRole="['STUDENT', 'INSTRUCTOR']" class="m-0 font-medium text-3xl">My Forms</h1>
+    <h1 *appHasRole="['DEPARTMENT_MANAGER', 'ADMIN']" class="m-0 font-medium text-3xl">All Evaluation Forms</h1>
+
+    <button *appHasRole="['INSTRUCTOR']" pButton pRipple (click)="goToCreate()"
+            label="Create a New Evaluation Form" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
+  </div>
+  <span *ngIf="forms.length<=0" class="text-lg">No Forms Found</span>
+  <div >
+    <p-dataView [value]="forms">
+      <ng-template let-form pTemplate="listItem">
+        <div class="col-12">
+          <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+
+            <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+              <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+                <div class="flex gap-3">
+                  <div class="text-2xl font-bold text-900">{{ form.name }}</div>
+                  <p-tag [value]="form.submitted?'SUBMITTED': 'INCOMPLETE'" [severity]="form.submitted?'success': 'warning'"></p-tag>
+                </div>
+              </div>
+            </div>
+            <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
+              <span >20.05.2023 -28.06.2023 </span>
+              <span class="text-xl">Ends in 3 days</span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+</div>
+
+
+

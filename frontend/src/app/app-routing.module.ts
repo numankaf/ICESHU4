@@ -19,7 +19,6 @@ import {CourseComponent} from "./iceshu4/components/course/course.component";
 import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/coursedetail.component";
 import {BanStudentsComponent} from "./iceshu4/components/admin/ban-students/ban-students.component";
 import {FormComponent} from "./iceshu4/components/form/form.component";
-import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-detail.component";
 import {CreateFormComponent} from "./iceshu4/components/form/create-form/create-form.component";
 import {MessageComponent} from "./iceshu4/components/message/message.component";
 import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
@@ -48,7 +47,6 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
-        {path: 'forms/:id', component: FormDetailComponent},
         {path: 'messages', component: MessageComponent},
         {path: 'messages/:id', component: DetailMessageComponent},
         {path: 'about', component: DashboardComponent},
@@ -67,6 +65,7 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'semesters', component: SemestersComponent},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
+        {path: 'forms', component: FormComponent},
         {path: 'messages', component: MessageComponent},
         {path: 'messages/:id', component: DetailMessageComponent},
         {path: 'bans', component: BanStudentsComponent},
@@ -83,9 +82,9 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'dashboard', component: DashboardComponent},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
+        {path: 'courses/:id/createform', component: CreateFormComponent},
         {path: 'forms', component: FormComponent},
         {path: 'forms/createform', component: CreateFormComponent},
-        {path: 'forms/:id', component: FormDetailComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
       ]
@@ -102,7 +101,6 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
-        {path: 'forms/:id', component: FormDetailComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
       ]
