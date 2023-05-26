@@ -55,8 +55,8 @@
           <div *ngIf="question.options.length>1" class="flex flex-row align-items-center gap-5">
             <ng-container *ngFor="let option of question.options" >
               <div class="flex align-items-center">
-                <p-radioButton  value="{{option.option}}" [(ngModel)]="questionType" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
-                <label  class="ml-2">{{option.option}}</label>
+                <p-radioButton  value="{{option.content}}" [(ngModel)]="selOption" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
+                <label  class="ml-2">{{option.content}}</label>
               </div>
             </ng-container>
           </div>
@@ -127,11 +127,11 @@
           <form [formGroup]="optionForm" (ngSubmit)="createOption()">
             <div class="mb-4 pt-2  ">
               <input  type="text" pInputText placeholder="Option"
-                     class="w-full " formControlName="option">
-              <div *ngIf="optionForm.controls['option'].invalid && (optionForm.controls['option'].dirty )"
+                     class="w-full " formControlName="content">
+              <div *ngIf="optionForm.controls['content'].invalid && (optionForm.controls['content'].dirty )"
                    style="text-align: left;">
                 <small class="p-error"
-                       *ngIf="optionForm.controls['option'].errors?.['required']">Option required!</small>
+                       *ngIf="optionForm.controls['content'].errors?.['required']">Option required!</small>
               </div>
             </div>
             <div class="flex align-items-center justify-content-end">
@@ -147,8 +147,8 @@
       <div class="flex flex-column gap-2">
         <ng-container *ngFor="let option of questionForm.value['options']" >
           <div class="flex align-items-center">
-            <p-radioButton  value="{{option.option}}" [(ngModel)]="questionType" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
-            <label  class="ml-2">{{option.option}}</label>
+            <p-radioButton  value="{{option.content}}" [(ngModel)]="questionType" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
+            <label  class="ml-2">{{option.content}}</label>
           </div>
         </ng-container>
       </div>

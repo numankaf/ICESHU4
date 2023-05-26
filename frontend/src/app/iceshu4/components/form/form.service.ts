@@ -10,8 +10,45 @@ export class FormService {
 
   constructor(private httpClient: HttpClient) {
   }
+  findAll(): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAll`).pipe(catchError(this.handleError));
+  }
 
+  createSurvey(courseId: any, form:any): Observable<any> {
+    // @ts-ignore
+    return this.httpClient.post<any>(`${environment.apiUrl}/survey/create/${courseId}`, form, {responseType: "text"}).pipe(catchError(this.handleError));
+  }
+  findAllSurveysOfUser(userId: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAll/${userId}`).pipe(catchError(this.handleError));
+  }
 
+  findAllSurveysOfCourses(courseId: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAllByCourseID/${courseId}`).pipe(catchError(this.handleError));
+  }
+
+  getSurveyById(id: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/survey/get/${id}`).pipe(catchError(this.handleError));
+  }
+
+  deleteSurvey(id: any): Observable<any> {
+    // @ts-ignore
+    return this.httpClient.delete<any>(`${environment.apiUrl}/survey/get/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError));
+  }
+
+  addQuestion(surveyId: any, question: any): Observable<any> {
+    // @ts-ignore
+    return this.httpClient.put<any>(`${environment.apiUrl}/survey/update/addQuestion/${surveyId}`,question,{responseType: 'text'}).pipe(catchError(this.handleError));
+  }
+
+  deleteQuestion(surveyId: any, questionId: any): Observable<any> {
+    // @ts-ignore
+    return this.httpClient.put<any>(`${environment.apiUrl}/survey/update/deleteQuestion/${surveyId}/${questionId}`,question,{responseType: 'text'}).pipe(catchError(this.handleError));
+  }
+
+  publishSurvey(surveyId: any): Observable<any> {
+    // @ts-ignore
+    return this.httpClient.put<any>(`${environment.apiUrl}/publish/${surveyId}`,question,{responseType: 'text'}).pipe(catchError(this.handleError));
+  }
 
   handleError(error: HttpErrorResponse) {
     let msg = '';
