@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/findAll")
     public List<UserDetailDTO> findAll() {
         return userService.findAll();
-    }
+    }//will be updated with userDetailDTO
 
     @GetMapping("/get/{id}")
     public UserDetailDTO getUserById(@PathVariable Long id) {
@@ -68,25 +68,6 @@ public class UserController {
         }
         userService.createUser(user);
         return new ResponseEntity<>("User is created", HttpStatus.OK);
-    }
-
-    @PostMapping("/enrollCourse/{UserID}/{CourseID}")
-    public ResponseEntity<String> enrollCourse(@PathVariable Long UserID, @PathVariable Long CourseID) {
-        if (userService.getUserById(UserID) == null) {
-            return new ResponseEntity<>("There is no user with given id", HttpStatus.BAD_REQUEST);
-        }
-        userService.enrollCourse(UserID, CourseID);
-        return new ResponseEntity<>("User enrolled the Course", HttpStatus.OK);
-    }
-
-    @GetMapping("/findCourseStudents/{id}")
-    public List<User> findCourseStudents(@PathVariable Long id) {
-        return userService.findCourseStudents(id);
-    }
-
-    @GetMapping("/findCourseInstructors/{id}")
-    public List<User> findCourseInstructors(@PathVariable Long id) {
-        return userService.findCourseInstructors(id);
     }
 
     @GetMapping("/getInstructorsByDepartmentId/{id}")

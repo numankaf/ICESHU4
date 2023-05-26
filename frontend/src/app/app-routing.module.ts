@@ -17,8 +17,8 @@ import {SemestersComponent} from "./iceshu4/components/admin/semesters/semesters
 import {ChangepasswordComponent} from "./iceshu4/components/profile/changepassword/changepassword.component";
 import {CourseComponent} from "./iceshu4/components/course/course.component";
 import {CoursedetailComponent} from "./iceshu4/components/course/coursedetail/coursedetail.component";
-import {MessageComponent} from "./iceshu4/components/message/message.component";
-import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
+import {FormComponent} from "./iceshu4/components/form/form.component";
+import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-detail.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -42,9 +42,9 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'dashboard', component: DashboardComponent},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
-        {path: 'forms', component: DashboardComponent},
-        {path: 'messages', component: MessageComponent},
-        {path: 'messages/:id', component: DetailMessageComponent},
+        {path: 'forms', component: FormComponent},
+        {path: 'forms/:id', component: FormDetailComponent},
+        {path: 'messages', component: DashboardComponent},
         {path: 'about', component: DashboardComponent},
         {path: 'help', component: DashboardComponent},
       ]
@@ -61,8 +61,7 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'semesters', component: SemestersComponent},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
-        {path: 'messages', component: MessageComponent},
-        {path: 'messages/:id', component: DetailMessageComponent},
+        {path: 'messages', component: DashboardComponent},
         {path: 'bans', component: DashboardComponent},
       ]
     },
@@ -77,7 +76,8 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'dashboard', component: DashboardComponent},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
-        {path: 'forms', component: DashboardComponent},
+        {path: 'forms', component: FormComponent},
+        {path: 'forms/:id', component: FormDetailComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
       ]
@@ -93,7 +93,8 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'dashboard', component: DashboardComponent},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
-        {path: 'forms', component: DashboardComponent},
+        {path: 'forms', component: FormComponent},
+        {path: 'forms/:id', component: FormDetailComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
       ]

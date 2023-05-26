@@ -57,9 +57,9 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 import { CoursedetailComponent } from './iceshu4/components/course/coursedetail/coursedetail.component';
 import {DataViewModule} from "primeng/dataview";
 import {TagModule} from "primeng/tag";
-import {SpeedDialModule} from "primeng/speeddial";
-import { MessageComponent } from './iceshu4/components/message/message.component';
-import { DetailMessageComponent } from './iceshu4/components/message/detail-message/detail-message.component';
+import { FormComponent } from './iceshu4/components/form/form.component';
+import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
+import {MultiSelectModule} from "primeng/multiselect";
 
 @NgModule({
   declarations: [
@@ -82,50 +82,50 @@ import { DetailMessageComponent } from './iceshu4/components/message/detail-mess
     HasRoleDirective,
     CourseComponent,
     CoursedetailComponent,
-    MessageComponent,
-    DetailMessageComponent
+    FormComponent,
+    FormDetailComponent
   ],
-  imports: [
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatDividerModule,
-    MatButtonModule,
-    CardModule,
-    MatListModule,
-    MatMenuModule,
-    SelectButtonModule,
-    FormsModule,
-    StyleClassModule,
-    RippleModule,
-    OverlayPanelModule,
-    ButtonModule,
-    InputSwitchModule,
-    CheckboxModule,
-    ChipsModule,
-    ReactiveFormsModule,
-    DividerModule,
-    PasswordModule,
-    CarouselModule,
-    AvatarModule,
-    DropdownModule,
-    DialogModule,
-    MessagesModule,
-    InputTextareaModule,
-    CalendarModule,
-    ToastModule,
-    TableModule,
-    ConfirmDialogModule,
-    MenuModule,
-    AutoCompleteModule,
-    DataViewModule,
-    TagModule,
-    SpeedDialModule
-  ],
+    imports: [
+        HttpClientModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatButtonModule,
+        CardModule,
+        MatListModule,
+        MatMenuModule,
+        SelectButtonModule,
+        FormsModule,
+        StyleClassModule,
+        RippleModule,
+        OverlayPanelModule,
+        ButtonModule,
+        InputSwitchModule,
+        CheckboxModule,
+        ChipsModule,
+        ReactiveFormsModule,
+        DividerModule,
+        PasswordModule,
+        CarouselModule,
+        AvatarModule,
+        DropdownModule,
+        DialogModule,
+        MessagesModule,
+        InputTextareaModule,
+        CalendarModule,
+        ToastModule,
+        TableModule,
+        ConfirmDialogModule,
+        MenuModule,
+        AutoCompleteModule,
+        DataViewModule,
+        TagModule,
+        MultiSelectModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
