@@ -3,19 +3,14 @@ package com.cyberbullies.iceshu4.service;
 import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
-import com.cyberbullies.iceshu4.entity.Course;
 import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.enums.UserRole;
-import com.cyberbullies.iceshu4.repository.CourseRepository;
 import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +20,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final CourseRepository courseRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CourseService courseService;
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -57,9 +52,10 @@ public class UserService {
     }
 
     public void deleteUserById(Long id) {
-        if (userRepository.findById(id).isEmpty()) {
-            throw new BadCredentialsException("There is no user with this id!");
-        }
+        User user = userRepository.findById(id).get();
+        user.getUser_courses().forEach(course -> {
+            courseService.quitCourse(user.getId(), course.getId());
+        });
         userRepository.deleteById(id);
     }
 
@@ -80,40 +76,6 @@ public class UserService {
         userRepository.save(createdUser);
     }
 
-    public void enrollCourse(Long UserID, long CourseID) {
-        User user = userRepository.findById(UserID).get();
-        Course course = courseRepository.findById(CourseID).get();
-        if (user.getDepartment().getId() != course.getDepartment().getId()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Student can't take courses from another department!");
-        }
-        if (!user.getUser_courses().stream().filter(student_course -> CourseID == student_course.getId()).findAny()
-                .isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Student can't take courses that already taken'");
-        }
-//        List<Course> courses = user.getUser_courses();
-//        courses.add(course);
-//        user.setUser_courses(courses);
-//        userRepository.save(user);
-        List<User> users = course.getUsers();
-        users.add(user);
-        course.setUsers(users);
-        courseRepository.save(course);
-    }
-
-    public List<User> findCourseStudents(Long id) {
-        Course course = courseRepository.findById(id).get();
-        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.STUDENT).collect(Collectors.toList());
-        return users;
-    }
-
-    public List<User> findCourseInstructors(Long id) {
-        Course course = courseRepository.findById(id).get();
-        List<User> users =course.getUsers().stream().map(s->s).filter(user -> user.getRole() ==UserRole.INSTRUCTOR).collect(Collectors.toList());
-        return users;
-    }
-
     public List<User> getInstructorsByDepartmentId(Long id) {
         return userRepository.getInstructorsByDepartmentId(id);
     }
@@ -130,9 +92,9 @@ public class UserService {
         dto.setRole(user.getRole());
         dto.setBirth_date(user.getBirth_date());
         dto.setSchool_id(user.getSchool_id());
-        if(user.getRole()==UserRole.DEPARTMENT_MANAGER){
+        if (user.getRole() == UserRole.DEPARTMENT_MANAGER) {
             dto.setDepartment(user.getManaged_department());
-        }else{
+        } else {
             dto.setDepartment(user.getDepartment());
         }
         dto.setBanned(user.getBanned());
@@ -143,10 +105,9 @@ public class UserService {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User admin = userRepository.findByEmail(email);
         List<User> users = userRepository.findAllByIdNot(admin.getId());
-//        List<User> users = userRepository.findAll();
         List<UserDetailDTO> dtos = users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
         return dtos;
-    }//
+    }
 
     public List<UserDetailDTO> findAllByRole(Long id) {
         List<User> users = userRepository.findAllByRole(id);
