@@ -3,6 +3,7 @@ package com.cyberbullies.iceshu4.entity;
 import com.cyberbullies.iceshu4.enums.UserRole;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +41,7 @@ public class User {
     @ManyToOne(targetEntity = Department.class)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
-    @JsonIgnore
+    @JsonIgnoreProperties
     @OneToOne
     @JoinColumn(name = "managed_department_id", referencedColumnName = "id")
     private Department managed_department;
