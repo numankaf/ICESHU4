@@ -61,6 +61,8 @@ import { BanStudentsComponent } from './iceshu4/components/admin/ban-students/ba
 import { FormComponent } from './iceshu4/components/form/form.component';
 import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
 import {MultiSelectModule} from "primeng/multiselect";
+import {MessageComponent} from "./iceshu4/components/message/message.component";
+import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
 
 @NgModule({
   declarations: [
@@ -85,7 +87,9 @@ import {MultiSelectModule} from "primeng/multiselect";
     CoursedetailComponent,
     BanStudentsComponent,
     FormComponent,
-    FormDetailComponent
+    FormDetailComponent,
+    MessageComponent,
+    DetailMessageComponent
   ],
     imports: [
         HttpClientModule,

@@ -1,0 +1,73 @@
+<div class="grid card border-round-3xl" >
+
+  <div *appHasRole="['ADMIN']" class="col-12">
+    <div class="col-6">
+      <div class="card bg-bluegray-50">
+        <div class="" style="display: flex; align-items: center;">
+          <img alt="avatar" class="profile-avatar ml-2" src="{{messageOwner?.profile_photo}}">
+          <h2 class="ml-1 mt-3">{{messageOwner?.name + " " + messageOwner?.surname}}</h2>
+        </div>
+          <h2 class="ml-1 mb-1" style="font-size: 18px; word-wrap: break-word;">{{message?.subject}}</h2>
+          <p class="ml-1 mb-0" style="word-wrap: break-word;">{{message?.content}}.</p>
+          <p class="ml-1 mb-0 text-right"><b>{{message?.created_date | date:'dd/MM/yyyy'}}</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div *appHasRole="['STUDENT']" class="col-12">
+    <div class="col-offset-6 col-6">
+      <div class="card bg-bluegray-50">
+        <div class="" style="display: flex; align-items: center;">
+          <img alt="avatar" class="profile-avatar ml-2" src="{{messageOwner?.profile_photo}}">
+          <h2 class="ml-1 mt-3">{{messageOwner?.name + " " + messageOwner?.surname}}</h2>
+        </div>
+        <h2 class="ml-1 mb-0" style="font-size: 18px; word-wrap: break-word;">{{message?.subject}}</h2>
+        <p class="ml-1 mb-0" style="word-wrap: break-word;">{{message?.content}}.</p>
+        <p class="ml-1 mb-0 text-right"><b>{{message?.created_date | date:'dd/MM/yyyy'}}</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="message?.admin_response!=null && isStudent()" class="col-12">
+    <div class="col-6">
+      <div class="card bg-teal-100">
+        <h2 class="ml-1 mb-0">Admin Response</h2>
+        <p class="ml-1 mb-0" style="word-wrap: break-word;">{{message?.admin_response}}</p>
+        <p class="ml-1 mb-0 text-right"><b>{{message?.response_date | date:'dd/MM/yyyy'}}</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="message?.admin_response!=null && isAdmin()" class="col-12">
+    <div class="col-offset-6 col-6">
+      <div class="card bg-teal-100">
+        <h2 class="ml-1 mb-0">Admin Response</h2>
+        <p class="ml-1 mb-0" style="word-wrap: break-word;">{{message?.admin_response}}</p>
+        <p class="ml-1 mb-0 text-right"><b>{{message?.response_date | date:'dd/MM/yyyy'}}</b></p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="message?.admin_response==null && isStudent()" class="col-12 ">
+    <div class="col-6">
+      <div class="card bg-red-100">
+        <p class="ml-1" style="font-size: 18px;">Admin will reply as soon as possible. You can see it here when it's answered.</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="message?.admin_response==null && isAdmin()" class="flex justify-content-center" style="width: 100%" class="col-12">
+    <div class="col-offset-1 col-10">
+      <form [formGroup]="form" (ngSubmit)="answer()">
+        <label class=" block text-base font-medium mb-2">Response</label>
+        <textarea type="text" pInputText placeholder="Response"
+                  class="w-full py-5 flex align-items-center justify-content-center" formControlName="admin_response">
+      </textarea>
+
+        <div class="mt-2 text-center">
+          <p-button (click)="answer()" [disabled]="!this.form.valid" label="Answer" icon="pi pi-check" iconPos="right"></p-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

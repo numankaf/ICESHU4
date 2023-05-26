@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping("/findAll")
     public List<UserDetailDTO> findAll() {
         return userService.findAll();
-    }//will be updated with userDetailDTO
+    }// will be updated with userDetailDTO
 
     @GetMapping("/get/{id}")
     public UserDetailDTO getUserById(@PathVariable Long id) {
@@ -39,6 +39,9 @@ public class UserController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Long id) {
+        if (userService.getUserById(id) == null) {
+            return new ResponseEntity<>("There are no user by this id!", HttpStatus.BAD_REQUEST);
+        }
         userService.deleteUserById(id);
         return new ResponseEntity<>("User deleted with id :" + id, HttpStatus.OK);
     }
