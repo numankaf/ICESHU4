@@ -16,6 +16,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.*;
 
 
+
+
 @Service
 @AllArgsConstructor
 public class SurveyService {
@@ -63,6 +65,11 @@ public class SurveyService {
                 allSurveys.addAll(course.getSurveys());
             }
             return  allSurveys;
+
+    public List<Survey> findAllSurveysOfCourses(Long courseID) {
+        if(courseRepository.findById(courseID).isPresent() && !courseRepository.findById(courseID).get().getSurveys().isEmpty()){
+            Course course = courseRepository.findById(courseID).get();
+            return course.getSurveys();
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"There is not such a course or course doesn't have any survey!");
     }
