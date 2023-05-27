@@ -21,6 +21,10 @@ public class ReevaluationRequestService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Can not create re-evaluation request more than once!");
         }
+        if (!dto.getSurvey().isPublished()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Can not create re-evaluation request to non-published survey!");
+        }
         ReevaluationRequest reevaluationRequest = new ReevaluationRequest();
         reevaluationRequest.setContent(dto.getContent());
         reevaluationRequest.setSurvey(dto.getSurvey());
