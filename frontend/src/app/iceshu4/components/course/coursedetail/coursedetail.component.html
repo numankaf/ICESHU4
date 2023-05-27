@@ -7,7 +7,7 @@
   </div>
 
   <div class="grid">
-    <div *appHasRole="['STUDENT']" class="border-primary  border-1 border-solid   shadow-2 col-12 " style="border-radius: 7px">
+    <div *appHasRole="['STUDENT']" class="border-primary  border-1 border-solid   col-12 " style="border-radius: 7px">
       <div class="mb-5">
         <div class="flex justify-content-between align-items-center m-3">
           <span class="text-xl font-medium text-900  ">Instructors</span>
@@ -35,7 +35,7 @@
     </div>
     <div class="col-12" >
       <div *appHasRole="['DEPARTMENT_MANAGER','INSTRUCTOR','ADMIN']"  class="grid justify-content-between">
-        <div class="border-primary  border-1 border-solid  card-section shadow-2 col-6 " style="border-radius: 7px">
+        <div class="border-primary  border-1 border-solid  card-section col-6 " style="border-radius: 7px">
           <div class="mb-5">
             <div class="flex justify-content-between align-items-center m-3">
               <span class="text-xl font-medium text-900  ">Instructors</span>
@@ -94,51 +94,10 @@
       <div>
         <div class="flex justify-content-between align-items-center  m-3">
           <span class="text-xl font-medium text-900 ">Evaluation Forms</span>
-          <button *appHasRole="['INSTRUCTOR']" pButton pRipple
-                  label="Create an  Evaluation Form" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
+          <button *appHasRole="['INSTRUCTOR']" pButton pRipple (click)="goToCreate()"
+                  label="Create a New Evaluation Form" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
         </div>
-        <p-dataView *appHasRole="['INSTRUCTOR','DEPARTMENT_MANAGER','ADMIN']" [value]="forms">
-          <ng-template let-form pTemplate="listItem">
-            <div class="col-12">
-              <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-
-                <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                  <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                    <div class="flex gap-3">
-                      <div class="text-2xl font-bold text-900">{{ form.name }}</div>
-                      <p-tag [value]="form.submitted?'PUBLISHED': 'NOT PUBLISHED'" [severity]="form.submitted?'success': 'danger'"></p-tag>
-                    </div>
-                    </div>
-                  </div>
-                <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                  <span >20.05.2023 -28.06.2023 </span>
-                  <span class="text-xl">Ends in 3 days</span>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-dataView>
-        <p-dataView *appHasRole="['STUDENT']" [value]="forms">
-          <ng-template let-form pTemplate="listItem">
-            <div class="col-12">
-              <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-
-                <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                  <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                    <div class="flex gap-3">
-                      <div class="text-2xl font-bold text-900">{{ form.name }}</div>
-                      <p-tag [value]="form.submitted?'SUBMITTED': 'INCOMPLETE'" [severity]="form.submitted?'success': 'warning'"></p-tag>
-                    </div>
-                  </div>
-                </div>
-                <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                  <span >20.05.2023 -28.06.2023 </span>
-                  <span class="text-xl">Ends in 3 days</span>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-dataView>
+        <app-form-list [courseId]="currentCourseId"></app-form-list>
       </div>
     </div>
 
@@ -149,40 +108,3 @@
 
 </div>
 
-
-<!--<p-dialog header="Enroll to Another Course" [(visible)]="enrollDialog" [dismissableMask]="true" [modal]="true"-->
-<!--          [style]="{ width: '50vw' }" [draggable]="false"-->
-<!--          [resizable]="false">-->
-<!--  <ng-template pTemplate="content">-->
-<!--    <label class="block text-base font-medium mb-2">Select a course to enroll</label>-->
-<!--    <p-autoComplete [(ngModel)]="selectedCourse" [dropdown]="true" [suggestions]="departmentAllCourses" appendTo="body"-->
-<!--                    placeholder="Course"-->
-<!--                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"-->
-<!--                    (completeMethod)="filterCourse($event)" field="name"></p-autoComplete>-->
-<!--  </ng-template>-->
-
-<!--  <ng-template pTemplate="footer">-->
-<!--    <div class="flex align-items-center justify-content-center m-2">-->
-<!--      <button pButton pRipple label="Enroll" icon="pi pi-check"-->
-<!--              [disabled]="selectedCourse==null"-->
-<!--              class="p-button-info mr-2 mb-2" (click)="enroll()">-->
-<!--      </button>-->
-<!--    </div>-->
-<!--  </ng-template>-->
-<!--</p-dialog>-->
-<!--<p-confirmDialog #cdDrop key="dropDialog" [style]="{width: '50vw'}" [dismissableMask]="true">-->
-<!--  <ng-template pTemplate="footer">-->
-<!--    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"-->
-<!--            (click)="cdDrop.reject()"></button>-->
-<!--    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"-->
-<!--            (click)="cdDrop.accept()"></button>-->
-<!--  </ng-template>-->
-<!--</p-confirmDialog>-->
-<!--<p-confirmDialog #cdDelete key="deleteDialog" [style]="{width: '50vw'}" [dismissableMask]="true">-->
-<!--  <ng-template pTemplate="footer">-->
-<!--    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"-->
-<!--            (click)="cdDelete.reject()"></button>-->
-<!--    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"-->
-<!--            (click)="cdDelete.accept()"></button>-->
-<!--  </ng-template>-->
-<!--</p-confirmDialog>-->

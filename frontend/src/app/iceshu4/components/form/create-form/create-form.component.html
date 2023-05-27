@@ -1,0 +1,177 @@
+<div class="card">
+  <h1 class="m-0 font-medium text-xl">Create a Form</h1>
+  <form [formGroup]="survey" >
+    <div class="mb-4 pt-2  ">
+      <label for="name" class="block text-base font-medium mb-2">Name</label>
+      <input id="name" type="text" pInputText placeholder="Name"
+             class="w-full " formControlName="name">
+      <div *ngIf="survey.controls['name'].invalid && (survey.controls['name'].dirty )"
+           style="text-align: left;">
+        <small class="p-error"
+               *ngIf="survey.controls['name'].errors?.['required']">Name required!</small>
+
+      </div>
+    </div>
+    <div class="py-2 flex justify-content-between flex-wrap mb-5">
+          <span class="" style="width: 49%;">
+            <label class="block text-base font-medium mb-2">Start Date</label>
+
+              <p-calendar placeholder="Start Date" appendTo="body" [style]="{'width':'100%'}"
+                          [inputStyle]="{'width':'100%'}" [minDate]="dateCurrent"
+                          formControlName="startDate"
+                          [readonlyInput]="true" [showIcon]="true"></p-calendar>
+              <span *ngIf="survey.controls['startDate'].invalid && (survey.controls['startDate'].dirty )"
+                    style="text-align: left;"
+                    class="block mt-1">
+                <small class="p-error"
+                       *ngIf="survey.controls['startDate'].errors?.['required']">Start Date required.</small>
+              </span>
+           </span>
+      <span class="" style="width: 49%;">
+            <label class="block text-base font-medium mb-2">End Date</label>
+            <p-calendar placeholder="End Date" appendTo="body" [style]="{'width':'100%'}"
+                        [inputStyle]="{'width':'100%'}" [minDate]="survey.value['startDate']"
+                        formControlName="endDate"
+                        [readonlyInput]="true" [showIcon]="true"></p-calendar>
+              <span *ngIf="survey.controls['endDate'].invalid && (survey.controls['endDate'].dirty )"
+                    style="text-align: left;"
+                    class="block mt-1">
+                <small class="p-error"
+                       *ngIf="survey.controls['endDate'].errors?.['required']">End Date required.</small>
+              </span>
+           </span>
+    </div>
+    <div class="flex align-items-center justify-content-between my-3">
+      <h1 class="m-0 font-medium text-xl">Questions</h1>
+      <button pButton pRipple label="Add a Question" icon="pi pi-plus" class="p-button-success mr-2 mb-2"
+              (click)="addQuestion = !addQuestion"></button>
+    </div>
+    <span *ngIf="survey.value['questions'].length<=0">No Questions Given</span>
+    <div class="flex flex-column gap-3">
+      <ng-container *ngFor="let question of survey.value['questions'];let i = index" >
+        <span class="font-semibold text-lg"> {{i+1 + ". "+ question.questionText}}</span>
+        <div class="flex flex-row align-items-center gap-5">
+          <textarea *ngIf="question.options.length==1" rows="2"  class="w-full" pInputTextarea ></textarea>
+          <div *ngIf="question.options.length>1" class="flex flex-row align-items-center gap-5">
+            <ng-container *ngFor="let option of question.options" >
+              <div class="flex align-items-center">
+                <p-radioButton  value="{{option.content}}" [(ngModel)]="selOption" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
+                <label  class="ml-2">{{option.content}}</label>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="flex justify-content-end mt-5">
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple label="Cancel" icon="pi pi-times"
+                class="p-button-danger p-button-outlined mr-2 mb-2"  [routerLink]="['../']">
+        </button>
+      </div>
+
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple label="Save" icon="pi pi-check" (click)="createSurvey()"
+                [disabled]="survey.invalid ||(survey.value['questions'].length<=0)"
+                class="p-button-success mr-2 mb-2" type="Submit">
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+<p-dialog header="Add a Question" [(visible)]="addQuestion" [dismissableMask]="true" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+          [resizable]="false" [breakpoints]="{ '960px': '75vw' }"  (onHide)="resetForms()">
+  <ng-template pTemplate="content">
+    <label class="block text-base font-medium mb-2">Question Type</label>
+    <div class="flex flex-wrap gap-3 mb-3 mt-3">
+      <div class="flex align-items-center">
+        <p-radioButton  value="Open Ended" [(ngModel)]="questionType" (click)=" this.questionForm.controls['options'].setValue([' ']);"
+                        [ngModelOptions]="{standalone: true}" inputId="ingredient1"></p-radioButton>
+        <label  class="ml-2">Open Ended</label>
+      </div>
+
+      <div class="flex align-items-center">
+        <p-radioButton  value="Multiple Choice" [(ngModel)]="questionType"  (click)=" this.questionForm.controls['options'].setValue([]);"
+                        [ngModelOptions]="{standalone: true}" inputId="ingredient2"></p-radioButton>
+        <label  class="ml-2">Multiple Choice</label>
+      </div>
+
+    </div>
+    <form [formGroup]="questionForm" (ngSubmit)="createQuestion()">
+      <div class="py-2 flex justify-content-between flex-wrap">
+          <span class="" style="width: 100%;">
+            <label class="block text-base font-medium mb-2">Question Text</label>
+              <div class="inline">
+                  <input type="text" pInputText placeholder="Question Text" class="w-full" formControlName="questionText"/>
+              </div>
+              <span *ngIf="questionForm.controls['questionText'].invalid && (questionForm.controls['questionText'].dirty )" style="text-align: left;" class="block mt-1">
+                <small class="p-error" *ngIf="questionForm.controls['questionText'].errors?.['required']">Question Text required.</small>
+              </span>
+           </span>
+      </div>
+    <div *ngIf="questionType ==='Multiple Choice'" class="mt-3">
+      <div>
+        <div class="flex align-items-center justify-content-between">
+          <h1 class="m-0 font-medium text-base">Options</h1>
+          <button *ngIf="!addOption" pButton pRipple label="Add an Option" icon="pi pi-plus" class="p-button-success p-button-sm mr-2 mb-2"
+                  (click)="addOption = !addOption" ></button>
+          <button *ngIf="addOption" pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger p-button-sm mr-2 mb-2"
+                  (click)="addOption = !addOption"></button>
+        </div>
+
+        <div *ngIf="addOption">
+          <form [formGroup]="optionForm" (ngSubmit)="createOption()">
+            <div class="mb-4 pt-2  ">
+              <input  type="text" pInputText placeholder="Option"
+                     class="w-full " formControlName="content">
+              <div *ngIf="optionForm.controls['content'].invalid && (optionForm.controls['content'].dirty )"
+                   style="text-align: left;">
+                <small class="p-error"
+                       *ngIf="optionForm.controls['content'].errors?.['required']">Option required!</small>
+              </div>
+            </div>
+            <div class="flex align-items-center justify-content-end">
+              <button pButton pRipple label="Add" icon="pi pi-check"
+                      type="Submit" [disabled]="optionForm.invalid"
+                      class="p-button-success p-button-sm mr-2 mb-2"
+                      (click)="addOption"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <span *ngIf="questionForm.value['options'] ==null || questionForm.value['options'].length==0">No Options Given</span>
+      <div class="flex flex-column gap-2">
+        <ng-container *ngFor="let option of questionForm.value['options']" >
+          <div class="flex align-items-center">
+            <p-radioButton  value="{{option.content}}" [(ngModel)]="questionType" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
+            <label  class="ml-2">{{option.content}}</label>
+          </div>
+        </ng-container>
+      </div>
+
+    </div>
+
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-end">
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple label="Cancel" icon="pi pi-times"
+                class="p-button-danger p-button-outlined mr-2 mb-2" (click)="addQuestion =!addQuestion">
+        </button>
+      </div>
+
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple label="Create" icon="pi pi-check"
+                [disabled]="questionForm.invalid ||(questionType=='Multiple Choice' &&questionForm.value['options'].length<2)"
+                class="p-button-success mr-2 mb-2" (click)="createQuestion()">
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

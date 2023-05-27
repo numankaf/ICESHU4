@@ -24,6 +24,7 @@ export class AdminLayoutComponent implements AfterViewInit{
       {icon: 'group', name: 'System Users', route: '/admin/users'},
       {icon: 'calendar_view_week', name: 'Semesters', route: '/admin/semesters'},
       {icon: 'library_books',name:'Courses', route:'/admin/courses'},
+      {icon: 'feed',name:'All Forms', route:'/admin/forms'},
       {icon: 'forum', name: 'Messages', route: '/admin/messages'},
       {icon: 'block', name: 'Ban Students', route: '/admin/bans'},
     ]

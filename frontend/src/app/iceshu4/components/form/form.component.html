@@ -1,1 +1,10 @@
-<p>form works!</p>
+<p-toast></p-toast>
+<div class="card">
+  <div class="flex align-items-center justify-content-between my-3">
+    <h1 *appHasRole="['STUDENT', 'INSTRUCTOR']" class="m-0 font-medium text-3xl">My Forms</h1>
+    <h1 *appHasRole="['DEPARTMENT_MANAGER', 'ADMIN']" class="m-0 font-medium text-3xl">All Evaluation Forms</h1>
+<!--    <button *appHasRole="['INSTRUCTOR']" pButton pRipple (click)="goToCreate()"-->
+<!--            label="Create a New Evaluation Form" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>-->
+  </div>
+  <app-form-list></app-form-list>
+</div>
