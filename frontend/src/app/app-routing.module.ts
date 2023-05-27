@@ -43,15 +43,12 @@ import {FormEditComponent} from "./iceshu4/components/form/form-edit/form-edit.c
         roles: ["STUDENT"]
       },
       children: [
-        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-        {path: 'dashboard', component: DashboardComponent},
+        {path: '', redirectTo: 'courses', pathMatch: 'full'},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
         {path: 'messages', component: MessageComponent},
-        {path: 'messages/:id', component: DetailMessageComponent},
-        {path: 'about', component: DashboardComponent},
-        {path: 'help', component: DashboardComponent},
+        {path: 'messages/:id', component: DetailMessageComponent}
       ]
     },
     {
@@ -79,15 +76,12 @@ import {FormEditComponent} from "./iceshu4/components/form/form-edit/form-edit.c
         roles: ["INSTRUCTOR"]
       },
       children: [
-        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-        {path: 'dashboard', component: DashboardComponent},
+        {path: '', redirectTo: 'courses', pathMatch: 'full'},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'courses/:id/createform', component: CreateFormComponent},
         {path: 'forms', component: FormComponent},
-        {path: 'forms/:id/edit', component: FormEditComponent},
-        {path: 'resources', component: DashboardComponent},
-        {path: 're-evaluationrequests', component: DashboardComponent},
+        {path: 'forms/:id/edit', component: FormEditComponent}
       ]
     },
     {
@@ -97,12 +91,10 @@ import {FormEditComponent} from "./iceshu4/components/form/form-edit/form-edit.c
         roles: ["DEPARTMENT_MANAGER"]
       },
       children: [
-        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-        {path: 'dashboard', component: DashboardComponent},
+        {path: '', redirectTo: 'courses', pathMatch: 'full'},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
-        {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
       ]
     },

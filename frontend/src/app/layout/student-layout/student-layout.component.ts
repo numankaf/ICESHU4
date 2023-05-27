@@ -21,13 +21,9 @@ export class StudentLayoutComponent implements AfterViewInit {
 
   ngOnInit() {
     this.menuItems = [
-      {icon: 'dashboard',name:'Dashboard', route:'/student/dashboard'},
       {icon: 'library_books',name:'Courses', route:'/student/courses'},
       {icon: 'feed',name:'Forms', route:'/student/forms'},
       {icon: 'forum', name: 'Messages', route: '/student/messages'},
-      {icon: 'info',name:'About', route:'/student/about'},
-      {icon: 'help',name:'Help', route:'/student/help'},
-
       ]
   }
 
