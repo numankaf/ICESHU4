@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ public class CourseController {
         return new ResponseEntity<>("Course is created", HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/findAll")
     public List<Course> findAll() {
         return courseService.findAll();
@@ -87,6 +89,15 @@ public class CourseController {
         }
         courseService.quitCourse(UserID, CourseID);
         return new ResponseEntity<>("User quitted the Course", HttpStatus.OK);
+    }
+
+    @PostMapping("/addInstructor/{CourseID}/{UserID}")
+    public ResponseEntity<String> addInstructor(@PathVariable Long CourseID, @PathVariable Long UserID) {
+        if (userService.getUserById(UserID) == null) {
+            return new ResponseEntity<>("There is no user with given id", HttpStatus.BAD_REQUEST);
+        }
+        courseService.addInstructor(CourseID, UserID);
+        return new ResponseEntity<>("Instructor added to the Course!", HttpStatus.OK);
     }
 
     @GetMapping("/findCourseStudents/{id}")

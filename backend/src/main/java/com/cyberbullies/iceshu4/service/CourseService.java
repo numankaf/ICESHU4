@@ -16,7 +16,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -102,7 +101,7 @@ public class CourseService {
         User user = userRepository.findById(UserID).get();
         Course course = courseRepository.findById(CourseID).get();
         if (user.getUser_courses().stream().filter(student_course -> CourseID == student_course.getId()).findAny()
-        .isEmpty()) {
+                .isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Student can only quit courses that already taken!");
         }
@@ -112,16 +111,39 @@ public class CourseService {
         courseRepository.save(course);
     }
 
+    public void addInstructor(Long CourseID, Long UserID) {
+        User instructor = userRepository.findById(UserID).get();
+        Course course = courseRepository.findById(CourseID).get();
+        if (instructor.getRole() != UserRole.INSTRUCTOR) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Only Instructor can be added!");
+        }
+        if (!course.getUsers().stream().filter(user -> user.getId() == UserID).findAny().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Same Instructor can not be added!");
+        }
+        if (instructor.getDepartment().getId() != course.getDepartment().getId()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Only the Instructors at the same department can be added!");
+        }
+        List<User> users = course.getUsers();
+        users.add(instructor);
+        course.setUsers(users);
+        courseRepository.save(course);
+    }
+
     public List<User> findCourseStudents(Long id) {
         Course course = courseRepository.findById(id).get();
-        List<User> users = course.getUsers().stream().map(s->s).filter(user -> user.getRole() == UserRole.STUDENT).collect(Collectors.toList());
+        List<User> users = course.getUsers().stream().map(s -> s).filter(user -> user.getRole() == UserRole.STUDENT)
+                .collect(Collectors.toList());
         return users;
+
     }
 
     public List<User> findCourseInstructors(Long id) {
         Course course = courseRepository.findById(id).get();
-        List<User> users = course.getUsers().stream().map(s->s).filter(user -> user.getRole() == UserRole.INSTRUCTOR).collect(Collectors.toList());
+        List<User> users = course.getUsers().stream().map(s -> s).filter(user -> user.getRole() == UserRole.INSTRUCTOR)
+                .collect(Collectors.toList());
         return users;
+
     }
 
     public List<Course> getEnrollableCourses(Long id) {
