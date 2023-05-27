@@ -85,6 +85,20 @@ public class SurveyService {
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not such a course or course doesn't have any survey!");
     }
 
+    public List<Survey> findAllSurveysOfCoursesForStudent(Long courseID) {
+        List<Survey> allSurveys = new ArrayList<Survey>();
+        if (courseRepository.findById(courseID).isPresent() && !courseRepository.findById(courseID).get().getSurveys().isEmpty()) {
+            Course course = courseRepository.findById(courseID).get();
+            for(Survey survey : course.getSurveys()){
+                if (survey.isPublished()){
+                    allSurveys.add(survey);
+                }
+            }
+            return allSurveys;
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not such a course or course doesn't have any survey!");
+    }
+
     public boolean publishSurvey(Long surveyID) {
         Survey survey = surveyRepository.findById(surveyID).get();
         survey.setPublished(true);

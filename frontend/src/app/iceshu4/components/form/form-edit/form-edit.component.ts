@@ -1,17 +1,17 @@
 import {Component} from '@angular/core';
-import {ConfirmationService, MessageService} from "primeng/api";
 import {ActivatedRoute} from "@angular/router";
 import {FormService} from "../form.service";
+import {ConfirmationService, MessageService} from "primeng/api";
 import {AuthenticationService} from "../../../core/authentication.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-create-form',
-  templateUrl: './create-form.component.html',
-  styleUrls: ['./create-form.component.scss'],
-  providers: [MessageService, ConfirmationService]
+  selector: 'app-form-edit',
+  templateUrl: './form-edit.component.html',
+  styleUrls: ['./form-edit.component.scss'],
+  providers:[MessageService, ConfirmationService]
 })
-export class CreateFormComponent {
+export class FormEditComponent {
   userData: any;
   selOption:any;
   questionType= "Open Ended";
@@ -62,13 +62,14 @@ export class CreateFormComponent {
   survey: FormGroup;
   questionForm: FormGroup;
   optionForm: FormGroup;
+  surveyId:any;
   constructor(private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
               private formService: FormService,
               private messageService: MessageService,
-              private formBuilder: FormBuilder,
               private confirmationService: ConfirmationService,
               private authenticationService: AuthenticationService) {
-
+    this.surveyId = this.route.snapshot.paramMap.get('id');
     this.userData = authenticationService.decodeToken(this.authenticationService.getToken() || "");
     this.survey = this.formBuilder.group({
       name: new FormControl(null, [Validators.required]),
@@ -77,6 +78,7 @@ export class CreateFormComponent {
       questions: new FormControl([], []),
     });
     this.questionForm = this.formBuilder.group({
+      id: new FormControl(null, ),
       questionText: new FormControl(null, [Validators.required]),
       questionType: new FormControl(null, []),
       options: new FormControl([{content: ""}], []),
@@ -86,28 +88,62 @@ export class CreateFormComponent {
     })
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void{
+    this.formService.getSurveyById(this.surveyId).subscribe((data)=>{
+        this.survey.patchValue(data);
 
-  createSurvey() {
-    const courseId = this.route.snapshot.paramMap.get('id');
-    if(this.survey.invalid){return;}
-    this.formService.createSurvey(courseId,this.survey.value).subscribe(
-      (data)=>{
-        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Form created Successfully'});
-      },
-      (error)=>{
-        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Form Create Failed'});
-      },
+      }
     )
 
   }
 
+
   createQuestion(){
     this.questionForm.controls['questionType'].setValue(this.questionType);
-    this.survey.value['questions'].push(this.questionForm.value);
     this.addQuestion = false;
+    this.formService.addQuestion(this.surveyId,this.questionForm.value).subscribe(
+      (data) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You added the question successfully'
+        });
+        this.ngOnInit();
+      },
+      (error) => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Question add failed'});
+      }
+    );
+    this.ngOnInit();
 
+  }
+  confirmDelete(questionId: any) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to delete this question?',
+      header: 'Delete Question',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteQuestion(questionId);
+      },
+      key: "deleteDialog"
+    });
+  }
+
+  deleteQuestion(questionId: any){
+    this.formService.deleteQuestion(this.surveyId,questionId).subscribe(
+      (data) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You deleted the question successfully'
+        });
+        this.ngOnInit();
+      },
+      (error) => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Question deletion failed'});
+      }
+    );
+    this.ngOnInit();
   }
 
   createOption(){
@@ -122,12 +158,5 @@ export class CreateFormComponent {
     this.optionForm.reset();
     this.questionForm.reset();
     this.questionForm.controls['options'].setValue([{content: ""}]);
-    let oldSurvey = this.survey.value;
-    this.survey.reset();
-    this.survey.controls['questions'].setValue(oldSurvey.questions);
-    this.survey.controls['startDate'].setValue(oldSurvey.startDate);
-    this.survey.controls['endDate'].setValue(oldSurvey.endDate);
-    this.survey.controls['name'].setValue(oldSurvey.name);
-
   }
 }

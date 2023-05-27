@@ -97,48 +97,7 @@
           <button *appHasRole="['INSTRUCTOR']" pButton pRipple (click)="goToCreate()"
                   label="Create a New Evaluation Form" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
         </div>
-        <p-dataView *appHasRole="['INSTRUCTOR','DEPARTMENT_MANAGER','ADMIN']" [value]="forms">
-          <ng-template let-form pTemplate="listItem">
-            <div class="col-12">
-              <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-
-                <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                  <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                    <div class="flex gap-3">
-                      <div class="text-2xl font-bold text-900">{{ form.name }}</div>
-                      <p-tag [value]="form.submitted?'PUBLISHED': 'NOT PUBLISHED'" [severity]="form.submitted?'success': 'danger'"></p-tag>
-                    </div>
-                    </div>
-                  </div>
-                <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                  <span >20.05.2023 -28.06.2023 </span>
-                  <span class="text-xl">Ends in 3 days</span>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-dataView>
-        <p-dataView *appHasRole="['STUDENT']" [value]="forms">
-          <ng-template let-form pTemplate="listItem">
-            <div class="col-12">
-              <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-
-                <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
-                  <div class="flex flex-column align-items-center sm:align-items-start gap-3">
-                    <div class="flex gap-3">
-                      <div class="text-2xl font-bold text-900">{{ form.name }}</div>
-                      <p-tag [value]="form.submitted?'SUBMITTED': 'INCOMPLETE'" [severity]="form.submitted?'success': 'warning'"></p-tag>
-                    </div>
-                  </div>
-                </div>
-                <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                  <span >20.05.2023 -28.06.2023 </span>
-                  <span class="text-xl">Ends in 3 days</span>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-dataView>
+        <app-form-list [courseId]="currentCourseId"></app-form-list>
       </div>
     </div>
 

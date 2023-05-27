@@ -18,7 +18,7 @@ export class CoursedetailComponent {
   students: any;
   instructors: any;
   userData: any;
-
+  currentCourseId: any;
   constructor(private route: ActivatedRoute,
               private router:Router,
               private courseService: CourseService,
@@ -32,6 +32,7 @@ export class CoursedetailComponent {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    this.currentCourseId = id;
     this.courseService.getById(id).subscribe((data) => {
       this.course = data;
     })

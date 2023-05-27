@@ -1,17 +1,17 @@
-import {Component} from '@angular/core';
-import {Router} from "@angular/router";
-import {FormService} from "./form.service";
-import {AuthenticationService} from "../../core/authentication.service";
+import {Component, Input} from '@angular/core';
 import {ConfirmationService, MessageService} from "primeng/api";
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../../../core/authentication.service";
+import {FormService} from "../form.service";
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss'],
+  selector: 'app-form-list',
+  templateUrl: './form-list.component.html',
+  styleUrls: ['./form-list.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class FormComponent {
-
+export class FormListComponent {
+  @Input() courseId=0;
   forms: any = [];
   userData: any;
 
@@ -24,19 +24,47 @@ export class FormComponent {
   }
 
   ngOnInit(): void {
-    if (this.authenticationService.getRole() === 'ADMIN') {
-      this.formService.findAll().subscribe((data) => {
-        this.forms = data;
-      })
-    } else {
-      this.formService.findAllSurveysOfUser(this.userData.sub).subscribe((data) => {
-        this.forms = data;
-      })
+    if(this.courseId !==0){
+      if (this.authenticationService.getRole() === 'STUDENT') {
+        this.formService.findAllByCourseIDForStudent(this.courseId).subscribe((data) => {
+          this.forms = data;
+        })
+      } else {
+        this.formService.findAllSurveysOfCourses(this.courseId).subscribe((data) => {
+          this.forms = data;
+        })
+      }
+    }
+    else{
+      if (this.authenticationService.getRole() === 'ADMIN') {
+        this.formService.findAll().subscribe((data) => {
+          this.forms = data;
+        })
+      } else {
+        this.formService.findAllSurveysOfUser(this.userData.sub).subscribe((data) => {
+          this.forms = data;
+        })
+      }
     }
   }
 
   goToCreate() {
     this.router.navigate([this.router.url, 'createform']);
+  }
+
+  goToEdit(id:any) {
+    if(this.authenticationService.getRole()==="ADMIN"){
+      this.router.navigate(['admin/forms/'+id+'/edit']);
+    }
+    else if(this.authenticationService.getRole()==="DEPARTMENT_MANAGER"){
+      this.router.navigate(['departmentmanager/forms/'+id+'/edit']);
+    }
+    else if(this.authenticationService.getRole()==="INSTRUCTOR"){
+      this.router.navigate(['instructor/forms/'+id+'/edit']);
+    }
+    else {
+      this.router.navigate(['student/forms/'+id+'/edit']);
+    }
   }
 
   getNumberOfDays(end: any) {
@@ -77,7 +105,6 @@ export class FormComponent {
   }
 
   publish(id: any){
-    console.log(id)
     this.formService.publishSurvey(id).subscribe(
       (data) => {
         this.messageService.add({

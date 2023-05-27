@@ -1,0 +1,66 @@
+<p-toast></p-toast>
+<div >
+  <p-dataView [value]="forms">
+    <ng-template let-form pTemplate="listItem">
+      <div class="col-12">
+        <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+
+          <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+              <div class="flex gap-3">
+                <div class="text-2xl font-bold text-900">{{ form.name }}</div>
+                <p-tag [value]="getStatus(form).text" [severity]="getStatus(form).severity"></p-tag>
+              </div>
+              <div class="flex  align-items-center gap-3 flex-row">
+                <span >{{form.startDate|date : 'dd/MM/yyyy'}} - {{form.endDate|date : 'dd/MM/yyyy'}}</span>
+                <span *appHasRole="['STUDENT']"><span *ngIf="getNumberOfDays(form.endDate)>0">Ends in <span class="font-semibold text-green-500">{{getNumberOfDays(form.endDate)}}</span> days</span></span>
+              </div>
+            </div>
+            <div class="flex">
+              <div *appHasRole="['STUDENT']">
+
+                <button  *ngIf="form.published &&getNumberOfDays(form.endDate)>0"
+                         pButton pRipple label="Go to Form"  icon="pi pi-chevron-right"  class="p-button-info p-button-sm mr-2 mb-2"></button>
+              </div>
+              <div *appHasRole="['INSTRUCTOR']">
+
+                <button  *ngIf="!form.published" (click)="goToEdit(form.id)"
+                         pButton pRipple label="Edit"  icon="pi pi-pencil"  class="p-button-info p-button-sm mr-2 mb-2"></button>
+                <button  *ngIf="!form.published" (click)="confirmPublish(form.id)"
+                         pButton pRipple label="Publish"  icon="pi pi-check-circle"  class="p-button-success p-button-sm mr-2 mb-2"></button>
+                <button  *ngIf="form.published"
+                         pButton pRipple label="Create Re-evaluation Request"  icon="pi pi-reply"  class=" p-button-sm mr-2 mb-2"></button>
+              </div>
+              <div *appHasRole="['INSTRUCTOR','DEPARTMENT_MANAGER', 'ADMIN']">
+                <button  (click)="confirmDelete(form.id)"
+                         pButton pRipple label="Delete"  icon="pi pi-trash"  class="p-button-danger p-button-sm mr-2 mb-2"></button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</div>
+
+<p-confirmDialog #cdPublish key="publishDialog" [style]="{width: '50vw'}" [dismissableMask]="true">
+  <ng-template pTemplate="footer">
+    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"
+            (click)="cdPublish.reject()"></button>
+    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"
+            (click)="cdPublish.accept()"></button>
+  </ng-template>
+</p-confirmDialog>
+
+
+
+<p-confirmDialog #cdDelete key="deleteDialog" [style]="{width: '50vw'}" [dismissableMask]="true">
+  <ng-template pTemplate="footer">
+    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"
+            (click)="cdDelete.reject()"></button>
+    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"
+            (click)="cdDelete.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

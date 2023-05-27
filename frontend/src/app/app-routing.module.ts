@@ -22,6 +22,7 @@ import {FormComponent} from "./iceshu4/components/form/form.component";
 import {CreateFormComponent} from "./iceshu4/components/form/create-form/create-form.component";
 import {MessageComponent} from "./iceshu4/components/message/message.component";
 import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
+import {FormEditComponent} from "./iceshu4/components/form/form-edit/form-edit.component";
 
 
 @NgModule({
@@ -84,7 +85,7 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'courses/:id/createform', component: CreateFormComponent},
         {path: 'forms', component: FormComponent},
-        {path: 'forms/createform', component: CreateFormComponent},
+        {path: 'forms/:id/edit', component: FormEditComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: DashboardComponent},
       ]

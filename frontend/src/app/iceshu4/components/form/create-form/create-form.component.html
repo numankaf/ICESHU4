@@ -1,6 +1,6 @@
 <div class="card">
   <h1 class="m-0 font-medium text-xl">Create a Form</h1>
-  <form [formGroup]="survey" (ngSubmit)="createSurvey()">
+  <form [formGroup]="survey" >
     <div class="mb-4 pt-2  ">
       <label for="name" class="block text-base font-medium mb-2">Name</label>
       <input id="name" type="text" pInputText placeholder="Name"
@@ -66,14 +66,14 @@
     <div class="flex justify-content-end mt-5">
       <div class="flex align-items-center justify-content-center m-2">
         <button pButton pRipple label="Cancel" icon="pi pi-times"
-                class="p-button-danger p-button-outlined mr-2 mb-2" (click)="addQuestion =!addQuestion">
+                class="p-button-danger p-button-outlined mr-2 mb-2"  [routerLink]="['../']">
         </button>
       </div>
 
       <div class="flex align-items-center justify-content-center m-2">
-        <button pButton pRipple label="Save" icon="pi pi-check"
+        <button pButton pRipple label="Save" icon="pi pi-check" (click)="createSurvey()"
                 [disabled]="survey.invalid ||(survey.value['questions'].length<=0)"
-                class="p-button-success mr-2 mb-2" (click)="createSurvey()">
+                class="p-button-success mr-2 mb-2" type="Submit">
         </button>
       </div>
     </div>
