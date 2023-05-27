@@ -14,8 +14,12 @@
 
     <div class="flex align-items-center justify-content-between my-3">
       <h1 class="m-0 font-medium text-xl">Questions</h1>
-      <button pButton pRipple label="Add a Question" icon="pi pi-plus" class="p-button-success mr-2 mb-2"
-              (click)="addQuestion = !addQuestion"></button>
+      <div>
+        <button pButton pRipple label="Add From Common Questions" icon="pi pi-table" class="p-button-info "
+                (click)="addCommonQuestion = !addCommonQuestion"></button>
+        <button pButton pRipple label="Add a Question" icon="pi pi-plus" class="p-button-success mx-2"
+                (click)="addQuestion = !addQuestion"></button>
+      </div>
     </div>
     <span *ngIf="survey.value['questions'].length<=0">No Questions Given</span>
     <div class="flex flex-column gap-3">
@@ -166,3 +170,35 @@
             (click)="cdDelete.accept()"></button>
   </ng-template>
 </p-confirmDialog>
+
+
+<p-dialog header="Add from Common Questions" [(visible)]="addCommonQuestion" [dismissableMask]="true" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+          [resizable]="false" [breakpoints]="{ '960px': '75vw' }"  (onHide)="resetForms()">
+
+  <div class="flex flex-column gap-3">
+    <ng-container *ngFor="let question of commonQuestions;let i = index">
+      <div class="flex align-items-center justify-content-between">
+        <div class="w-10">
+          <span class="font-semibold text-lg mb-3"> {{ question.questionText}}</span>
+          <div class="flex flex-row align-items-center gap-5">
+            <textarea *ngIf="question.options.length==1" rows="2" class="w-full" pInputTextarea></textarea>
+            <div *ngIf="question.options.length>1" class="mt-2 flex flex-row align-items-center gap-5">
+              <ng-container *ngFor="let option of question.options">
+                <div class="flex align-items-center">
+                  <p-radioButton value="{{option.content}}" [(ngModel)]="selOption"
+                                 [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
+                  <label class="ml-2">{{option.content}}</label>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button pButton pRipple [label]="questionIncluded(question) ? 'Added': 'Add'" icon="pi pi-plus" [disabled]="questionIncluded(question) "
+                  class="p-button-success p-button-outlined mr-2 mb-2" (click)="addCommonQuestionToSurvey(question)">
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</p-dialog>

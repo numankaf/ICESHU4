@@ -17,11 +17,14 @@ export class CreateFormComponent {
   questionType= "Open Ended";
   dateCurrent = new Date();
   addQuestion: boolean = false;
+  addCommonQuestion: boolean = false;
   addOption: boolean= false;
-  commonQuestions = [{
-    name: "The Instructor satisfactorily responded to questions",
-    options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
-  },
+  commonQuestions = [
+    {
+      questionText: "The Instructor satisfactorily responded to questions",
+      questionType: "Multiple Choice",
+      options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
+    },
     {
       questionText: "Communication with the Instructor was adequate.",
       questionType: "Multiple Choice",
@@ -110,6 +113,12 @@ export class CreateFormComponent {
     this.survey.value['questions'].push(this.questionForm.value);
     this.addQuestion = false;
 
+  }
+
+  addCommonQuestionToSurvey(question: any){
+    this.survey.value['questions'].push(question);
+    console.log(this.survey.value['questions'].includes(question));
+    this.addCommonQuestion = false;
   }
 
   createOption(){

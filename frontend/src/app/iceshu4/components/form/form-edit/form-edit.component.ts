@@ -9,19 +9,22 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
   selector: 'app-form-edit',
   templateUrl: './form-edit.component.html',
   styleUrls: ['./form-edit.component.scss'],
-  providers:[MessageService, ConfirmationService]
+  providers: [MessageService, ConfirmationService]
 })
 export class FormEditComponent {
   userData: any;
-  selOption:any;
-  questionType= "Open Ended";
+  selOption: any;
+  questionType = "Open Ended";
   dateCurrent = new Date();
   addQuestion: boolean = false;
-  addOption: boolean= false;
-  commonQuestions = [{
-    name: "The Instructor satisfactorily responded to questions",
-    options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
-  },
+  addCommonQuestion: boolean = false;
+  addOption: boolean = false;
+  commonQuestions = [
+    {
+      questionText: "The Instructor satisfactorily responded to questions",
+      questionType: "Multiple Choice",
+      options: [{content: "Very Bad"}, {content: "Bad"}, {content: "Moderate"}, {content: "Good"}, {content: "Very Good"}]
+    },
     {
       questionText: "Communication with the Instructor was adequate.",
       questionType: "Multiple Choice",
@@ -62,7 +65,8 @@ export class FormEditComponent {
   survey: FormGroup;
   questionForm: FormGroup;
   optionForm: FormGroup;
-  surveyId:any;
+  surveyId: any;
+
   constructor(private route: ActivatedRoute,
               private formBuilder: FormBuilder,
               private formService: FormService,
@@ -78,7 +82,7 @@ export class FormEditComponent {
       questions: new FormControl([], []),
     });
     this.questionForm = this.formBuilder.group({
-      id: new FormControl(null, ),
+      id: new FormControl(null,),
       questionText: new FormControl(null, [Validators.required]),
       questionType: new FormControl(null, []),
       options: new FormControl([{content: ""}], []),
@@ -88,8 +92,8 @@ export class FormEditComponent {
     })
   }
 
-  ngOnInit(): void{
-    this.formService.getSurveyById(this.surveyId).subscribe((data)=>{
+  ngOnInit(): void {
+    this.formService.getSurveyById(this.surveyId).subscribe((data) => {
         this.survey.patchValue(data);
 
       }
@@ -98,10 +102,10 @@ export class FormEditComponent {
   }
 
 
-  createQuestion(){
+  createQuestion() {
     this.questionForm.controls['questionType'].setValue(this.questionType);
     this.addQuestion = false;
-    this.formService.addQuestion(this.surveyId,this.questionForm.value).subscribe(
+    this.formService.addQuestion(this.surveyId, this.questionForm.value).subscribe(
       (data) => {
         this.messageService.add({
           severity: 'success',
@@ -117,6 +121,27 @@ export class FormEditComponent {
     this.ngOnInit();
 
   }
+
+  addCommonQuestionToSurvey(question: any) {
+    this.formService.addQuestion(this.surveyId, question).subscribe(
+      (data) => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You added the question successfully'
+        });
+        this.ngOnInit();
+      },
+      (error) => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Question add failed'});
+      }
+    );
+    this.addCommonQuestion = false;
+    this.ngOnInit();
+
+  }
+
+
   confirmDelete(questionId: any) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete this question?',
@@ -129,8 +154,8 @@ export class FormEditComponent {
     });
   }
 
-  deleteQuestion(questionId: any){
-    this.formService.deleteQuestion(this.surveyId,questionId).subscribe(
+  deleteQuestion(questionId: any) {
+    this.formService.deleteQuestion(this.surveyId, questionId).subscribe(
       (data) => {
         this.messageService.add({
           severity: 'success',
@@ -146,17 +171,27 @@ export class FormEditComponent {
     this.ngOnInit();
   }
 
-  createOption(){
-    this.questionForm.value['options'].push({content:this.optionForm.value['content']});
+  createOption() {
+    this.questionForm.value['options'].push({content: this.optionForm.value['content']});
     this.addOption = false;
     this.optionForm.reset();
 
   }
-  resetForms(){
-    this.questionType= "Open Ended";
+
+  resetForms() {
+    this.questionType = "Open Ended";
     this.addOption = false;
     this.optionForm.reset();
     this.questionForm.reset();
     this.questionForm.controls['options'].setValue([{content: ""}]);
+  }
+
+  questionIncluded(question: any){
+    for (const el of this.survey.value['questions']){
+      if(el.questionText == question.questionText){
+        return true;
+      }
+    }
+    return false;
   }
 }
