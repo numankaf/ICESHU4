@@ -7,7 +7,7 @@
   </div>
 
   <div class="grid">
-    <div *appHasRole="['STUDENT']" class="border-primary  border-1 border-solid   shadow-2 col-12 " style="border-radius: 7px">
+    <div *appHasRole="['STUDENT']" class="border-primary  border-1 border-solid   col-12 " style="border-radius: 7px">
       <div class="mb-5">
         <div class="flex justify-content-between align-items-center m-3">
           <span class="text-xl font-medium text-900  ">Instructors</span>
@@ -35,7 +35,7 @@
     </div>
     <div class="col-12" >
       <div *appHasRole="['DEPARTMENT_MANAGER','INSTRUCTOR','ADMIN']"  class="grid justify-content-between">
-        <div class="border-primary  border-1 border-solid  card-section shadow-2 col-6 " style="border-radius: 7px">
+        <div class="border-primary  border-1 border-solid  card-section col-6 " style="border-radius: 7px">
           <div class="mb-5">
             <div class="flex justify-content-between align-items-center m-3">
               <span class="text-xl font-medium text-900  ">Instructors</span>
@@ -94,8 +94,8 @@
       <div>
         <div class="flex justify-content-between align-items-center  m-3">
           <span class="text-xl font-medium text-900 ">Evaluation Forms</span>
-          <button *appHasRole="['INSTRUCTOR']" pButton pRipple
-                  label="Create an  Evaluation Form" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
+          <button *appHasRole="['INSTRUCTOR']" pButton pRipple (click)="goToCreate()"
+                  label="Create a New Evaluation Form" icon="pi pi-plus" class="p-button-success mr-2 mb-2"></button>
         </div>
         <p-dataView *appHasRole="['INSTRUCTOR','DEPARTMENT_MANAGER','ADMIN']" [value]="forms">
           <ng-template let-form pTemplate="listItem">
@@ -149,40 +149,3 @@
 
 </div>
 
-
-<!--<p-dialog header="Enroll to Another Course" [(visible)]="enrollDialog" [dismissableMask]="true" [modal]="true"-->
-<!--          [style]="{ width: '50vw' }" [draggable]="false"-->
-<!--          [resizable]="false">-->
-<!--  <ng-template pTemplate="content">-->
-<!--    <label class="block text-base font-medium mb-2">Select a course to enroll</label>-->
-<!--    <p-autoComplete [(ngModel)]="selectedCourse" [dropdown]="true" [suggestions]="departmentAllCourses" appendTo="body"-->
-<!--                    placeholder="Course"-->
-<!--                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"-->
-<!--                    (completeMethod)="filterCourse($event)" field="name"></p-autoComplete>-->
-<!--  </ng-template>-->
-
-<!--  <ng-template pTemplate="footer">-->
-<!--    <div class="flex align-items-center justify-content-center m-2">-->
-<!--      <button pButton pRipple label="Enroll" icon="pi pi-check"-->
-<!--              [disabled]="selectedCourse==null"-->
-<!--              class="p-button-info mr-2 mb-2" (click)="enroll()">-->
-<!--      </button>-->
-<!--    </div>-->
-<!--  </ng-template>-->
-<!--</p-dialog>-->
-<!--<p-confirmDialog #cdDrop key="dropDialog" [style]="{width: '50vw'}" [dismissableMask]="true">-->
-<!--  <ng-template pTemplate="footer">-->
-<!--    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"-->
-<!--            (click)="cdDrop.reject()"></button>-->
-<!--    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"-->
-<!--            (click)="cdDrop.accept()"></button>-->
-<!--  </ng-template>-->
-<!--</p-confirmDialog>-->
-<!--<p-confirmDialog #cdDelete key="deleteDialog" [style]="{width: '50vw'}" [dismissableMask]="true">-->
-<!--  <ng-template pTemplate="footer">-->
-<!--    <button type="button" class="p-button-danger p-button-text" pButton icon="pi pi-times" label="No"-->
-<!--            (click)="cdDelete.reject()"></button>-->
-<!--    <button type="button" class="p-button-success p-button-text" pButton icon="pi pi-check" label="Yes"-->
-<!--            (click)="cdDelete.accept()"></button>-->
-<!--  </ng-template>-->
-<!--</p-confirmDialog>-->
