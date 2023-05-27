@@ -1,11 +1,15 @@
 <p-toast></p-toast>
 <div class="card">
-  <h1 class="m-0 font-medium text-xl">Create a Form</h1>
-  <form [formGroup]="survey" >
+  <h1 class="m-0 font-medium text-xl">Edit the Form</h1>
+  <form [formGroup]="survey">
     <div class="mb-4 pt-2  ">
-      <label for="name" class="block text-base font-medium mb-2">Name</label>
-      <input id="name" type="text" pInputText placeholder="Name"
-             class="w-full " formControlName="name">
+      <div class="flex gap-3">
+        <div class="text-2xl font-bold text-900">{{ survey.value['name'] }}</div>
+      </div>
+      <div class="flex  align-items-center gap-3 flex-row mt-3">
+        <span class="text-base">{{survey.value['startDate'] |date : 'dd/MM/yyyy'}}
+          - {{survey.value['endDate'] |date : 'dd/MM/yyyy'}}</span>
+      </div>
     </div>
 
     <div class="flex align-items-center justify-content-between my-3">
@@ -15,17 +19,18 @@
     </div>
     <span *ngIf="survey.value['questions'].length<=0">No Questions Given</span>
     <div class="flex flex-column gap-3">
-      <ng-container *ngFor="let question of survey.value['questions'];let i = index" >
+      <ng-container *ngFor="let question of survey.value['questions'];let i = index">
         <div class="flex align-items-center justify-content-between">
           <div class="w-11">
-            <span class="font-semibold text-lg mb-3"> {{i+1 + ". "+ question.questionText}}</span>
+            <span class="font-semibold text-lg mb-3"> {{i + 1 + ". " + question.questionText}}</span>
             <div class="flex flex-row align-items-center gap-5">
-              <textarea *ngIf="question.options.length==1" rows="2"  class="w-full" pInputTextarea ></textarea>
+              <textarea *ngIf="question.options.length==1" rows="2" class="w-full" pInputTextarea></textarea>
               <div *ngIf="question.options.length>1" class="mt-2 flex flex-row align-items-center gap-5">
-                <ng-container *ngFor="let option of question.options" >
+                <ng-container *ngFor="let option of question.options">
                   <div class="flex align-items-center">
-                    <p-radioButton  value="{{option.content}}" [(ngModel)]="selOption" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
-                    <label  class="ml-2">{{option.content}}</label>
+                    <p-radioButton value="{{option.content}}" [(ngModel)]="selOption"
+                                   [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
+                    <label class="ml-2">{{option.content}}</label>
                   </div>
                 </ng-container>
               </div>
@@ -50,23 +55,24 @@
 </div>
 
 
-
-
-<p-dialog header="Add a Question" [(visible)]="addQuestion" [dismissableMask]="true" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
-          [resizable]="false" [breakpoints]="{ '960px': '75vw' }"  (onHide)="resetForms()">
+<p-dialog header="Add a Question" [(visible)]="addQuestion" [dismissableMask]="true" [modal]="true"
+          [style]="{ width: '50vw' }" [draggable]="false"
+          [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="resetForms()">
   <ng-template pTemplate="content">
     <label class="block text-base font-medium mb-2">Question Type</label>
     <div class="flex flex-wrap gap-3 mb-3 mt-3">
       <div class="flex align-items-center">
-        <p-radioButton  value="Open Ended" [(ngModel)]="questionType" (click)=" this.questionForm.controls['options'].setValue([' ']);"
-                        [ngModelOptions]="{standalone: true}" inputId="ingredient1"></p-radioButton>
-        <label  class="ml-2">Open Ended</label>
+        <p-radioButton value="Open Ended" [(ngModel)]="questionType"
+                       (click)=" this.questionForm.controls['options'].setValue([' ']);"
+                       [ngModelOptions]="{standalone: true}" inputId="ingredient1"></p-radioButton>
+        <label class="ml-2">Open Ended</label>
       </div>
 
       <div class="flex align-items-center">
-        <p-radioButton  value="Multiple Choice" [(ngModel)]="questionType"  (click)=" this.questionForm.controls['options'].setValue([]);"
-                        [ngModelOptions]="{standalone: true}" inputId="ingredient2"></p-radioButton>
-        <label  class="ml-2">Multiple Choice</label>
+        <p-radioButton value="Multiple Choice" [(ngModel)]="questionType"
+                       (click)=" this.questionForm.controls['options'].setValue([]);"
+                       [ngModelOptions]="{standalone: true}" inputId="ingredient2"></p-radioButton>
+        <label class="ml-2">Multiple Choice</label>
       </div>
 
     </div>
@@ -75,9 +81,12 @@
           <span class="" style="width: 100%;">
             <label class="block text-base font-medium mb-2">Question Text</label>
               <div class="inline">
-                  <input type="text" pInputText placeholder="Question Text" class="w-full" formControlName="questionText"/>
+                  <input type="text" pInputText placeholder="Question Text" class="w-full"
+                         formControlName="questionText"/>
               </div>
-              <span *ngIf="questionForm.controls['questionText'].invalid && (questionForm.controls['questionText'].dirty )" style="text-align: left;" class="block mt-1">
+              <span
+                *ngIf="questionForm.controls['questionText'].invalid && (questionForm.controls['questionText'].dirty )"
+                style="text-align: left;" class="block mt-1">
                 <small class="p-error" *ngIf="questionForm.controls['questionText'].errors?.['required']">Question Text required.</small>
               </span>
            </span>
@@ -86,17 +95,19 @@
         <div>
           <div class="flex align-items-center justify-content-between">
             <h1 class="m-0 font-medium text-base">Options</h1>
-            <button *ngIf="!addOption" pButton pRipple label="Add an Option" icon="pi pi-plus" class="p-button-success p-button-sm mr-2 mb-2"
-                    (click)="addOption = !addOption" ></button>
-            <button *ngIf="addOption" pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger p-button-sm mr-2 mb-2"
+            <button *ngIf="!addOption" pButton pRipple label="Add an Option" icon="pi pi-plus"
+                    class="p-button-success p-button-sm mr-2 mb-2"
+                    (click)="addOption = !addOption"></button>
+            <button *ngIf="addOption" pButton pRipple label="Cancel" icon="pi pi-times"
+                    class="p-button-danger p-button-sm mr-2 mb-2"
                     (click)="addOption = !addOption"></button>
           </div>
 
           <div *ngIf="addOption">
             <form [formGroup]="optionForm" (ngSubmit)="createOption()">
               <div class="mb-4 pt-2  ">
-                <input  type="text" pInputText placeholder="Option"
-                        class="w-full " formControlName="content">
+                <input type="text" pInputText placeholder="Option"
+                       class="w-full " formControlName="content">
                 <div *ngIf="optionForm.controls['content'].invalid && (optionForm.controls['content'].dirty )"
                      style="text-align: left;">
                   <small class="p-error"
@@ -112,12 +123,14 @@
             </form>
           </div>
         </div>
-        <span *ngIf="questionForm.value['options'] ==null || questionForm.value['options'].length==0">No Options Given</span>
+        <span
+          *ngIf="questionForm.value['options'] ==null || questionForm.value['options'].length==0">No Options Given</span>
         <div class="flex flex-column gap-2">
-          <ng-container *ngFor="let option of questionForm.value['options']" >
+          <ng-container *ngFor="let option of questionForm.value['options']">
             <div class="flex align-items-center">
-              <p-radioButton  value="{{option.content}}" [(ngModel)]="questionType" [ngModelOptions]="{standalone: true}" [disabled]="true"></p-radioButton>
-              <label  class="ml-2">{{option.content}}</label>
+              <p-radioButton value="{{option.content}}" [(ngModel)]="questionType" [ngModelOptions]="{standalone: true}"
+                             [disabled]="true"></p-radioButton>
+              <label class="ml-2">{{option.content}}</label>
             </div>
           </ng-container>
         </div>

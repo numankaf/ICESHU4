@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ConfirmationService, MessageService} from "primeng/api";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {FormService} from "../form.service";
 import {AuthenticationService} from "../../../core/authentication.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
@@ -63,6 +63,7 @@ export class CreateFormComponent {
   questionForm: FormGroup;
   optionForm: FormGroup;
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private formService: FormService,
               private messageService: MessageService,
               private formBuilder: FormBuilder,
@@ -95,6 +96,7 @@ export class CreateFormComponent {
     this.formService.createSurvey(courseId,this.survey.value).subscribe(
       (data)=>{
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Form created Successfully'});
+        this.router.navigate(['../'], { relativeTo: this.route });
       },
       (error)=>{
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'Form Create Failed'});
