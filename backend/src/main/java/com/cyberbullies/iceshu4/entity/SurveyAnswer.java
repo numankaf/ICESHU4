@@ -5,27 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 @Entity
-@Table(name = "survey")
+@Table(name = "surveyanswer")
 @Data
-public class Survey {
+public class SurveyAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
-    private String name;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private Long courseId;
+    private Long studentId;
+    private Long surveyId;
+    private boolean isSubmitted= false;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Question> questions;
-    private boolean published = false;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<SurveyAnswer> surveyAnswers;
-
+    List<Answer> answers;
 }

@@ -1,9 +1,7 @@
 package com.cyberbullies.iceshu4.service;
 
-import com.cyberbullies.iceshu4.entity.Course;
-import com.cyberbullies.iceshu4.entity.Question;
-import com.cyberbullies.iceshu4.entity.Survey;
-import com.cyberbullies.iceshu4.entity.User;
+import com.cyberbullies.iceshu4.dto.SurveyAnswerResponseDTO;
+import com.cyberbullies.iceshu4.entity.*;
 import com.cyberbullies.iceshu4.enums.UserRole;
 import com.cyberbullies.iceshu4.repository.CourseRepository;
 import com.cyberbullies.iceshu4.repository.QuestionRepository;
@@ -20,10 +18,10 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class SurveyService {
-    private SurveyRepository surveyRepository;
-    private CourseRepository courseRepository;
-    private QuestionRepository questionRepository;
-    private UserRepository userRepository;
+    private final SurveyRepository surveyRepository;
+    private final CourseRepository courseRepository;
+    private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
     public Survey create(Survey survey, Long courseID) {
         if (courseRepository.findById(courseID).isPresent()) {
@@ -40,6 +38,13 @@ public class SurveyService {
     }
 
     public void delete(Survey survey) {
+        for(SurveyAnswer surveyAnswer : survey.getSurveyAnswers()){
+            User student = userRepository.findById(surveyAnswer.getStudentId()).get();
+            List<SurveyAnswer> updatedSurveyAnswers = student.getSurveyAnswers();
+            updatedSurveyAnswers.remove(surveyAnswer);
+            student.setSurveyAnswers(updatedSurveyAnswers);
+            userRepository.save(student);
+        }
         Course course = courseRepository.findById(survey.getCourseId()).get();
         course.getSurveys().remove(survey);
         courseRepository.save(course);
@@ -117,5 +122,32 @@ public class SurveyService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Survey cannot be updated!");
 
+    }
+
+    public List<SurveyAnswerResponseDTO> findAllSubmittedSurveyAnswers(Long surveyID) {
+        if(surveyRepository.findById(surveyID).isPresent()){
+            List<SurveyAnswerResponseDTO> surveyAnswerResponseDTOList = new ArrayList<>();
+            for(SurveyAnswer surveyAnswer: surveyRepository.findById(surveyID).get().getSurveyAnswers()){
+                if(surveyAnswer.isSubmitted()){
+                    surveyAnswerResponseDTOList.add(mapSurveyAnswerToSurveyAnswerResponseDTO(surveyAnswer));
+                }
+            }
+            return surveyAnswerResponseDTOList;
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"There is not such a survey!");
+        }
+    }
+
+    private SurveyAnswerResponseDTO mapSurveyAnswerToSurveyAnswerResponseDTO(SurveyAnswer surveyAnswer){
+        SurveyAnswerResponseDTO surveyAnswerResponseDTO = new SurveyAnswerResponseDTO();
+        surveyAnswerResponseDTO.setId(surveyAnswer.getId());
+        surveyAnswerResponseDTO.setSurveyId(surveyAnswer.getSurveyId());
+        surveyAnswerResponseDTO.setStudentId(surveyAnswerResponseDTO.getStudentId());
+        User student = userRepository.findById(surveyAnswer.getStudentId()).get();
+        surveyAnswerResponseDTO.setStudentName(student.getName());
+        surveyAnswerResponseDTO.setStudentSurname(student.getSurname());
+        surveyAnswerResponseDTO.setProfilePhoto(student.getProfile_photo());
+        surveyAnswerResponseDTO.setAnswers(surveyAnswer.getAnswers());
+        return surveyAnswerResponseDTO;
     }
 }
