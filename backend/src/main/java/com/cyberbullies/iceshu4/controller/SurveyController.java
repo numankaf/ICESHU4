@@ -35,7 +35,11 @@ public class SurveyController {
         return surveyService.findAllSurveysOfCourses(courseID);
 
     }
+    @GetMapping("/findAllByCourseIDForStudent/{courseID}")
+    public List<Survey> findAllByCourseIDForStudent(@PathVariable Long courseID) {
+        return surveyService.findAllSurveysOfCoursesForStudent(courseID);
 
+    }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Survey> getCourseById(@PathVariable Long id) {
@@ -58,7 +62,7 @@ public class SurveyController {
         return new ResponseEntity<>(surveyService.deleteQuestion(surveyID,questionID),HttpStatus.OK);
     }
 
-    @PutMapping("/publish/{surveyID}")
+    @PostMapping("/publish/{surveyID}")
     public ResponseEntity<String> publishSurvey (@PathVariable Long surveyID){
         if(surveyService.publishSurvey(surveyID)){
             return new ResponseEntity<>("Survey published successfully!",HttpStatus.OK);

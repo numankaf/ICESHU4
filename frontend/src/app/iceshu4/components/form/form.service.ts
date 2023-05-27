@@ -25,6 +25,9 @@ export class FormService {
   findAllSurveysOfCourses(courseId: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAllByCourseID/${courseId}`).pipe(catchError(this.handleError));
   }
+  findAllByCourseIDForStudent(courseId: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAllByCourseIDForStudent/${courseId}`).pipe(catchError(this.handleError));
+  }
 
   getSurveyById(id: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}/survey/get/${id}`).pipe(catchError(this.handleError));
@@ -32,7 +35,7 @@ export class FormService {
 
   deleteSurvey(id: any): Observable<any> {
     // @ts-ignore
-    return this.httpClient.delete<any>(`${environment.apiUrl}/survey/get/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError));
+    return this.httpClient.delete<any>(`${environment.apiUrl}/survey/delete/${id}`, {responseType: 'text'}).pipe(catchError(this.handleError));
   }
 
   addQuestion(surveyId: any, question: any): Observable<any> {
@@ -42,12 +45,12 @@ export class FormService {
 
   deleteQuestion(surveyId: any, questionId: any): Observable<any> {
     // @ts-ignore
-    return this.httpClient.put<any>(`${environment.apiUrl}/survey/update/deleteQuestion/${surveyId}/${questionId}`,question,{responseType: 'text'}).pipe(catchError(this.handleError));
+    return this.httpClient.put<any>(`${environment.apiUrl}/survey/update/deleteQuestion/${surveyId}/${questionId}`,{},{responseType: 'text'}).pipe(catchError(this.handleError));
   }
 
   publishSurvey(surveyId: any): Observable<any> {
     // @ts-ignore
-    return this.httpClient.put<any>(`${environment.apiUrl}/publish/${surveyId}`,question,{responseType: 'text'}).pipe(catchError(this.handleError));
+    return this.httpClient.post<any>(`${environment.apiUrl}/survey/publish/${surveyId}`, {},{responseType: 'text'}).pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {

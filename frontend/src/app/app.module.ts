@@ -64,6 +64,8 @@ import { CreateFormComponent } from './iceshu4/components/form/create-form/creat
 import {RadioButtonModule} from "primeng/radiobutton";
 import {MessageComponent} from "./iceshu4/components/message/message.component";
 import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
+import { FormListComponent } from './iceshu4/components/form/form-list/form-list.component';
+import { FormEditComponent } from './iceshu4/components/form/form-edit/form-edit.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +92,9 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
     FormComponent,
     CreateFormComponent,
     MessageComponent,
-    DetailMessageComponent
+    DetailMessageComponent,
+    FormListComponent,
+    FormEditComponent
   ],
     imports: [
         HttpClientModule,

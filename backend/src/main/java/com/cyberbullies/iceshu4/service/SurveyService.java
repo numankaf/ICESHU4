@@ -28,6 +28,7 @@ public class SurveyService {
     public Survey create(Survey survey, Long courseID) {
         if (courseRepository.findById(courseID).isPresent()) {
             Course course = courseRepository.findById(courseID).get();
+            survey.setCourseId(courseID);
             Survey createdSurvey = surveyRepository.save(survey);
             List<Survey> courseSurveys = course.getSurveys();
             courseSurveys.add(createdSurvey);
@@ -39,6 +40,9 @@ public class SurveyService {
     }
 
     public void delete(Survey survey) {
+        Course course = courseRepository.findById(survey.getCourseId()).get();
+        course.getSurveys().remove(survey);
+        courseRepository.save(course);
         surveyRepository.delete(survey);
     }
 
@@ -81,6 +85,20 @@ public class SurveyService {
         if (courseRepository.findById(courseID).isPresent() && !courseRepository.findById(courseID).get().getSurveys().isEmpty()) {
             Course course = courseRepository.findById(courseID).get();
             return course.getSurveys();
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not such a course or course doesn't have any survey!");
+    }
+
+    public List<Survey> findAllSurveysOfCoursesForStudent(Long courseID) {
+        List<Survey> allSurveys = new ArrayList<Survey>();
+        if (courseRepository.findById(courseID).isPresent() && !courseRepository.findById(courseID).get().getSurveys().isEmpty()) {
+            Course course = courseRepository.findById(courseID).get();
+            for(Survey survey : course.getSurveys()){
+                if (survey.isPublished()){
+                    allSurveys.add(survey);
+                }
+            }
+            return allSurveys;
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not such a course or course doesn't have any survey!");
     }
