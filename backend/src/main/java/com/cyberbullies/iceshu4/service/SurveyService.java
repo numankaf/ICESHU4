@@ -28,6 +28,7 @@ public class SurveyService {
     public Survey create(Survey survey, Long courseID) {
         if (courseRepository.findById(courseID).isPresent()) {
             Course course = courseRepository.findById(courseID).get();
+            survey.setCourseId(courseID);
             Survey createdSurvey = surveyRepository.save(survey);
             List<Survey> courseSurveys = course.getSurveys();
             courseSurveys.add(createdSurvey);
@@ -39,6 +40,9 @@ public class SurveyService {
     }
 
     public void delete(Survey survey) {
+        Course course = courseRepository.findById(survey.getCourseId()).get();
+        course.getSurveys().remove(survey);
+        courseRepository.save(course);
         surveyRepository.delete(survey);
     }
 
