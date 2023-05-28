@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 public class SurveyAnswerController {
     private final SurveyAnswerService surveyAnswerService;
 
-    @PostMapping("/create/{studentID}/{surveyID}")
-    public ResponseEntity<SurveyAnswer> createSurveyAnswer(@RequestBody SurveyAnswer surveyAnswer, @PathVariable Long studentID, @PathVariable Long surveyID) {
-        return new ResponseEntity<>(surveyAnswerService.create(surveyAnswer,studentID,surveyID), HttpStatus.OK);
-    }
+//    @PostMapping("/create/{studentID}/{surveyID}")
+//    public ResponseEntity<SurveyAnswer> createSurveyAnswer(@RequestBody SurveyAnswer surveyAnswer, @PathVariable Long studentID, @PathVariable Long surveyID) {
+//        return new ResponseEntity<>(surveyAnswerService.create(surveyAnswer,studentID,surveyID), HttpStatus.OK);
+//    }
 
     @GetMapping("/get/{studentID}/{surveyID}")
     public ResponseEntity<SurveyAnswer> getSurveyAnswer(@PathVariable Long studentID, @PathVariable Long surveyID){

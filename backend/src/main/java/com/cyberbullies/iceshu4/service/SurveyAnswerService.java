@@ -1,8 +1,6 @@
 package com.cyberbullies.iceshu4.service;
 
-import com.cyberbullies.iceshu4.entity.Survey;
-import com.cyberbullies.iceshu4.entity.SurveyAnswer;
-import com.cyberbullies.iceshu4.entity.User;
+import com.cyberbullies.iceshu4.entity.*;
 import com.cyberbullies.iceshu4.repository.SurveyAnswerRepository;
 import com.cyberbullies.iceshu4.repository.SurveyRepository;
 import com.cyberbullies.iceshu4.repository.UserRepository;
@@ -11,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,14 +19,26 @@ public class SurveyAnswerService {
     private final SurveyRepository surveyRepository;
     private final UserRepository userRepository;
 
-    public  SurveyAnswer create(SurveyAnswer surveyAnswer, Long studentID, Long surveyID) {
+    public  SurveyAnswer create(Long studentID, Long surveyID) {
         if(surveyAnswerRepository.findByStudentIdAndSurveyId(studentID,surveyID).isEmpty()){
-            SurveyAnswer returnedSurveyAnswer =surveyAnswerRepository.save(surveyAnswer);
+            SurveyAnswer surveyAnswer = new SurveyAnswer();
+            surveyAnswer.setStudentId(studentID);
+            surveyAnswer.setSurveyId(surveyID);
+            List<Answer> answerList = new ArrayList<>();
+            Survey survey = surveyRepository.findById(surveyID).get();
+            for(Question question:survey.getQuestions()){
+                Answer answer = new Answer();
+                answer.setQuestionId(question.getId());
+                answerList.add(answer);
+            }
+            surveyAnswer.setAnswers(answerList);
+            SurveyAnswer returnedSurveyAnswer = surveyAnswerRepository.save(surveyAnswer);
+            //add returnedSurveyAnswer to the survey answer list of the student
             User student = userRepository.findById(studentID).get();
             List<SurveyAnswer> surveyAnswersOfStudent = student.getSurveyAnswers();
             surveyAnswersOfStudent.add(returnedSurveyAnswer);
             userRepository.save(student);
-            Survey survey = surveyRepository.findById(surveyID).get();
+            //add returnedSurveyAnswer to the survey answer list of the survey
             List<SurveyAnswer> surveyAnswersOfSurvey = survey.getSurveyAnswers();
             surveyAnswersOfSurvey.add(returnedSurveyAnswer);
             surveyRepository.save(survey);
@@ -41,7 +52,7 @@ public class SurveyAnswerService {
         if(surveyAnswerRepository.findByStudentIdAndSurveyId(studentID,surveyID).isPresent()){
             return surveyAnswerRepository.findByStudentIdAndSurveyId(studentID,surveyID).get();
         }else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"This SurveyAnswer doesn't exist.");
+            return create(studentID,surveyID);
         }
     }
 
