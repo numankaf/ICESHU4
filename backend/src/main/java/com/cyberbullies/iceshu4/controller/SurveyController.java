@@ -1,4 +1,5 @@
 package com.cyberbullies.iceshu4.controller;
+import com.cyberbullies.iceshu4.dto.SurveyAnswerResponseDTO;
 import com.cyberbullies.iceshu4.entity.Question;
 import com.cyberbullies.iceshu4.entity.Survey;
 import com.cyberbullies.iceshu4.service.SurveyService;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequestMapping("/survey")
 @AllArgsConstructor
 public class SurveyController {
-    private SurveyService surveyService;
+    private final SurveyService surveyService;
 
     @PostMapping("/create/{courseID}")
     public ResponseEntity<Survey> createSurvey(@RequestBody Survey survey,@PathVariable Long courseID) {
@@ -68,5 +69,10 @@ public class SurveyController {
             return new ResponseEntity<>("Survey published successfully!",HttpStatus.OK);
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Survey couldn't published successfully!");
+    }
+
+    @GetMapping("/findAllSurveyAnswers/{surveyID}")
+    public ResponseEntity<List<SurveyAnswerResponseDTO>> findAllSubmittedSurveyAnswers(@PathVariable Long surveyID){
+        return new ResponseEntity<>(surveyService.findAllSubmittedSurveyAnswers(surveyID),HttpStatus.OK);
     }
 }

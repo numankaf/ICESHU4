@@ -50,5 +50,8 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Message> messages;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SurveyAnswer> surveyAnswers;
+
 
 }

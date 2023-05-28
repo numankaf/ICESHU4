@@ -3,6 +3,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../core/authentication.service";
 import {FormService} from "../form.service";
+import {AnswerService} from "../answer.service";
 
 @Component({
   selector: 'app-form-list',
@@ -11,11 +12,13 @@ import {FormService} from "../form.service";
   providers: [MessageService, ConfirmationService]
 })
 export class FormListComponent {
-  @Input() courseId=0;
+  @Input() courseId = 0;
   forms: any = [];
   userData: any;
+  formStatus: any;
 
   constructor(private router: Router,
+              private answerService: AnswerService,
               private authenticationService: AuthenticationService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
@@ -24,7 +27,12 @@ export class FormListComponent {
   }
 
   ngOnInit(): void {
-    if(this.courseId !==0){
+    this.answerService.getStudentFilledFormsStatus(this.userData.sub).subscribe(
+      (data)=>{
+        this.formStatus = data;
+      }
+    )
+    if (this.courseId !== 0) {
       if (this.authenticationService.getRole() === 'STUDENT') {
         this.formService.findAllByCourseIDForStudent(this.courseId).subscribe((data) => {
           this.forms = data;
@@ -34,8 +42,7 @@ export class FormListComponent {
           this.forms = data;
         })
       }
-    }
-    else{
+    } else {
       if (this.authenticationService.getRole() === 'ADMIN') {
         this.formService.findAll().subscribe((data) => {
           this.forms = data;
@@ -52,18 +59,20 @@ export class FormListComponent {
     this.router.navigate([this.router.url, 'createform']);
   }
 
-  goToEdit(id:any) {
-    if(this.authenticationService.getRole()==="ADMIN"){
-      this.router.navigate(['admin/forms/'+id+'/edit']);
-    }
-    else if(this.authenticationService.getRole()==="DEPARTMENT_MANAGER"){
-      this.router.navigate(['departmentmanager/forms/'+id+'/edit']);
-    }
-    else if(this.authenticationService.getRole()==="INSTRUCTOR"){
-      this.router.navigate(['instructor/forms/'+id+'/edit']);
-    }
-    else {
-      this.router.navigate(['student/forms/'+id+'/edit']);
+  goToFill(id: any) {
+    const routeLink = id + '/fill'
+    this.router.navigate(['student/forms/' + routeLink]);
+  }
+
+  goToEdit(id: any) {
+    if (this.authenticationService.getRole() === "ADMIN") {
+      this.router.navigate(['admin/forms/' + id + '/edit']);
+    } else if (this.authenticationService.getRole() === "DEPARTMENT_MANAGER") {
+      this.router.navigate(['departmentmanager/forms/' + id + '/edit']);
+    } else if (this.authenticationService.getRole() === "INSTRUCTOR") {
+      this.router.navigate(['instructor/forms/' + id + '/edit']);
+    } else {
+      this.router.navigate(['student/forms/' + id + '/edit']);
     }
   }
 
@@ -76,19 +85,22 @@ export class FormListComponent {
     return diffInDays;
   }
 
-  getStatus(form: any){
-    if(form.published){
-      if(this.authenticationService.getRole() == 'STUDENT'){
-        if(this.getNumberOfDays(form.endDate)<=0){
-          return {text:"ENDED", severity:"danger"};
+  getStatus(form: any) {
+    if (form.published) {
+      if (this.authenticationService.getRole() == 'STUDENT') {
+        if (this.getNumberOfDays(form.endDate) <= 0) {
+          return {text: "ENDED", severity: "danger"};
+        } else if (this.formStatus[form.id] == true) {
+          return {text: "COMPLETED", severity: "success"};
+        } else {
+          return {text: "INCOMPLETE", severity: "warning"};
         }
-        return {text:"INCOMPLETE", severity:"warning"};
-      }else{
-        return {text:"PUBLISHED", severity:"success"};
+
+      } else {
+        return {text: "PUBLISHED", severity: "success"};
       }
-    }
-    else{
-      return {text:"NOT PUBLISHED", severity:"warning"};
+    } else {
+      return {text: "NOT PUBLISHED", severity: "warning"};
     }
   }
 
@@ -104,7 +116,7 @@ export class FormListComponent {
     });
   }
 
-  publish(id: any){
+  publish(id: any) {
     this.formService.publishSurvey(id).subscribe(
       (data) => {
         this.messageService.add({
@@ -132,7 +144,7 @@ export class FormListComponent {
     });
   }
 
-  delete(id: any){
+  delete(id: any) {
     this.formService.deleteSurvey(id).subscribe(
       (data) => {
         this.messageService.add({
