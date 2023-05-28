@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionStatisticOptionDTO {
-    private Long option_id;
     private String option_text;
     private Long count;
 }

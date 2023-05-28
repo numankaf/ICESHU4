@@ -178,12 +178,14 @@ public class SurveyService {
         Survey survey = surveyRepository.findById(id).get();
         List<Question> questions = survey.getQuestions();
         for (Question question : questions) {
+            if (question.getQuestionType().equals("Open Ended")) {
+                continue;
+            }
             QuestionStatisticsDTO dto = new QuestionStatisticsDTO();
             List<QuestionStatisticOptionDTO> lst = new ArrayList<QuestionStatisticOptionDTO>();
-            dto.setQuestionId(question.getId());
+            dto.setQuestionText(question.getQuestionText());
             for (QuestionOption option : question.getOptions()) {
                 QuestionStatisticOptionDTO option_dto = new QuestionStatisticOptionDTO();
-                option_dto.setOption_id(option.getId());
                 option_dto.setOption_text(option.getContent());
                 option_dto.setCount(answerRepository.getOptionCounts(option.getId(), question.getId()));
                 lst.add(option_dto);

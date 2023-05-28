@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QuestionStatisticsDTO {
-    private Long questionId;
+    private String questionText;
     private List<QuestionStatisticOptionDTO> options;
 }
