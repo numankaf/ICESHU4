@@ -26,6 +26,7 @@ public class Survey {
     private LocalDate endDate;
     private Long courseId;
     private boolean published = false;
+    private boolean status = false;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;
     @OneToMany(cascade = CascadeType.ALL)

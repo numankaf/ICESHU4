@@ -17,6 +17,6 @@ public class Answer {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
     private Long questionId;
-    private String optionId;
+    private Long optionId;
     private String answerText;
 }
