@@ -3,6 +3,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../core/authentication.service";
 import {FormService} from "../form.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-form-list',
@@ -14,13 +15,19 @@ export class FormListComponent {
   @Input() courseId=0;
   forms: any = [];
   userData: any;
+  reEvaluateForm: FormGroup;
 
   constructor(private router: Router,
               private authenticationService: AuthenticationService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private formService: FormService) {
+              private formService: FormService,
+              private fb: FormBuilder) {
     this.userData = authenticationService.decodeToken(this.authenticationService.getToken() || "");
+    this.reEvaluateForm = this.fb.group({
+      survey: [null, Validators.required],
+      content: [null, [Validators.required]],
+    })
   }
 
   ngOnInit(): void {
@@ -148,4 +155,31 @@ export class FormListComponent {
     )
   }
 
+  reEvalRequestDialog: boolean = false;
+  get f() {
+    return this.reEvaluateForm.controls;
+  }
+  openReEvalRequest(form: any){
+    this.reEvaluateForm.reset()
+    this.reEvalRequestDialog = true;
+    this.reEvaluateForm.get('survey')?.patchValue(form);
+  }
+  createReEvalRequest() {
+    if (this.reEvaluateForm.valid){
+      console.log(this.reEvaluateForm.value);
+      this.formService.createReEvalutaionRequest(this.reEvaluateForm.value).subscribe(
+        response =>{
+          this.reEvalRequestDialog = false;
+          this.ngOnInit();
+          this.messageService.add({ severity: 'success', summary: 'Re-Evaluation', detail: 'Re-Evaluation request sended.' });
+        },error=>{
+          console.log(error)
+          this.messageService.add({ severity: 'error', summary: 'Re-Evaluation', detail: 'Error occurred while re-evaluation request sending.' });
+        }
+      )
+    }
+    else{
+      return;
+    }
+  }
 }
