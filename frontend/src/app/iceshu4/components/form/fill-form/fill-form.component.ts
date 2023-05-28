@@ -47,8 +47,8 @@ export class FillFormComponent {
     for (const answer of this.surveyAnswer.answers) {
       for (const question of this.survey.questions) {
         for (const option of question.options) {
-          if (option.content == answer.answerText) {
-            answer.optionId = parseInt(String(option.id));
+          if (option.id == answer.optionId) {
+            answer.answerText = option.content;
           }
         }
       }
