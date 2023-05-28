@@ -73,7 +73,13 @@ export class CourseComponent {
 
 
   ngOnInit(): void {
-
+    if (this.authenticationService.getRole() === "STUDENT") {
+      this.courseService.getEnrollableCourses(this.userData.sub).subscribe(
+        (data) => {
+          this.enrollableCourses = data;
+        }
+      )
+    }
     if (this.authenticationService.getRole() === 'DEPARTMENT_MANAGER') {
       this.http.get<any>(`${environment.apiUrl}/department/get/${this.userData.departmentId}`).subscribe(
         (data) => {
