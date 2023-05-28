@@ -28,6 +28,8 @@ public class Survey {
     private boolean published = false;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SurveyAnswer> surveyAnswers;
     @JsonIgnoreProperties("survey")
     @OneToOne(mappedBy = "survey")
     private ReevaluationRequest reevaluation_request;
