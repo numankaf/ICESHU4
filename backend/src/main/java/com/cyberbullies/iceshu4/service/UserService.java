@@ -3,8 +3,11 @@ package com.cyberbullies.iceshu4.service;
 import com.cyberbullies.iceshu4.dto.UserCreateRequestDTO;
 import com.cyberbullies.iceshu4.dto.UserDetailDTO;
 import com.cyberbullies.iceshu4.dto.UserUpdateRequestDTO;
+import com.cyberbullies.iceshu4.entity.Survey;
+import com.cyberbullies.iceshu4.entity.SurveyAnswer;
 import com.cyberbullies.iceshu4.entity.User;
 import com.cyberbullies.iceshu4.enums.UserRole;
+import com.cyberbullies.iceshu4.repository.SurveyRepository;
 import com.cyberbullies.iceshu4.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final SurveyRepository surveyRepository;
     private final PasswordEncoder passwordEncoder;
     private final CourseService courseService;
 
@@ -53,6 +57,15 @@ public class UserService {
 
     public void deleteUserById(Long id) {
         User user = userRepository.findById(id).get();
+        if(user.getRole()== UserRole.STUDENT){
+            for(SurveyAnswer surveyAnswer : user.getSurveyAnswers()){
+                Survey survey = surveyRepository.findById(surveyAnswer.getSurveyId()).get();
+                List<SurveyAnswer> updatedSurveyAnswers= survey.getSurveyAnswers();
+                updatedSurveyAnswers.remove(survey);
+                survey.setSurveyAnswers(updatedSurveyAnswers);
+                surveyRepository.save(survey);
+            }
+        }
         user.getUser_courses().forEach(course -> {
             courseService.quitCourse(user.getId(), course.getId());
         });

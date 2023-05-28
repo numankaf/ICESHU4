@@ -67,6 +67,7 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
 import { FormListComponent } from './iceshu4/components/form/form-list/form-list.component';
 import { FormEditComponent } from './iceshu4/components/form/form-edit/form-edit.component';
 import { ReEvaluationComponent } from './iceshu4/components/department-manager/re-evaluation/re-evaluation.component';
+import { FillFormComponent } from './iceshu4/components/form/fill-form/fill-form.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { ReEvaluationComponent } from './iceshu4/components/department-manager/r
     DetailMessageComponent,
     FormListComponent,
     FormEditComponent,
-    ReEvaluationComponent
+    ReEvaluationComponent,
+    FillFormComponent
   ],
     imports: [
         HttpClientModule,

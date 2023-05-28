@@ -55,7 +55,7 @@
       <ng-container *ngFor="let question of survey.value['questions'];let i = index" >
         <span class="font-semibold text-lg"> {{i+1 + ". "+ question.questionText}}</span>
         <div class="flex flex-row align-items-center gap-5">
-          <textarea *ngIf="question.options.length==1" rows="2"  class="w-full" pInputTextarea ></textarea>
+          <textarea *ngIf="question.options.length==1" rows="2"  class="w-full" pInputTextarea [disabled]="true"></textarea>
           <div *ngIf="question.options.length>1" class="flex flex-row align-items-center gap-5">
             <ng-container *ngFor="let option of question.options" >
               <div class="flex align-items-center">

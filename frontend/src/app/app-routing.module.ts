@@ -24,6 +24,7 @@ import {MessageComponent} from "./iceshu4/components/message/message.component";
 import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
 import {FormEditComponent} from "./iceshu4/components/form/form-edit/form-edit.component";
 import {ReEvaluationComponent} from "./iceshu4/components/department-manager/re-evaluation/re-evaluation.component";
+import { FillFormComponent } from './iceshu4/components/form/fill-form/fill-form.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {ReEvaluationComponent} from "./iceshu4/components/department-manager/re-
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
+        {path: 'forms/:id/fill', component: FillFormComponent},
         {path: 'messages', component: MessageComponent},
         {path: 'messages/:id', component: DetailMessageComponent}
       ]
