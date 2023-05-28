@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/surveyanswer")
 @AllArgsConstructor
@@ -21,6 +23,11 @@ public class SurveyAnswerController {
     @GetMapping("/get/{studentID}/{surveyID}")
     public ResponseEntity<SurveyAnswer> getSurveyAnswer(@PathVariable Long studentID, @PathVariable Long surveyID){
         return new ResponseEntity<>(surveyAnswerService.findByStudentIdAndSurveyId(studentID,surveyID), HttpStatus.OK);
+    }
+
+    @GetMapping("/get/formstatus/{studentID}")
+    public ResponseEntity<Map<Long, Boolean>> getStudentFilledFormsStatus(@PathVariable Long studentID){
+        return new ResponseEntity<>(surveyAnswerService.findStudentFilledFormsStatus(studentID), HttpStatus.OK);
     }
 
     @PutMapping("/doItLater")

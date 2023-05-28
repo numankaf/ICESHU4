@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -48,6 +50,14 @@ public class SurveyAnswerService {
         }
     }
 
+    public Map<Long, Boolean> findStudentFilledFormsStatus(Long studentID){
+        List<SurveyAnswer> surveyAnswers = surveyAnswerRepository.findAllByStudentId(studentID);
+        Map<Long, Boolean> hashMap = new HashMap<>();
+        for(SurveyAnswer surveyAnswer:surveyAnswers){
+            hashMap.put(surveyAnswer.getSurveyId(),surveyAnswer.isSubmitted());
+        }
+        return hashMap;
+    }
     public SurveyAnswer findByStudentIdAndSurveyId(Long studentID, Long surveyID) {
         if(surveyAnswerRepository.findByStudentIdAndSurveyId(studentID,surveyID).isPresent()){
             return surveyAnswerRepository.findByStudentIdAndSurveyId(studentID,surveyID).get();
@@ -64,6 +74,7 @@ public class SurveyAnswerService {
 
     public SurveyAnswer submitSurveyAnswer(SurveyAnswer surveyAnswer) {
         SurveyAnswer updatedSurveyAnswer = surveyAnswerRepository.findById(surveyAnswer.getId()).get();
+        updatedSurveyAnswer.setAnswers(surveyAnswer.getAnswers());
         updatedSurveyAnswer.setSubmitted(true);
         return surveyAnswerRepository.save(updatedSurveyAnswer);
     }

@@ -1,0 +1,44 @@
+<p-toast></p-toast>
+<div class="card" *ngIf="survey &&survey.questions">
+  <a class="text-primary cursor-pointer underline-link text-lg my-2" routerLink="../../">
+    <i class="pi pi-arrow-circle-left mr-1" style="font-size: 1rem"></i>
+    Back to Forms</a>
+  <div class="mb-4 pt-2  ">
+    <div class="flex gap-3">
+      <div class="text-2xl font-bold text-900">{{ survey.name }}</div>
+    </div>
+
+  </div>
+  <div class="flex flex-column gap-3" *ngIf="surveyAnswer && surveyAnswer.answers &&surveyAnswer.answers.length===survey.questions.length">
+    <ng-container *ngFor="let question of survey.questions;let i = index" >
+      <span class="font-semibold text-lg"> {{i+1 + ". "+ question.questionText}}</span>
+      <div class="flex flex-row align-items-center gap-5">
+        <textarea *ngIf="question.options.length==1" rows="2"  class="w-full" pInputTextarea [disabled]="surveyAnswer.submitted"
+                  [(ngModel)]="surveyAnswer.answers[i].answerText" ></textarea>
+        <div *ngIf="question.options.length>1" class="flex flex-row align-items-center gap-5">
+          <ng-container *ngFor="let option of question.options;let j = index" >
+            <div class="flex align-items-center">
+              <p-radioButton  type="radio" [value]="option.content"
+                              [(ngModel)]="surveyAnswer.answers[i].answerText"  [disabled]="surveyAnswer.submitted"></p-radioButton>
+              <label  class="ml-2">{{option.content}}</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="flex justify-content-end mt-5" *ngIf="(surveyAnswer && !surveyAnswer.submitted )&&getNumberOfDays(survey.endDate)>0">
+    <div class="flex align-items-center justify-content-center m-2">
+      <button pButton pRipple label="Do it later" icon="pi pi-history" (click)="doItLater()"
+              class="p-button-info p-button-outlined mr-2 mb-2"  >
+      </button>
+    </div>
+
+    <div class="flex align-items-center justify-content-center m-2">
+      <button pButton pRipple label="Submit" icon="pi pi-check" (click)="submit()"
+              class="p-button-success mr-2 mb-2" type="Submit">
+      </button>
+    </div>
+  </div>
+</div>
