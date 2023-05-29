@@ -62,6 +62,10 @@ export class FormListComponent {
     }
   }
 
+  goToDetail(id: any){
+    this.router.navigate([this.router.url, id]);
+  }
+
   goToCreate() {
     this.router.navigate([this.router.url, 'createform']);
   }

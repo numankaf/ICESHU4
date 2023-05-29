@@ -1,0 +1,75 @@
+<div class="card" *ngIf="survey">
+  <a class="text-primary cursor-pointer underline-link text-lg" routerLink="..">
+    <i class="pi pi-arrow-circle-left mr-1" style="font-size: 1rem"></i>
+    Back to Forms</a>
+  <div class="flex align-items-center justify-content-between my-5 ">
+    <h1 class="m-0 font-medium text-3xl uppercase">{{survey.name}}</h1>
+  </div>
+  <div class="col-12">
+    <div *appHasRole="['DEPARTMENT_MANAGER','INSTRUCTOR','ADMIN']"
+         class="border-primary  border-1 border-solid card-section  "
+         style="border-radius: 7px">
+      <div class="mb-5">
+        <div class="flex justify-content-between align-items-center m-3">
+          <span class="text-xl font-medium text-900 ">Students that Answered the Form</span>
+        </div>
+        <p-dataView [value]="formAnswers" [rows]="5" [paginator]="true">
+          <ng-template let-formanswer pTemplate="listItem">
+            <div class="col-12">
+              <div class="flex flex-row align-items-center justify-content-between">
+                <div class="flex flex-column xl:flex-row xl:align-items-center p-4 gap-4">
+                  <img alt="avatar" class="profile-avatar ml-2" [src]="formanswer.profilePhoto">
+                  <div class="flex flex-column  align-items-start">
+                    <div
+                      class="text-lg font-semibold text-900">{{ formanswer.studentName + " " + formanswer.studentSurname}} </div>
+                    <div class="flex align-items-center gap-3">
+                <span class="flex align-items-center gap-2">
+                  <i class="pi pi-envelope"></i>
+                  <span>{{ formanswer.studentEmail }}</span>
+                </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex align-items-center justify-content-center m-2">
+                    <button *appHasRole="['DEPARTMENT_MANAGER', 'ADMIN']" pButton pRipple label="View Answers" icon="pi pi-server"
+                            (click)="openAnswers(formAnswers.indexOf(formanswer))"
+                            class="p-button-sm p-button-info mr-2 mb-2">
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </ng-template>
+        </p-dataView>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<p-dialog header="Answers" [(visible)]="showAnswers" [dismissableMask]="true" [modal]="true" [style]="{ width: '65vw' }"
+          [draggable]="false"  [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+  <div class="flex flex-column gap-3"
+       *ngIf="surveyAnswer && surveyAnswer.answers &&surveyAnswer.answers.length===survey.questions.length">
+    <ng-container *ngFor="let question of survey.questions;let i = index">
+      <span class="font-semibold text-lg"> {{i + 1 + ". " + question.questionText}}</span>
+      <div class="flex flex-row align-items-center gap-5">
+        <textarea *ngIf="question.options.length==1" rows="2" class="w-full" pInputTextarea
+                  [disabled]="true" [(ngModel)]="surveyAnswer.answers[i].answerText"></textarea>
+        <div *ngIf="question.options.length>1" class="flex flex-row align-items-center gap-5">
+          <ng-container *ngFor="let option of question.options;let j = index">
+            <div class="flex align-items-center">
+              <p-radioButton type="radio" [value]="option.content"
+                             [(ngModel)]="surveyAnswer.answers[i].answerText"
+                             [disabled]="true"></p-radioButton>
+              <label class="ml-2">{{option.content}}</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</p-dialog>

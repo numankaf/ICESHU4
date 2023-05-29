@@ -164,11 +164,12 @@ public class SurveyService {
         SurveyAnswerResponseDTO surveyAnswerResponseDTO = new SurveyAnswerResponseDTO();
         surveyAnswerResponseDTO.setId(surveyAnswer.getId());
         surveyAnswerResponseDTO.setSurveyId(surveyAnswer.getSurveyId());
-        surveyAnswerResponseDTO.setStudentId(surveyAnswerResponseDTO.getStudentId());
         User student = userRepository.findById(surveyAnswer.getStudentId()).get();
+        surveyAnswerResponseDTO.setStudentId(student.getId());
         surveyAnswerResponseDTO.setStudentName(student.getName());
         surveyAnswerResponseDTO.setStudentSurname(student.getSurname());
         surveyAnswerResponseDTO.setProfilePhoto(student.getProfile_photo());
+        surveyAnswerResponseDTO.setStudentEmail(student.getEmail());
         surveyAnswerResponseDTO.setAnswers(surveyAnswer.getAnswers());
         return surveyAnswerResponseDTO;
     }

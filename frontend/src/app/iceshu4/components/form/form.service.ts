@@ -22,6 +22,10 @@ export class FormService {
     return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAll/${userId}`).pipe(catchError(this.handleError));
   }
 
+  findAllSubmittedSurveyAnswers(surveyId: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAllSurveyAnswers/${surveyId}`).pipe(catchError(this.handleError));
+  }
+
   findAllSurveysOfCourses(courseId: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}/survey/findAllByCourseID/${courseId}`).pipe(catchError(this.handleError));
   }
