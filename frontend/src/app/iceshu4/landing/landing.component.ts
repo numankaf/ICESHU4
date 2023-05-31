@@ -8,20 +8,24 @@ import { Component } from '@angular/core';
 export class LandingComponent {
   carouselImages: any[] = [
     {
-      url: 'assets/layout/images/carousel/carouseimage1.PNG',
+      url: 'assets/layout/images/carousel/course.png',
       content: 'Courses'
     },
     {
-      url: 'assets/layout/images/carousel/carouseimage4.PNG',
+      url: 'assets/layout/images/carousel/forms.png',
       content: 'Evaluation Forms'
     },
     {
-      url: 'assets/layout/images/carousel/carouseimage3.PNG',
+      url: 'assets/layout/images/carousel/message.png',
       content: 'Chat with Admin'
     },
     {
-      url: 'assets/layout/images/carousel/carouseimage2.PNG',
+      url: 'assets/layout/images/carousel/profile.png',
       content: 'Profile Overview'
+    },
+    {
+      url: 'assets/layout/images/carousel/users.png',
+      content: 'User Management'
     },
   ];
   constructor() {

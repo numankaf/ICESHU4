@@ -127,23 +127,25 @@ public class UserService {
         return users.stream().map(user -> userToDto(user)).collect(Collectors.toList());
     }
 
-    public void banUser(Long id)
-    {
+    public void banUser(Long id) {
         User user = userRepository.findById(id).get();
         user.setBanned(true);
         userRepository.save(user);
     }
 
-    public void unbanUser(Long id)
-    {
+    public void unbanUser(Long id) {
         User user = userRepository.findById(id).get();
         user.setBanned(false);
         userRepository.save(user);
     }
 
-    public List<User> getBannedUsers()
-    {
+    public List<User> getBannedUsers() {
         return userRepository.getBannedUsers();
+    }
+
+    public boolean isBanned(Long id) {
+        User user = userRepository.findById(id).get();
+        return user.getBanned();
     }
 
 }

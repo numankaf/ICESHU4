@@ -21,12 +21,10 @@ export class InstructorLayoutComponent implements AfterViewInit {
 
   ngOnInit() {
     this.menuItems = [
-      {icon: 'dashboard',name:'Dashboard', route:'/instructor/dashboard'},
       {icon: 'library_books',name:'Courses', route:'/instructor/courses'},
       {icon: 'feed',name:'Forms', route:'/instructor/forms'},
-      {icon: 'folder_copy',name:'Resources', route:'/instructor/resources'},
-      {icon: 'request_quote',name:'Re-evaluation Requests', route:'/instructor/re-evaluationrequests'}
-
+      {icon: 'request_quote',name:'Re-evaluation Requests', route:'/instructor/re-evaluationrequests'},
+      // {icon: 'folder_copy',name:'Resources', route:'/instructor/resources'}
     ]
   }
 

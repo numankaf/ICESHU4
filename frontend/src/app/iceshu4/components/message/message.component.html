@@ -12,7 +12,7 @@
   </div>
 
   <ng-container *ngFor="let message of messages">
-    <p-card class="message mx-2">
+    <p-card class="message mx-2" [style]="styleOBJ">
       <div class="grid">
         <div class="col-11 p-0">
           <h2 class="ml-2 mb-0" style="word-wrap: break-word;">{{message.subject}}</h2>

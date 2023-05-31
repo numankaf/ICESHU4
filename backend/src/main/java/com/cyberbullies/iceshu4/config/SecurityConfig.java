@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private UserDetailsServiceImpl userDetailsService;
 
@@ -54,15 +56,16 @@ public class SecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(handler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/department/**").permitAll()
-                .antMatchers("/course/**").permitAll()
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/semester/**").hasAnyAuthority("ADMIN", "DEPARTMENT_MANAGER")
-                .antMatchers("/survey/**").permitAll()
-                .antMatchers("/message/**").permitAll()
-                .antMatchers("/surveyanswer/**").permitAll()
+                // .antMatchers("/auth/**").permitAll()
+                // .antMatchers("/h2-console/**").permitAll()
+                // .antMatchers("/department/**").permitAll()
+                // .antMatchers("/course/**").permitAll()
+                // .antMatchers("/user/**").permitAll()
+                // .antMatchers("/semester/**").permitAll()
+                // .antMatchers("/survey/**").permitAll()
+                // .antMatchers("/message/**").permitAll()
+                // .antMatchers("/reevaluation/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();// for semester: hasAnyAuthority("ADMIN")
         // for user:
         // hasAnyAuthority("ADMIN","INSTRUCTOR","DEPARTMENT_MANAGER","STUDENT")

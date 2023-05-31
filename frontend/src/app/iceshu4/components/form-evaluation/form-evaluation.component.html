@@ -1,0 +1,40 @@
+<p-toast></p-toast>
+<div class="card">
+  <h1 class="m-0 font-medium text-3xl">All Evaluation Forms</h1>
+  <p-dataView [value]="reEvalRequest">
+
+    <ng-template let-form pTemplate="listItem">
+      <div class="col-12">
+        <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+
+          <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+            <div class="flex flex-column align-items-center sm:align-items-start gap-3">
+              <div class="flex gap-3">
+                <div class="text-2xl font-bold text-900">{{ form.survey.name }}</div>
+                <p-tag severity="warning">IN RE-EVALUATE PROCESS</p-tag>
+              </div>
+              <div class="flex  align-items-center gap-3 flex-row">
+                <span >{{form.content}}</span>
+              </div>
+            </div>
+            <div *appHasRole="['DEPARTMENT_MANAGER']" class="flex">
+              <button (click)="declineRequest(form.id)"
+                      pButton pRipple label="Decline"  icon="pi pi-times-circle"  class="p-button-danger p-button-sm mr-2 mb-2"></button>
+              <button  (click)="acceptRequest(form.id)"
+                       pButton pRipple label="Accept"  icon="pi pi-check-circle"  class="p-button-success p-button-sm mr-2 mb-2"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
+</div>
+
+<p-confirmDialog #cd key="confirmDialog" [style]="{width: '50vw'}" [dismissableMask]="true">
+  <ng-template pTemplate="footer">
+    <button type="button" class="p-button-danger p-button-outlined" pButton icon="pi pi-times" label="No"
+            (click)="cd.reject()"></button>
+    <button type="button" class="p-button-success p-button-outlined" pButton icon="pi pi-check" label="Yes"
+            (click)="cd.accept()"></button>
+  </ng-template>
+</p-confirmDialog>

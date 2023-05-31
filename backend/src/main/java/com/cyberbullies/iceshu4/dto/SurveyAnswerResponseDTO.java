@@ -16,6 +16,7 @@ public class SurveyAnswerResponseDTO {
     private String studentName;
     private String studentSurname;
     private String profilePhoto;
+    private String studentEmail;
     private Long surveyId;
     List<Answer> answers;
 }

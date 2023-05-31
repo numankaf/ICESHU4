@@ -13,7 +13,7 @@ export class MessageComponent {
   messages: any;
   messagesLen: any;
   form: FormGroup;
-  //userData: any;
+  styleOBJ = {'background-color': 'var(--surface-card)'}
   constructor(private router: Router, private icesMessageService: IcesMessageService,
               private authenticationService: AuthenticationService,
               private fb: FormBuilder) {

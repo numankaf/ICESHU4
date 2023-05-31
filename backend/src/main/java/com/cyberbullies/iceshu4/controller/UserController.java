@@ -1,6 +1,7 @@
 package com.cyberbullies.iceshu4.controller;
 
 import com.cyberbullies.iceshu4.enums.UserRole;
+import com.cyberbullies.iceshu4.repository.UserRepository;
 import com.cyberbullies.iceshu4.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,8 +80,7 @@ public class UserController {
     }
 
     @PutMapping("/banUser/{id}")
-    public ResponseEntity<String> banUser(@PathVariable Long id)
-    {
+    public ResponseEntity<String> banUser(@PathVariable Long id) {
         if (userService.getUserById(id) == null) {
             return new ResponseEntity<>("There is no user by this id!", HttpStatus.BAD_REQUEST);
         }
@@ -89,20 +89,23 @@ public class UserController {
     }
 
     @GetMapping("/getBannedUsers")
-    public List<User> getBannedUsers()
-    {
+    public List<User> getBannedUsers() {
         return userService.getBannedUsers();
     }
 
     @PutMapping("/unbanUser/{id}")
-    public ResponseEntity<String> unbanuser(@PathVariable Long id)
-    {
+    public ResponseEntity<String> unbanuser(@PathVariable Long id) {
         if (userService.getUserById(id) == null) {
             return new ResponseEntity<>("There are no user by this id!", HttpStatus.BAD_REQUEST);
         }
 
         userService.unbanUser(id);
         return new ResponseEntity<>("User's ban is removed", HttpStatus.OK);
+    }
+
+    @GetMapping("/isBanned/{id}")
+    public ResponseEntity<Boolean> isBanned(@PathVariable Long id) {
+        return new ResponseEntity<>(userService.isBanned(id), HttpStatus.OK);
     }
 
 }
