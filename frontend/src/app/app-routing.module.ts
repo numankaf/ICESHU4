@@ -23,9 +23,9 @@ import {CreateFormComponent} from "./iceshu4/components/form/create-form/create-
 import {MessageComponent} from "./iceshu4/components/message/message.component";
 import {DetailMessageComponent} from "./iceshu4/components/message/detail-message/detail-message.component";
 import {FormEditComponent} from "./iceshu4/components/form/form-edit/form-edit.component";
-import {ReEvaluationComponent} from "./iceshu4/components/department-manager/re-evaluation/re-evaluation.component";
 import {FillFormComponent} from "./iceshu4/components/form/fill-form/fill-form.component";
 import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-detail.component";
+import {FormEvaluationComponent} from "./iceshu4/components/form-evaluation/form-evaluation.component";
 
 
 @NgModule({
@@ -88,7 +88,7 @@ import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-de
         {path: 'forms', component: FormComponent},
         {path: 'forms/:id/edit', component: FormEditComponent},
         {path: 'resources', component: DashboardComponent},
-        {path: 're-evaluationrequests', component: DashboardComponent}
+        {path: 're-evaluationrequests', component: FormEvaluationComponent}
       ]
     },
     {
@@ -103,7 +103,7 @@ import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-de
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
         {path: 'forms/:id', component: FormDetailComponent},
-        {path: 're-evaluationrequests', component: ReEvaluationComponent},
+        {path: 're-evaluationrequests', component: FormEvaluationComponent},
         {path: 'resources', component: DashboardComponent},
       ]
     },

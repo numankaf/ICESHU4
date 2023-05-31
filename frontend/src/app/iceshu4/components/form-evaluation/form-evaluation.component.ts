@@ -1,31 +1,37 @@
 import { Component } from '@angular/core';
-import {AuthenticationService} from "../../../core/authentication.service";
+import {AuthenticationService} from "../../core/authentication.service";
 import {Router} from "@angular/router";
-import {ReEvaluationService} from "./re-evaluation.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {FormEvalutaionService} from "./form-evalutaion.service";
 
 @Component({
-  selector: 'app-re-evaluation',
-  templateUrl: './re-evaluation.component.html',
-  styleUrls: ['./re-evaluation.component.scss'],
-  providers: [ConfirmationService, MessageService]
+  selector: 'app-form-evaluation',
+  templateUrl: './form-evaluation.component.html',
+  styleUrls: ['./form-evaluation.component.scss'],
+  providers: [MessageService]
 })
-export class ReEvaluationComponent {
+export class FormEvaluationComponent {
   reEvalRequest: any = [];
 
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
-              private reEvaluationService: ReEvaluationService,
+              private reEvaluationService: FormEvalutaionService,
               private confirmationService: ConfirmationService,
               private messageService: MessageService,) {
   }
 
   ngOnInit(){
-    this.reEvaluationService.findAllReEvaluationRequest().subscribe(
-      response=>{
-        this.reEvalRequest = response;
-      }
-    );
+    if (this.authenticationService.getRole() === 'DEPARTMENT_MANAGER'){
+      this.reEvaluationService.findAllReEvaluationRequest().subscribe(
+        response=>{
+          this.reEvalRequest = response;
+        }
+      );
+    }
+    else if(this.authenticationService.getRole() === 'INSTRUCTOR'){
+      this.reEvalRequest = null;
+    }
+
 
   }
 
@@ -66,4 +72,5 @@ export class ReEvaluationComponent {
       key: "confirmDialog"
     });
   }
+
 }

@@ -97,7 +97,10 @@ export class FormListComponent {
   }
 
   getStatus(form: any) {
-    if (form.published) {
+    if (form.status){
+      return {text: "IN REEVALUATION", severity: "warning"};
+    }
+    else if (form.published) {
       if (this.authenticationService.getRole() == 'STUDENT') {
         if (this.getNumberOfDays(form.endDate) <= 0) {
           return {text: "ENDED", severity: "danger"};
