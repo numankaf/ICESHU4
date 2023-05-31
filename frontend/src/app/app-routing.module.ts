@@ -86,6 +86,7 @@ import {FormEvaluationComponent} from "./iceshu4/components/form-evaluation/form
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'courses/:id/createform', component: CreateFormComponent},
         {path: 'forms', component: FormComponent},
+        {path: 'forms/:id', component: FormDetailComponent},
         {path: 'forms/:id/edit', component: FormEditComponent},
         {path: 'resources', component: DashboardComponent},
         {path: 're-evaluationrequests', component: FormEvaluationComponent}

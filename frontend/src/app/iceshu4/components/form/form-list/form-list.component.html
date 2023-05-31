@@ -36,6 +36,8 @@
                          pButton pRipple label="Create Re-evaluation Request"  icon="pi pi-reply"  class=" p-button-sm mr-2 mb-2"></button>
               </div>
               <div *appHasRole="['INSTRUCTOR','DEPARTMENT_MANAGER', 'ADMIN']">
+                <button  *ngIf="form.published"   (click)="goToDetail(form.id)"
+                           pButton pRipple label="Detail"  icon="pi pi-window-maximize"  class="p-button-secondary p-button-sm mr-2 mb-2"></button>
                 <button *ngIf="!form.status" (click)="confirmDelete(form.id)"
                          pButton pRipple label="Delete"  icon="pi pi-trash"  class="p-button-danger p-button-sm mr-2 mb-2"></button>
               </div>
