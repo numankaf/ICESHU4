@@ -203,7 +203,6 @@ export class FormListComponent {
   }
   createReEvalRequest() {
     if (this.reEvaluateForm.valid){
-      console.log(this.reEvaluateForm.value);
       this.formService.createReEvalutaionRequest(this.reEvaluateForm.value).subscribe(
         response =>{
           this.reEvalRequestDialog = false;

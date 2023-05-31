@@ -1,12 +1,10 @@
 package com.cyberbullies.iceshu4.service;
 
 import com.cyberbullies.iceshu4.dto.ReevaluationRequestDTO;
-import com.cyberbullies.iceshu4.entity.Course;
-import com.cyberbullies.iceshu4.entity.ReevaluationRequest;
-import com.cyberbullies.iceshu4.entity.Survey;
-import com.cyberbullies.iceshu4.entity.User;
+import com.cyberbullies.iceshu4.entity.*;
 import com.cyberbullies.iceshu4.enums.UserRole;
 import com.cyberbullies.iceshu4.repository.ReevaluationRequestRepository;
+import com.cyberbullies.iceshu4.repository.SurveyAnswerRepository;
 import com.cyberbullies.iceshu4.repository.SurveyRepository;
 import com.cyberbullies.iceshu4.repository.UserRepository;
 
@@ -16,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +24,7 @@ import java.util.List;
 public class ReevaluationRequestService {
     private final ReevaluationRequestRepository reevaluationRequestRepository;
     private final SurveyRepository surveyRepository;
+    private final SurveyAnswerRepository surveyAnswerRepository;
     private final UserRepository userRepository;
 
     public void createReevaluationRequest(ReevaluationRequestDTO dto) {
@@ -46,7 +46,7 @@ public class ReevaluationRequestService {
         reevaluationRequestRepository.save(reevaluationRequest);
         surveyRepository.save(survey);
     }
-
+    @Transactional
     public void acceptReevaluationRequest(Long id) {
         ReevaluationRequest reevaluationRequest = reevaluationRequestRepository.findById(id).orElse(null);
         Survey survey = reevaluationRequest.getSurvey();
@@ -54,8 +54,17 @@ public class ReevaluationRequestService {
         survey.setStatus(false);
         survey.setPublished(true);
         survey.setStartDate(LocalDate.now());
-        survey.setEndDate(LocalDate.now().plusDays(3));
+        if (LocalDate.now().isAfter(survey.getEndDate())){
+            survey.setEndDate(LocalDate.now().plusDays(3));
+        }
         reevaluationRequest.setSurvey(null);
+        for(SurveyAnswer sa: survey.getSurveyAnswers()){
+            if(sa.getSurveyId() == survey.getId()){
+                sa.setStudentId(null);
+                sa.setSubmitted(false);
+            }
+            surveyAnswerRepository.save(sa);
+        }
         reevaluationRequestRepository.deleteById(reevaluationRequest.getId());
         surveyRepository.save(survey);
     }
@@ -64,9 +73,9 @@ public class ReevaluationRequestService {
         ReevaluationRequest reevaluationRequest = reevaluationRequestRepository.findById(id).orElse(null);
         Survey survey = reevaluationRequest.getSurvey();
         survey.setStatus(false);
-        survey.setPublished(false);
         reevaluationRequest.setAccepted(false);
         reevaluationRequest.setSurvey(null);
+        survey.setPublished(true);
         reevaluationRequestRepository.deleteById(reevaluationRequest.getId());
         surveyRepository.save(survey);
     }

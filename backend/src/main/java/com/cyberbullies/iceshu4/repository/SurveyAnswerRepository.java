@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface SurveyAnswerRepository extends JpaRepository<SurveyAnswer,Long> {
     public Optional<SurveyAnswer> findByStudentIdAndSurveyId(Long studentId, Long surveyId);
     List<SurveyAnswer> findAllByStudentId(Long studentId);
+    void deleteAllBySurveyId(Long surveyId);
 }
