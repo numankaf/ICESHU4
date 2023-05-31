@@ -5,6 +5,7 @@
   <div class="flex align-items-center justify-content-between my-5 ">
     <h1 class="m-0 font-medium text-3xl uppercase">{{survey.name}}</h1>
   </div>
+
   <div class="col-12">
     <div *appHasRole="['DEPARTMENT_MANAGER','INSTRUCTOR','ADMIN']"
          class="border-primary  border-1 border-solid card-section  "
@@ -43,6 +44,55 @@
             </div>
           </ng-template>
         </p-dataView>
+      </div>
+    </div>
+  </div>
+<!--  <div class="flex flex-wrap m-2 ">-->
+<!--    <ng-container *ngFor="let statistic of statistics; let i = index">-->
+<!--      <div class="flex flex-row " style="width:50%">-->
+<!--        <div class="flex flex-column">-->
+<!--          <div class="font-semibold">{{statistic.questionText}}</div>-->
+<!--          <div class="flex">-->
+<!--            <p-chart type="pie" [data]="chartDatasPie[statistics.indexOf(statistic)].data" style="width: 250px; height:250px; display: block"-->
+<!--                     [options]="chartDatasPie[statistics.indexOf(statistic)].options"></p-chart>-->
+<!--            <div >-->
+<!--              <p-chart type="bar" [data]="chartDatasBar[statistics.indexOf(statistic)].data" style="width: 300px; height:250px; display: block"-->
+<!--                       [options]="chartDatasBar[statistics.indexOf(statistic)].options"></p-chart>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--  </div>-->
+  <div class="col-12">
+    <div *appHasRole="['DEPARTMENT_MANAGER','INSTRUCTOR','ADMIN']"
+         class="border-primary  border-1 border-solid card-section  "
+         style="border-radius: 7px">
+      <div class="mb-5" >
+        <p-table [value]="statistics" [tableStyle]="{'min-width': '60rem'}" >
+          <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+              Statistical Data
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Question</th>
+              <th>Pie Chart Statistics</th>
+              <th>Bar Chart Statistics</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-statistic>
+            <tr>
+              <td class="col-6 font-semibold">{{statistic.questionText}}</td>
+              <td > <p-chart type="pie" [data]="chartDatasPie[statistics.indexOf(statistic)].data" style="width: 250px; height:250px; display: block"
+                            [options]="chartDatasPie[statistics.indexOf(statistic)].options"></p-chart></td>
+              <td class="col-4"><p-chart type="bar" [data]="chartDatasBar[statistics.indexOf(statistic)].data"
+                           [options]="chartDatasBar[statistics.indexOf(statistic)].options"></p-chart></td>
+
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
   </div>

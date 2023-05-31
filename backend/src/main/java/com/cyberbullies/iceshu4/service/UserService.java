@@ -145,6 +145,9 @@ public class UserService {
 
     public boolean isBanned(Long id) {
         User user = userRepository.findById(id).get();
+        if(user.getBanned() ==null){
+            return false;
+        }
         return user.getBanned();
     }
 

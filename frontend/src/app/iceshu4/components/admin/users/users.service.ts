@@ -33,6 +33,9 @@ export class UsersService{
   addUserByAdmin(data: any): Observable<any>{
     return this.httpClient.post(`${environment.apiUrl}/user/create`,data, {responseType: "text"}).pipe(catchError(this.handleError))
   }
+  isBanned(id: any): Observable<any>{
+    return this.httpClient.get(`${environment.apiUrl}/user/isBanned/${id}`).pipe(catchError(this.handleError))
+  }
 
   handleError(error: HttpErrorResponse) {
     let msg = '';

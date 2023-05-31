@@ -13,13 +13,13 @@
     <ng-container *ngFor="let question of survey.questions;let i = index" >
       <span class="font-semibold text-lg"> {{i+1 + ". "+ question.questionText}}</span>
       <div class="flex flex-row align-items-center gap-5">
-        <textarea *ngIf="question.options.length==1" rows="2"  class="w-full" pInputTextarea [disabled]="surveyAnswer.submitted"
+        <textarea *ngIf="question.options.length==1" rows="2"  class="w-full" pInputTextarea [disabled]="surveyAnswer.submitted ||getNumberOfDays(survey.endDate) < 0"
                   [(ngModel)]="surveyAnswer.answers[i].answerText" ></textarea>
         <div *ngIf="question.options.length>1" class="flex flex-row align-items-center gap-5">
           <ng-container *ngFor="let option of question.options;let j = index" >
             <div class="flex align-items-center">
               <p-radioButton  type="radio" [value]="option.id"
-                              [(ngModel)]="surveyAnswer.answers[i].optionId"  [disabled]="surveyAnswer.submitted"></p-radioButton>
+                              [(ngModel)]="surveyAnswer.answers[i].optionId"  [disabled]="surveyAnswer.submitted||getNumberOfDays(survey.endDate) < 0"></p-radioButton>
               <label  class="ml-2">{{option.content}}</label>
             </div>
           </ng-container>

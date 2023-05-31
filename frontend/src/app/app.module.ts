@@ -68,6 +68,7 @@ import { FormListComponent } from './iceshu4/components/form/form-list/form-list
 import { FormEditComponent } from './iceshu4/components/form/form-edit/form-edit.component';
 import { FillFormComponent } from './iceshu4/components/form/fill-form/fill-form.component';
 import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
+import {ChartModule} from "primeng/chart";
 import { FormEvaluationComponent } from './iceshu4/components/form-evaluation/form-evaluation.component';
 
 @NgModule({
@@ -142,7 +143,8 @@ import { FormEvaluationComponent } from './iceshu4/components/form-evaluation/fo
         DataViewModule,
         TagModule,
         MultiSelectModule,
-        RadioButtonModule
+        RadioButtonModule,
+        ChartModule
     ],
   providers: [
     {
