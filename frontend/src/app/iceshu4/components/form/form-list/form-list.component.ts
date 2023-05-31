@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {AuthenticationService} from "../../../core/authentication.service";
 import {FormService} from "../form.service";
 import {AnswerService} from "../answer.service";
+import {UsersService} from "../../admin/users/users.service";
+import {THREE} from "@angular/cdk/keycodes";
 
 @Component({
   selector: 'app-form-list',
@@ -16,9 +18,11 @@ export class FormListComponent {
   forms: any = [];
   userData: any;
   formStatus: any;
+  isBanned = false;
 
   constructor(private router: Router,
               private answerService: AnswerService,
+              private usersService: UsersService,
               private authenticationService: AuthenticationService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
@@ -28,10 +32,13 @@ export class FormListComponent {
 
   ngOnInit(): void {
     this.answerService.getStudentFilledFormsStatus(this.userData.sub).subscribe(
-      (data)=>{
+      (data) => {
         this.formStatus = data;
       }
     )
+    this.usersService.isBanned(this.userData.sub).subscribe((data) => {
+      this.isBanned = data;
+    })
     if (this.courseId !== 0) {
       if (this.authenticationService.getRole() === 'STUDENT') {
         this.formService.findAllByCourseIDForStudent(this.courseId).subscribe((data) => {
@@ -55,8 +62,16 @@ export class FormListComponent {
     }
   }
 
-  goToDetail(id: any){
-    this.router.navigate([this.router.url, id]);
+  goToDetail(id: any) {
+    if (this.authenticationService.getRole() === "ADMIN") {
+      this.router.navigate(['admin/forms/' + id]);
+    } else if (this.authenticationService.getRole() === "DEPARTMENT_MANAGER") {
+      this.router.navigate(['departmentmanager/forms/' + id]);
+    } else if (this.authenticationService.getRole() === "INSTRUCTOR") {
+      this.router.navigate(['instructor/forms/' + id]);
+    } else {
+      this.router.navigate(['student/forms/' + id]);
+    }
   }
 
   goToCreate() {
@@ -92,9 +107,13 @@ export class FormListComponent {
   getStatus(form: any) {
     if (form.published) {
       if (this.authenticationService.getRole() == 'STUDENT') {
-        if (this.getNumberOfDays(form.endDate) <= 0) {
+        if (this.getNumberOfDays(form.endDate) < 0) {
           return {text: "ENDED", severity: "danger"};
-        } else if (this.formStatus[form.id] == true) {
+        }
+        else if (this.getNumberOfDays(form.startDate) >0 ) {
+          return {text: "NOT STARTED YET", severity: "info"};
+        }
+        else if (this.formStatus[form.id] == true) {
           return {text: "COMPLETED", severity: "success"};
         } else {
           return {text: "INCOMPLETE", severity: "warning"};

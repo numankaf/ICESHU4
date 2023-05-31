@@ -13,15 +13,18 @@
               </div>
               <div class="flex  align-items-center gap-3 flex-row">
                 <span >{{form.startDate|date : 'dd/MM/yyyy'}} - {{form.endDate|date : 'dd/MM/yyyy'}}</span>
-                <span *appHasRole="['STUDENT']"><span *ngIf="getNumberOfDays(form.endDate)>0">Ends in <span class="font-semibold text-green-500">{{getNumberOfDays(form.endDate)}}</span> days</span></span>
+                <span *appHasRole="['STUDENT']"><span *ngIf="getNumberOfDays(form.endDate)>=0">Ends in <span class="font-semibold text-green-500">{{getNumberOfDays(form.endDate)}}</span> days</span></span>
               </div>
             </div>
             <div class="flex">
               <div *appHasRole="['STUDENT']">
-                <button  *ngIf="formStatus[form.id] ||form.published &&getNumberOfDays(form.endDate)<=0 " (click)="goToFill(form.id)"
+
+                <button  *ngIf="formStatus[form.id] ||form.published &&getNumberOfDays(form.endDate)<0" (click)="goToFill(form.id)"
                          pButton pRipple label="See your answers"  icon="pi pi-chevron-right"  class="p-button-secondary p-button-sm mr-2 mb-2"></button>
-                <button  *ngIf="!formStatus[form.id] &&form.published &&getNumberOfDays(form.endDate)>0" (click)="goToFill(form.id)"
+                <button  *ngIf="!formStatus[form.id] &&form.published &&getNumberOfDays(form.endDate)>=0&& getNumberOfDays(form.startDate) <=0 &&!isBanned" (click)="goToFill(form.id)"
                          pButton pRipple label="Go to Form"  icon="pi pi-chevron-right"  class="p-button-info p-button-sm mr-2 mb-2"></button>
+                <button  *ngIf="!formStatus[form.id] &&form.published &&getNumberOfDays(form.endDate)>=0&& getNumberOfDays(form.startDate) <=0 &&isBanned" [disabled]="true"
+                         pButton pRipple label="You are banned! You can't fill any form"   class="p-button-danger p-button-sm mr-2 mb-2"></button>
               </div>
               <div *appHasRole="['INSTRUCTOR']">
 

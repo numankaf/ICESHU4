@@ -36,11 +36,12 @@ export class FillFormComponent {
   ngOnInit(): void {
     this.formService.getSurveyById(this.surveyId).subscribe((data) => {
       this.survey = data;
-    })
-    this.answerService.getSurveyAnswer(this.userData.sub, this.surveyId).subscribe((data) => {
+      this.answerService.getSurveyAnswer(this.userData.sub, this.surveyId).subscribe((data) => {
         this.surveyAnswer = data;
         this.setAnswers();
       })
+    })
+
   }
 
   setAnswers() {

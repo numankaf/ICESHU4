@@ -57,6 +57,9 @@ export class FormService {
     return this.httpClient.post<any>(`${environment.apiUrl}/survey/publish/${surveyId}`, {},{responseType: 'text'}).pipe(catchError(this.handleError));
   }
 
+  getStatistics(formId: any): Observable<any> {
+    return this.httpClient.get<any>(`${environment.apiUrl}/survey/getStatistics/${formId}`).pipe(catchError(this.handleError));
+  }
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {
