@@ -96,8 +96,8 @@ public class SurveyService {
             Course course = courseRepository.findById(courseID).get();
             return course.getSurveys();
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                "There is not such a course or course doesn't have any survey!");
+
+        return new ArrayList<Survey>();
     }
 
     public List<Survey> findAllSurveysOfCoursesForStudent(Long courseID) {
@@ -110,10 +110,8 @@ public class SurveyService {
                     allSurveys.add(survey);
                 }
             }
-            return allSurveys;
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                "There is not such a course or course doesn't have any survey!");
+        return allSurveys;
     }
 
     public boolean publishSurvey(Long surveyID) {
