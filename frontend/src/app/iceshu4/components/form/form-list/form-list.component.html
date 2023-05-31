@@ -28,17 +28,15 @@
               </div>
               <div *appHasRole="['INSTRUCTOR']">
 
-                <button  *ngIf="!form.published" (click)="goToEdit(form.id)"
+                <button  *ngIf="!form.published && !form.status" (click)="goToEdit(form.id)"
                          pButton pRipple label="Edit"  icon="pi pi-pencil"  class="p-button-info p-button-sm mr-2 mb-2"></button>
-                <button  *ngIf="!form.published" (click)="confirmPublish(form.id)"
+                <button  *ngIf="!form.published && !form.status" (click)="confirmPublish(form.id)"
                          pButton pRipple label="Publish"  icon="pi pi-check-circle"  class="p-button-success p-button-sm mr-2 mb-2"></button>
-                <button  *ngIf="form.published"
+                <button  *ngIf="form.published && !form.status" (click)="openReEvalRequest(form)"
                          pButton pRipple label="Create Re-evaluation Request"  icon="pi pi-reply"  class=" p-button-sm mr-2 mb-2"></button>
               </div>
               <div *appHasRole="['INSTRUCTOR','DEPARTMENT_MANAGER', 'ADMIN']">
-                <button  *ngIf="form.published"   (click)="goToDetail(form.id)"
-                         pButton pRipple label="Detail"  icon="pi pi-window-maximize"  class="p-button-secondary p-button-sm mr-2 mb-2"></button>
-                <button  (click)="confirmDelete(form.id)"
+                <button *ngIf="!form.status" (click)="confirmDelete(form.id)"
                          pButton pRipple label="Delete"  icon="pi pi-trash"  class="p-button-danger p-button-sm mr-2 mb-2"></button>
               </div>
 
@@ -70,3 +68,42 @@
             (click)="cdDelete.accept()"></button>
   </ng-template>
 </p-confirmDialog>
+
+<p-dialog header="Create Re-Evalutaion Request" [(visible)]="reEvalRequestDialog" [modal]="true" [style]="{ width: '50vw' }" styleClass="p-fluid" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+  <ng-template pTemplate="content">
+    <form [formGroup]="reEvaluateForm" (ngSubmit)="createReEvalRequest()">
+
+      <div>
+        <label for="content" class="block text-base font-medium mb-2">Content</label>
+        <div class="inline">
+          <textarea id="content" formControlName="content" rows="5" pInputTextarea placeholder="Content" style="width: 100%"></textarea>
+        </div>
+        <p></p>
+        <div *ngIf="f['content'].invalid && (f['content'].dirty )" style="text-align: left;">
+          <small class="p-error"
+                 *ngIf="f['content'].errors?.['content']">Content required!</small>
+        </div>
+      </div>
+
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-end">
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple label="Close" icon="pi pi-times"
+                class="p-button-secondary p-button-outlined mr-2 mb-2"
+                (click)="reEvalRequestDialog=false">
+        </button>
+      </div>
+
+      <div class="flex align-items-center justify-content-center m-2">
+        <button pButton pRipple [disabled]="!this.reEvaluateForm.valid " label="Send" icon="pi pi-check"
+                class="p-button-info mr-2 mb-2"
+                (click)="createReEvalRequest()">
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+

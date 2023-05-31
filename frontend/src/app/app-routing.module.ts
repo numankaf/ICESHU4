@@ -25,6 +25,7 @@ import {DetailMessageComponent} from "./iceshu4/components/message/detail-messag
 import {FormEditComponent} from "./iceshu4/components/form/form-edit/form-edit.component";
 import {FillFormComponent} from "./iceshu4/components/form/fill-form/fill-form.component";
 import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-detail.component";
+import {FormEvaluationComponent} from "./iceshu4/components/form-evaluation/form-evaluation.component";
 
 
 @NgModule({
@@ -45,16 +46,13 @@ import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-de
         roles: ["STUDENT"]
       },
       children: [
-        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-        {path: 'dashboard', component: DashboardComponent},
+        {path: '', redirectTo: 'courses', pathMatch: 'full'},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
         {path: 'forms/:id/fill', component: FillFormComponent},
         {path: 'messages', component: MessageComponent},
-        {path: 'messages/:id', component: DetailMessageComponent},
-        {path: 'about', component: DashboardComponent},
-        {path: 'help', component: DashboardComponent},
+        {path: 'messages/:id', component: DetailMessageComponent}
       ]
     },
     {
@@ -83,16 +81,14 @@ import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-de
         roles: ["INSTRUCTOR"]
       },
       children: [
-        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-        {path: 'dashboard', component: DashboardComponent},
+        {path: '', redirectTo: 'courses', pathMatch: 'full'},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'courses/:id/createform', component: CreateFormComponent},
         {path: 'forms', component: FormComponent},
-        {path: 'forms/:id', component: FormDetailComponent},
         {path: 'forms/:id/edit', component: FormEditComponent},
         {path: 'resources', component: DashboardComponent},
-        {path: 're-evaluationrequests', component: DashboardComponent},
+        {path: 're-evaluationrequests', component: FormEvaluationComponent}
       ]
     },
     {
@@ -102,14 +98,13 @@ import {FormDetailComponent} from "./iceshu4/components/form/form-detail/form-de
         roles: ["DEPARTMENT_MANAGER"]
       },
       children: [
-        {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-        {path: 'dashboard', component: DashboardComponent},
+        {path: '', redirectTo: 'courses', pathMatch: 'full'},
         {path: 'courses', component: CourseComponent},
         {path: 'courses/:id', component: CoursedetailComponent},
         {path: 'forms', component: FormComponent},
         {path: 'forms/:id', component: FormDetailComponent},
+        {path: 're-evaluationrequests', component: FormEvaluationComponent},
         {path: 'resources', component: DashboardComponent},
-        {path: 're-evaluationrequests', component: DashboardComponent},
       ]
     },
     {

@@ -69,6 +69,7 @@ import { FormEditComponent } from './iceshu4/components/form/form-edit/form-edit
 import { FillFormComponent } from './iceshu4/components/form/fill-form/fill-form.component';
 import { FormDetailComponent } from './iceshu4/components/form/form-detail/form-detail.component';
 import {ChartModule} from "primeng/chart";
+import { FormEvaluationComponent } from './iceshu4/components/form-evaluation/form-evaluation.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import {ChartModule} from "primeng/chart";
     FormListComponent,
     FormEditComponent,
     FillFormComponent,
-    FormDetailComponent
+    FormDetailComponent,
+    FormEvaluationComponent
   ],
     imports: [
         HttpClientModule,

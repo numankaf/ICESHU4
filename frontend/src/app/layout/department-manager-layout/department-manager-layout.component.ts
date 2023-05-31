@@ -21,10 +21,8 @@ export class DepartmentManagerLayoutComponent implements AfterViewInit{
 
   ngOnInit() {
     this.menuItems = [
-      {icon: 'dashboard',name:'Dashboard', route:'/departmentmanager/dashboard'},
       {icon: 'library_books',name:'Courses', route:'/departmentmanager/courses'},
       {icon: 'feed',name:'All Forms', route:'/departmentmanager/forms'},
-      {icon: 'folder_copy',name:'Resources', route:'/departmentmanager/resources'},
       {icon: 'request_quote',name:'Re-evaluation Requests', route:'/departmentmanager/re-evaluationrequests'},
 
 

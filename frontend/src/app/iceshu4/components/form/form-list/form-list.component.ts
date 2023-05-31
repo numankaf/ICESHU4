@@ -6,6 +6,8 @@ import {FormService} from "../form.service";
 import {AnswerService} from "../answer.service";
 import {UsersService} from "../../admin/users/users.service";
 import {THREE} from "@angular/cdk/keycodes";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { AnswerService } from '../answer.service';
 
 @Component({
   selector: 'app-form-list',
@@ -17,6 +19,7 @@ export class FormListComponent {
   @Input() courseId = 0;
   forms: any = [];
   userData: any;
+  reEvaluateForm: FormGroup;
   formStatus: any;
   isBanned = false;
 
@@ -26,8 +29,13 @@ export class FormListComponent {
               private authenticationService: AuthenticationService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private formService: FormService) {
+              private formService: FormService,
+              private fb: FormBuilder) {
     this.userData = authenticationService.decodeToken(this.authenticationService.getToken() || "");
+    this.reEvaluateForm = this.fb.group({
+      survey: [null, Validators.required],
+      content: [null, [Validators.required]],
+    })
   }
 
   ngOnInit(): void {
@@ -105,7 +113,10 @@ export class FormListComponent {
   }
 
   getStatus(form: any) {
-    if (form.published) {
+    if (form.status){
+      return {text: "IN REEVALUATION", severity: "warning"};
+    }
+    else if (form.published) {
       if (this.authenticationService.getRole() == 'STUDENT') {
         if (this.getNumberOfDays(form.endDate) < 0) {
           return {text: "ENDED", severity: "danger"};
@@ -183,4 +194,31 @@ export class FormListComponent {
     )
   }
 
+  reEvalRequestDialog: boolean = false;
+  get f() {
+    return this.reEvaluateForm.controls;
+  }
+  openReEvalRequest(form: any){
+    this.reEvaluateForm.reset()
+    this.reEvalRequestDialog = true;
+    this.reEvaluateForm.get('survey')?.patchValue(form);
+  }
+  createReEvalRequest() {
+    if (this.reEvaluateForm.valid){
+      console.log(this.reEvaluateForm.value);
+      this.formService.createReEvalutaionRequest(this.reEvaluateForm.value).subscribe(
+        response =>{
+          this.reEvalRequestDialog = false;
+          this.ngOnInit();
+          this.messageService.add({ severity: 'success', summary: 'Re-Evaluation', detail: 'Re-Evaluation request sended.' });
+        },error=>{
+          console.log(error)
+          this.messageService.add({ severity: 'error', summary: 'Re-Evaluation', detail: 'Error occurred while re-evaluation request sending.' });
+        }
+      )
+    }
+    else{
+      return;
+    }
+  }
 }

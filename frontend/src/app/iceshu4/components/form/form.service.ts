@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {environment} from "../../../../environments/environment";
 
@@ -60,6 +60,12 @@ export class FormService {
   getStatistics(formId: any): Observable<any> {
     return this.httpClient.get<any>(`${environment.apiUrl}/survey/getStatistics/${formId}`).pipe(catchError(this.handleError));
   }
+
+  createReEvalutaionRequest(reEvalDto: any): Observable<any>{
+    // @ts-ignore
+    return this.httpClient.post<any>(`${environment.apiUrl}/reevaluation/create`, reEvalDto,{responseType:"text"}).pipe(catchError(this.handleError));
+  }
+
   handleError(error: HttpErrorResponse) {
     let msg = '';
     if (error.error instanceof ErrorEvent) {

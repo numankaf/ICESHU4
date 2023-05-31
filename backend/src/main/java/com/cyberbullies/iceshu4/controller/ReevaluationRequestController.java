@@ -43,4 +43,14 @@ public class ReevaluationRequestController {
     public ReevaluationRequest findRequestById(@PathVariable Long id) {
         return reevaluationRequestService.findRequest(id);
     }
+
+    @GetMapping("/getInstructorRequests/{id}")
+    public List<ReevaluationRequest> getInstructorRequests(@PathVariable Long id) {
+        return reevaluationRequestService.getInstructorRequests(id);
+    }
+
+    @GetMapping("/getDepartmentRequests/{id}")
+    public List<ReevaluationRequest> getDepartmentRequests(@PathVariable Long id) {
+        return reevaluationRequestService.getDepartmentRequests(id);
+    }
 }
