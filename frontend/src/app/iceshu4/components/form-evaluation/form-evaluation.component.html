@@ -17,7 +17,7 @@
                 <span >{{form.content}}</span>
               </div>
             </div>
-            <div class="flex">
+            <div *appHasRole="['DEPARTMENT_MANAGER']" class="flex">
               <button (click)="declineRequest(form.id)"
                       pButton pRipple label="Decline"  icon="pi pi-times-circle"  class="p-button-danger p-button-sm mr-2 mb-2"></button>
               <button  (click)="acceptRequest(form.id)"

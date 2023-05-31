@@ -29,10 +29,14 @@ export class FormEvaluationComponent {
       );
     }
     else if(this.authenticationService.getRole() === 'INSTRUCTOR'){
-      this.reEvalRequest = null;
+      let token = this.authenticationService.getToken() || "";
+      const id = this.authenticationService.decodeToken(token)["sub"];
+      this.reEvaluationService.findInstructionsReEvaluationRequest(id).subscribe(
+        response=>{
+          this.reEvalRequest = response;
+        }
+      )
     }
-
-
   }
 
   declineRequest(id: any) {
@@ -41,17 +45,22 @@ export class FormEvaluationComponent {
       header: 'Decline Re-Evaluation Request',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({severity: 'error', summary: 'Re-Evaluation', detail: 'Re-Evaluation Request declined.'});
-        this.reEvaluationService.declinedReEvalRequest(id).subscribe(
-          response => {
-            this.ngOnInit();
-          },
-          error => {
-          }
-        )
+        this.decline(id);
       },
       key: "confirmDialog"
     });
+  }
+
+  decline(id: any){
+    this.reEvaluationService.declinedReEvalRequest(id).subscribe(
+      response => {
+        this.messageService.add({severity: 'error', summary: 'Re-Evaluation', detail: 'Re-Evaluation Request declined.'});
+        this.ngOnInit();
+      },
+      error => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Error occurred while sending decline request!'});
+      }
+    )
   }
 
   acceptRequest(id: any) {
@@ -60,17 +69,22 @@ export class FormEvaluationComponent {
       header: 'Accept Re-Evaluation Request',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.messageService.add({severity: 'success', summary: 'Re-Evaluation', detail: 'Re-Evaluation Request accepted.'});
-        this.reEvaluationService.acceptedReEvalRequest(id).subscribe(
-          response => {
-            this.ngOnInit();
-          },
-          error => {
-          }
-        )
+          this.accept(id);
       },
       key: "confirmDialog"
     });
+  }
+
+  accept(id: any){
+    this.reEvaluationService.acceptedReEvalRequest(id).subscribe(
+      response => {
+        this.messageService.add({severity: 'success', summary: 'Re-Evaluation', detail: 'Re-Evaluation Request accepted.'});
+        this.ngOnInit();
+      },
+      error => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Error occurred while sending accept request!'});
+      }
+    );
   }
 
 }

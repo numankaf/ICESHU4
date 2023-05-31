@@ -15,14 +15,18 @@ export class FormEvalutaionService{
     return this.httpClient.get<any>(`${environment.apiUrl}/reevaluation/findAll`).pipe(catchError(this.handleError));
   }
 
+  findInstructionsReEvaluationRequest(id: any): Observable<any>{
+    return this.httpClient.get<any>(`${environment.apiUrl}/reevaluation/getInstructorRequests/${id}`).pipe(catchError(this.handleError));
+  }
+
   acceptedReEvalRequest(id: any): Observable<any>{
     console.log(`${environment.apiUrl}/reevaluation/accept/${id}`)
-    return this.httpClient.put(`${environment.apiUrl}/reevaluation/accept/${id}`,{responseType: "text"}).pipe(catchError(this.handleError));
+    return this.httpClient.put(`${environment.apiUrl}/reevaluation/accept/${id}`,null,{responseType: "text"}).pipe(catchError(this.handleError));
   }
 
   declinedReEvalRequest(id: any): Observable<any>{
     console.log(`${environment.apiUrl}/reevaluation/decline/${id}`)
-    return this.httpClient.put(`${environment.apiUrl}/reevaluation/decline/${id}`,{responseType: "text"}).pipe(catchError(this.handleError));
+    return this.httpClient.put(`${environment.apiUrl}/reevaluation/decline/${id}`,null,{responseType: "text"}).pipe(catchError(this.handleError));
   }
 
   handleError(error: HttpErrorResponse) {
